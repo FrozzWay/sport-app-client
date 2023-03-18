@@ -1,6 +1,28 @@
 <p>schedule-widget works!</p>
-<div *ngFor="let s of schedule">
+<div *ngFor="let s of api_schedule">
   <p>{{jsonify(s)}}</p>
 </div>
 <hr>
-<p>{{schedule[0].places_available}}</p>
+<p>{{api_schedule[1].places_available}}</p>
+<h3 class="display-6">Display 6</h3>
+
+<div style="width: 1200px; margin: auto">
+  <div id="carouselExample" class="carousel slide" data-bs-wrap="false">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="d-block w-100" style="background-color: aquamarine; height: 500px"></div>
+      </div>
+      <div class="carousel-item">
+        <div class="d-block w-100" style="background-color: aqua; height: 500px"></div>
+      </div>
+    </div>
+    <button class="sl-b" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="sl-b sl-b-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>

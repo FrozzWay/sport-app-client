@@ -1,0 +1,9 @@
+.sl-b {
+  position: absolute;
+  top: 0;
+  border: none;
+}
+
+.sl-b-next {
+  right: 0;
+}
