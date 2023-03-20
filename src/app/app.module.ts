@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { BASE_PATH } from "../ApiModule";
 import { AdminModule } from "./admin/admin.module";
 import { PublicModule } from "./public/public.module";
+import '@angular/common/locales/global/ru';
+import { MaterialModule } from "./material.module";
 
 @NgModule({
   declarations: [
@@ -17,6 +19,7 @@ import { PublicModule } from "./public/public.module";
     RoutingModule,
     PublicModule,
     AdminModule,
+    MaterialModule
   ],
   providers: [
     { provide: BASE_PATH, useValue: 'http://127.0.0.1:8000' },

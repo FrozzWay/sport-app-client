@@ -1,27 +1,23 @@
-<p>schedule-widget works!</p>
-<div *ngFor="let s of api_schedule">
-  <p>{{jsonify(s)}}</p>
-</div>
-<hr>
-<p>{{api_schedule[1].places_available}}</p>
-<h3 class="display-6">Display 6</h3>
+
 
 <div style="width: 1200px; margin: auto">
   <div id="carouselExample" class="carousel slide" data-bs-wrap="false">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <div class="d-block w-100" style="background-color: aquamarine; height: 500px"></div>
+        <app-shed-table class="d-block w-100" [periods]="schedule.current_week"></app-shed-table>
       </div>
       <div class="carousel-item">
-        <div class="d-block w-100" style="background-color: aqua; height: 500px"></div>
+        <app-shed-table class="d-block w-100" [periods]="schedule.next_week" [next_week]="true"></app-shed-table>
       </div>
     </div>
-    <button class="sl-b" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <button class="sl-b d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
+            [ngStyle]="{'background-color': (!nw) ? '#f5f3f3' : '#e82e8a'}" [disabled]="!nw" (click)="onClick()">
+      <mat-icon class="align-self-center" style="color: #dedede">arrow_back_alt</mat-icon>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="sl-b sl-b-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <button class="sl-b sl-b-next d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
+            [ngStyle]="{'background-color': (nw) ? '#f5f3f3' : '#e82e8a'}" [disabled]="nw" (click)="onClick()">
+      <mat-icon class="align-self-center" style="color: #dedede">arrow_forward_alt</mat-icon>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
