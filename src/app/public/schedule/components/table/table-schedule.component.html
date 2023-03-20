@@ -1,0 +1,33 @@
+<table>
+  <tbody>
+  <tr>
+    <th></th>
+    <th *ngFor="let date of dates">
+      <ng-container *ngIf="date.getTime() !== today(); else elseBlock">
+        {{date| date:'d MMMM':'':'ru'}}<br>
+        {{date | date:'E':'':'ru'}}
+      </ng-container>
+      <ng-template #elseBlock><b>Сегодня</b></ng-template>
+    </th>
+    <th></th>
+  </tr>
+  </tbody>
+</table>
+
+<table class="sched-t">
+  <tbody>
+  <ng-container *ngFor="let period of periods | keyvalue">
+    <tr *ngIf="period.value.filled">
+      <td>{{period.key | number:'2.0-0'}}:00</td>
+      <td *ngFor="let date of period.value.dates | keyvalue">
+        <ul>
+          <ng-container *ngFor="let record of date.value">
+            <app-sched-elem [record]="record"></app-sched-elem>
+          </ng-container>
+        </ul>
+      </td>
+      <td></td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>

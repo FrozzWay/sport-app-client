@@ -1,0 +1,11 @@
+<li [ngStyle]="{'border-left': '2px solid '+record.program.category.color}">
+  <div>{{begins | date:'HH:mm'}}-{{ends| date:'HH:mm'}}</div>
+  <div class="duration"><mat-icon class="icon me-1" fontIcon="schedule"></mat-icon>{{record.duration}} мин.</div>
+  <div class="program-name fs-5">{{record.program.name}}</div>
+  <div style="color: grey">{{record.program.placement.name}}</div>
+  <div class="pt-1">{{record.program.instructor.credentials}}</div>
+  <div class="icon-top-container">
+    <mat-icon class="booking-icon" fontSet="mat-icon-filled" *ngIf="record.program.available_registration">edit</mat-icon>
+    <mat-icon class="paid-icon" fontSet="mat-icon-filled" *ngIf="record.program.paid">finance_chip</mat-icon>
+  </div>
+</li>
