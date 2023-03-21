@@ -2,8 +2,8 @@ import * as models from "../../ApiModule/model/models";
 
 export interface periods {
   [hour: number] : {
-    dates: {
-      [date: string]:  models.ScheduleRecord[]
+    days: {
+      [day: string]:  models.ScheduleRecord[]
     },
     filled?: boolean
   }
@@ -12,4 +12,11 @@ export interface periods {
 export interface Schedule {
   current_week: periods,
   next_week: periods
+}
+
+export interface Filters {
+  programs: Map<number, string>,
+  instructors: Map<number, string>,
+  categories: Set<string>,
+  placements: Set<string>
 }

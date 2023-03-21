@@ -1,0 +1,16 @@
+mat-label {
+  font-size: 0.9rem;
+}
+
+.mat-mdc-select-min-line {
+  font-size: 0.9rem;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) .mdc-line-ripple::before {
+  border-bottom-color: #dedede;
+}
+
+.micro-pen {
+  transform: scale(.7);
+  color: #d79001;
+}

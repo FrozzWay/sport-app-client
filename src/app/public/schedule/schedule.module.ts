@@ -5,6 +5,9 @@ import { FilterPanelComponent } from './components/filter-panel/filter-panel.com
 import { TableScheduleComponent } from './components/table/table-schedule.component';
 import { ElementScheduleComponent } from './components/element/element-schedule.component';
 import { MatIconModule } from "@angular/material/icon";
+import { MatSelectModule } from "@angular/material/select";
+import { ReactiveFormsModule } from "@angular/forms";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -13,10 +16,13 @@ import { MatIconModule } from "@angular/material/icon";
     TableScheduleComponent,
     ElementScheduleComponent
   ],
-  imports: [
-    CommonModule,
-    MatIconModule
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatCheckboxModule
+    ],
 })
 export class ScheduleModule {
 }

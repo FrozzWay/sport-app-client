@@ -8,6 +8,7 @@ import { AdminModule } from "./admin/admin.module";
 import { PublicModule } from "./public/public.module";
 import '@angular/common/locales/global/ru';
 import { MaterialModule } from "./material.module";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { MaterialModule } from "./material.module";
     RoutingModule,
     PublicModule,
     AdminModule,
+    BrowserAnimationsModule,
     MaterialModule
   ],
   providers: [

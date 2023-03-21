@@ -1,6 +1,9 @@
 th:first-child, th:last-child, td:first-child, td:last-child {
   width: 55px;
 }
+td {
+  vertical-align: top;
+}
 th {
   height: 42px;
   border-left: 1px solid #dedede;
@@ -21,7 +24,10 @@ tr:nth-child(even) {
 }
 ul {
   padding: 0;
-  margin: 1px 0;
+  margin: 3px 0;
+}
+.qwe:nth-child(even) {
+  margin-top: 3px;
 }
 .sched-t {
   margin-top: 10px;

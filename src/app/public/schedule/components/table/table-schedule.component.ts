@@ -15,7 +15,6 @@ export class TableScheduleComponent {
   dates!: Date[]
 
   ngOnInit() {
-    console.log(this.periods)
     this.add_days()
   }
 
