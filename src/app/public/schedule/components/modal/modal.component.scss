@@ -1,0 +1,32 @@
+.modal-title {
+
+}
+
+.title-wrapper {
+  border-bottom: 3px solid;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.btn-close {
+  transform: scale(1.5);
+  &:focus {
+    --bs-btn-close-focus-shadow: none;
+  }
+}
+
+img {
+  object-fit: scale-down;
+  width: 120px;
+  height: 120px
+}
+
+.modal {
+  --bs-modal-width: 480px;
+}
+
+.placement {
+  color: grey;
+}

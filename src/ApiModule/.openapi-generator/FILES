@@ -6,6 +6,7 @@ api/api.ts
 api/auth.service.ts
 api/categories.service.ts
 api/clients.service.ts
+api/default.service.ts
 api/instructors.service.ts
 api/placements.service.ts
 api/programs.service.ts

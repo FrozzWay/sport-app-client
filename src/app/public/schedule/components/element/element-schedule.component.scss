@@ -5,6 +5,9 @@ li {
   padding: 10px;
   display: block;
   position: relative;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .program-name {

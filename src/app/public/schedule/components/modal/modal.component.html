@@ -1,0 +1,25 @@
+<div class="modal fade" id="programModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h3 class="modal-title mb-3 fs-1 text-center">
+    <span class="title-wrapper pb-3 px-4" [ngStyle]="{'border-bottom-color': record.program.category.color}">
+      {{record.program.name}}
+    </span>
+      </h3>
+      <div class="text-center fs-4 mt-2">
+        {{begins | date:'HH:mm'}} - {{ends| date:'HH:mm'}}
+      </div>
+      <div class="modal-body px-5 mt-2">
+        <div class="instructor-info d-table">
+          <div class="instructor-img d-table-cell"><img [src]="photo_url" alt="{{record.program.instructor.credentials}}"></div>
+          <div class="instructor-desc d-table-cell align-middle fs-5 ps-1">
+            {{record.program.instructor.credentials}}
+            <div class="placement">{{record.program.placement.name}}</div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

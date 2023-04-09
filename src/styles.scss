@@ -55,3 +55,8 @@ $accent: #e82e8a;
 
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
+a {
+  color: unset;
+  text-decoration: unset;
+}
+

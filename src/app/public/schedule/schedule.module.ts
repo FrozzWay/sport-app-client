@@ -8,21 +8,25 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSelectModule } from "@angular/material/select";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { DirectivesModule } from "../../directives/directives.module";
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [
     WidgetComponent,
     FilterPanelComponent,
     TableScheduleComponent,
-    ElementScheduleComponent
+    ElementScheduleComponent,
+    ModalComponent
   ],
-    imports: [
-        CommonModule,
-        MatIconModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatCheckboxModule
-    ],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    DirectivesModule,
+  ],
 })
 export class ScheduleModule {
 }

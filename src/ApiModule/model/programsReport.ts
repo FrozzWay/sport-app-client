@@ -16,4 +16,7 @@ export interface ProgramsReport {
     programs: Array<number>;
     period: Periods;
 }
+export namespace ProgramsReport {
+}
+
 

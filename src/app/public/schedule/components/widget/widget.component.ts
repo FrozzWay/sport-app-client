@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import * as models from "src/ApiModule/model/models";
 import { Filters, Schedule } from "src/app/public/models"
 import * as utils from "src/time-utils"
 import { ScheduleService } from "src/ApiModule";
+import { ModalComponent} from "../modal/modal.component";
 
 
 @Component({
@@ -12,6 +13,7 @@ import { ScheduleService } from "src/ApiModule";
 })
 export class WidgetComponent {
   api_schedule!: models.ScheduleRecord[]
+  selected_record!: models.ScheduleRecord
   schedule: Schedule = {
     current_week: {},
     next_week: {}
@@ -76,6 +78,7 @@ export class WidgetComponent {
       path.filled = true
       path.days[day].push(record)
     })
+    this.selected_record = schedule[0]
   }
 
   filter_schedule(filters: any) {
@@ -102,5 +105,9 @@ export class WidgetComponent {
 
   onClick() {
     this.nw = !this.nw
+  }
+
+  change_selected_record(record: models.ScheduleRecord) {
+    this.selected_record = record
   }
 }

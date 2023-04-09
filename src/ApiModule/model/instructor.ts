@@ -15,5 +15,6 @@ export interface Instructor {
     credentials: string;
     phone: string;
     id: number;
+    photo_src?: string;
 }
 

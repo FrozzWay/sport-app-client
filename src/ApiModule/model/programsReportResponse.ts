@@ -18,4 +18,7 @@ export interface ProgramsReportResponse {
     period: Periods;
     data: Array<ProgramsReportRow>;
 }
+export namespace ProgramsReportResponse {
+}
+
 

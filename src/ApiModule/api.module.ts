@@ -2,16 +2,6 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthService } from './api/auth.service';
-import { CategoriesService } from './api/categories.service';
-import { ClientsService } from './api/clients.service';
-import { InstructorsService } from './api/instructors.service';
-import { PlacementsService } from './api/placements.service';
-import { ProgramsService } from './api/programs.service';
-import { RecordsService } from './api/records.service';
-import { ReportsService } from './api/reports.service';
-import { ScheduleService } from './api/schedule.service';
-import { ScheduleSchemasService } from './api/scheduleSchemas.service';
 
 @NgModule({
   imports:      [],

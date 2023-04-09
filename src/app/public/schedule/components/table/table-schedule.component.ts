@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import {periods} from 'src/app/public/models'
 import * as utils from "../../../../../time-utils";
+import { ScheduleRecord } from "../../../../../ApiModule";
 
 @Component({
   selector: 'app-shed-table',
@@ -8,6 +9,8 @@ import * as utils from "../../../../../time-utils";
   styleUrls: ['./table-schedule.component.scss']
 })
 export class TableScheduleComponent {
+  @Output()
+  onRecordSelect: EventEmitter<any> = new EventEmitter()
   @Input()
   periods!: periods
   @Input()
@@ -33,4 +36,7 @@ export class TableScheduleComponent {
     return date.getTime()
   }
 
+  open_modal(record: ScheduleRecord) {
+    this.onRecordSelect.emit(record)
+  }
 }

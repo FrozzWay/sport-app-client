@@ -14,5 +14,6 @@
 export interface InstructorPublic { 
     id: number;
     credentials: string;
+    photo_src?: string;
 }
 
