@@ -30,7 +30,7 @@
             <p *ngIf="record.registration_opens_at">Запись открывается {{registration_opens_at | date:'d MMM в HH:mm':'':'ru'}}</p>
           </ng-container>
           <ng-template #not_available><p>Нет доступных мест</p></ng-template>
-          <button mat-raised-button class="mt-3" [ngStyle]="{'background-color': record.program.category.color}"
+          <button *ngIf="authorized" mat-raised-button class="mt-3" color="primary"
                   data-bs-target="#modalBook" data-bs-toggle="modal">Записать клиента на занятие
           </button>
         </div>
@@ -39,19 +39,22 @@
   </div>
 </div>
 
-<div class="modal fade" id="modalBook" data-bs-backdrop="static" data-bs-keyboard="false">
+<div *ngIf="authorized" class="modal fade" id="modalBook" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="border-bottom: 1px solid #dee2e6">
         <h1 class="modal-title fs-4" id="exampleModalToggleLabel2">Запись клиента</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="clientControl.setValue('')"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetClientControl()"></button>
       </div>
-      <div class="modal-body">
-        <app-autocomplete [display_property]="'name'" [options]="options" width="80%"
+      <div class="modal-body fs-5">
+        <p>{{record.program.name}}</p>
+        <p class="mb-3">{{record.date | date:'medium':'':'ru'}}</p>
+        <app-autocomplete display_property="credentials" [options]="clients | async" width="80%"
                           placeholder="Клиент" [formControl]="clientControl"></app-autocomplete>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" data-bs-target="#programModal" data-bs-toggle="modal" (click)="clientControl.setValue('')">Back to first</button>
+      <div class="modal-footer fs-5">
+        <button mat-stroked-button color="primary" data-bs-target="#programModal" data-bs-toggle="modal" (click)="book_client()">Назад</button>
+        <button mat-raised-button color="primary" (click)="clientControl.setValue('')" [disabled]="!isSelectedClient()">Записать</button>
       </div>
     </div>
   </div>

@@ -1,5 +1,6 @@
 export * from './category';
 export * from './client';
+export * from './clientMinimum';
 export * from './clientReport';
 export * from './clientUpdate';
 export * from './createClient';

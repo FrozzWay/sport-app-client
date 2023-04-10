@@ -20,6 +20,7 @@ git_push.sh
 index.ts
 model/category.ts
 model/client.ts
+model/clientMinimum.ts
 model/clientReport.ts
 model/clientUpdate.ts
 model/createClient.ts

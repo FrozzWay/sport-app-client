@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AuthService as ApiAuthService } from '../../ApiModule'
+import { decodeJwt } from "jose";
 import * as models from '../../ApiModule/model/models';
 
 @Injectable({
@@ -11,7 +12,12 @@ export class AuthService {
   }
 
   get isLoggedIn(): Boolean {
-    return Boolean(localStorage.getItem("accessToken"))
+    const token = localStorage.getItem("accessToken")
+    if (!token) return false
+    const claims = decodeJwt(token)
+    let exp = new Date(0)
+    exp.setUTCSeconds(claims.exp!)
+    return new Date() <= exp
   }
 
   login(username: string = 'John Doe', password: string = '123') {
