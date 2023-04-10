@@ -60,3 +60,7 @@ a {
   text-decoration: unset;
 }
 
+.cdk-overlay-container {
+  z-index: 10000!important;
+}
+

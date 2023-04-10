@@ -6,10 +6,13 @@ import { TableScheduleComponent } from './components/table/table-schedule.compon
 import { ElementScheduleComponent } from './components/element/element-schedule.component';
 import { MatIconModule } from "@angular/material/icon";
 import { MatSelectModule } from "@angular/material/select";
+import { MatButtonModule } from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DirectivesModule } from "../../directives/directives.module";
 import { ModalComponent } from './components/modal/modal.component';
+import { ReusableModule } from "../../reusable components/reusable.module";
 
 @NgModule({
   declarations: [
@@ -19,14 +22,17 @@ import { ModalComponent } from './components/modal/modal.component';
     ElementScheduleComponent,
     ModalComponent
   ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatCheckboxModule,
-    DirectivesModule,
-  ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        DirectivesModule,
+        MatAutocompleteModule,
+        ReusableModule,
+    ],
 })
 export class ScheduleModule {
 }

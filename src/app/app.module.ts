@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -19,7 +19,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     RoutingModule,
     PublicModule,
     AdminModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: BASE_PATH, useValue: 'http://127.0.0.1:8000' },
