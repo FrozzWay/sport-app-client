@@ -9,7 +9,9 @@ import {
 } from "src/ApiModule";
 import { FormControl } from "@angular/forms";
 import { AuthService } from "../../../../auth/auth.service";
-import { Observable, startWith } from "rxjs";
+import { Observable } from "rxjs";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
   selector: 'app-modal-element',
@@ -32,25 +34,31 @@ export class ModalComponent {
   registration_opens_at?: Date
   begins!: Date
   ends!: Date
-  photo_url!: string
+  photo_url?: string
   clientControl = new FormControl<string | ClientMinimum>('');
   selected_client?: ClientMinimum
   clients!: Observable<ClientMinimum[]>
   authorized!: Boolean
+  booking_opened!: Boolean
 
   constructor(
     @Inject(BASE_PATH) private basePath: string,
     private instructor_service: InstructorsService,
     private client_service: ClientsService,
-    private auth_service: AuthService
+    private auth_service: AuthService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnChanges() {
+    this.booking_opened = true
+    if (this.record.registration_opens_at) {
+      this.registration_opens_at = new Date(this.record.registration_opens_at)
+      this.booking_opened = new Date() > this.registration_opens_at
+    }
+    this.photo_url = undefined
     this.begins = new Date(this.record.date)
     this.ends = new Date(this.begins)
     this.ends.setMinutes(this.ends.getMinutes() + this.record.duration)
-    if (this.record.registration_opens_at)
-      this.registration_opens_at = new Date(this.record.registration_opens_at)
 
     this.instructor_service.getInstructorImage(this.record.program.instructor.id).subscribe({
       next: (instructor) => {
@@ -84,8 +92,52 @@ export class ModalComponent {
   }
 
   book_client() {
-
-    this.resetClientControl()
+    this.client_service.bookClient(
+      this.selected_client!.id, this.record.program.id,
+      this.record.date, 'response'
+    ).subscribe({
+      next: (response) => {
+        if (response.status == 204) {
+          this.openSnackBar('Клиент успешно записан')
+          if (this.record.places_available! > 0)
+            this.record.places_available!--
+          this.resetClientControl()
+        }},
+      error: (err: HttpErrorResponse) => {
+        let msg = err.message
+        if (err.status == 409)
+          msg = err.error.detail
+        this.openSnackBar(msg)
+      }
+    })
   }
 
+  openSnackBar(message: string) {
+    this.snackBar.open(message, 'Закрыть', {
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      duration: 3000
+    })
+  }
+
+  unbook_client() {
+    this.client_service.removeClientBooking(
+      this.selected_client!.id, this.record.program.id,
+      this.record.date, 'response'
+    ).subscribe({
+      next: (response) => {
+        if (response.status == 204) {
+          if (this.record.places_available! != undefined)
+            this.record.places_available!++
+          this.openSnackBar('Запись отменена')
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        let msg = err.message
+        if (err.status == 404)
+          msg = 'Клиент не был записан на занятие'
+        this.openSnackBar(msg)
+      }
+    })
+  }
 }

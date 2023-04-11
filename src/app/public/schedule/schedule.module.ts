@@ -8,6 +8,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSelectModule } from "@angular/material/select";
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { DirectivesModule } from "../../directives/directives.module";
@@ -23,15 +24,16 @@ import { ReusableModule } from "../../reusable components/reusable.module";
     ModalComponent
   ],
     imports: [
-        CommonModule,
-        MatIconModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        DirectivesModule,
-        MatAutocompleteModule,
-        ReusableModule,
+      CommonModule,
+      MatIconModule,
+      MatSelectModule,
+      ReactiveFormsModule,
+      MatCheckboxModule,
+      MatButtonModule,
+      DirectivesModule,
+      MatAutocompleteModule,
+      MatSnackBarModule,
+      ReusableModule,
     ],
 })
 export class ScheduleModule {
