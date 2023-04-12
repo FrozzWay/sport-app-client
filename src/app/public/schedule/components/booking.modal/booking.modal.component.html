@@ -1,0 +1,23 @@
+<div class="modal-content">
+  <div class="modal-header" style="border-bottom: 1px solid #dee2e6">
+    <h1 class="modal-title fs-4" id="exampleModalToggleLabel2">Запись клиента</h1>
+    <button type="button" class="btn-close" aria-label="Close"
+            (click)="activeModal.close(); modalService.dismissAll()"></button>
+  </div>
+  <div class="modal-body fs-5">
+    <p>{{record.program.name}}</p>
+    <p class="mb-3">{{record.date | date:'medium':'':'ru'}}</p>
+    <app-autocomplete display_property="credentials" [options]="clients | async" width="80%"
+                      placeholder="Клиент" [formControl]="clientControl"></app-autocomplete>
+  </div>
+  <div class="modal-footer fs-5">
+    <button mat-stroked-button color="primary"
+            (click)="activeModal.close(); open_record_modal()">Назад
+    </button>
+    <button mat-raised-button color="warn" (click)="unbook_client()" [disabled]="!isSelectedClient()">Удалить запись
+    </button>
+    <button mat-raised-button color="primary" (click)="book_client()" [disabled]="!isSelectedClient()">Записать
+    </button>
+  </div>
+</div>
+

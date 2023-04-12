@@ -8,6 +8,7 @@ import { AdminModule } from "./admin/admin.module";
 import { PublicModule } from "./public/public.module";
 import '@angular/common/locales/global/ru';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
     RoutingModule,
     PublicModule,
     AdminModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModalModule,
   ],
   providers: [
     { provide: BASE_PATH, useValue: 'http://127.0.0.1:8000' },

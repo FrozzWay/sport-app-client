@@ -3,7 +3,6 @@ import * as models from "src/ApiModule/model/models";
 import { Filters, Schedule } from "src/app/public/models"
 import * as utils from "src/time-utils"
 import { ScheduleService } from "src/ApiModule";
-import { ModalComponent} from "../modal/modal.component";
 
 
 @Component({
@@ -105,9 +104,5 @@ export class WidgetComponent {
 
   onClick() {
     this.nw = !this.nw
-  }
-
-  change_selected_record(record: models.ScheduleRecord) {
-    this.selected_record = record
   }
 }

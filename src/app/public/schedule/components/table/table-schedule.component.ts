@@ -2,6 +2,9 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import {periods} from 'src/app/public/models'
 import * as utils from "../../../../../time-utils";
 import { ScheduleRecord } from "../../../../../ApiModule";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { RecordModalComponent} from "../record.modal/record.modal.component";
+import { BookingModalComponent } from "../booking.modal/booking.modal.component";
 
 @Component({
   selector: 'app-shed-table',
@@ -9,13 +12,14 @@ import { ScheduleRecord } from "../../../../../ApiModule";
   styleUrls: ['./table-schedule.component.scss']
 })
 export class TableScheduleComponent {
-  @Output()
-  onRecordSelect: EventEmitter<any> = new EventEmitter()
   @Input()
   periods!: periods
   @Input()
   next_week: boolean = false
   dates!: Date[]
+
+  constructor(private modalService: NgbModal) {
+  }
 
   ngOnInit() {
     this.add_days()
@@ -37,6 +41,10 @@ export class TableScheduleComponent {
   }
 
   open_modal(record: ScheduleRecord) {
-    this.onRecordSelect.emit(record)
+    const modalRef = this.modalService.open(RecordModalComponent, {
+      centered: true,
+      backdrop: true,
+    });
+    modalRef.componentInstance.record = record
   }
 }

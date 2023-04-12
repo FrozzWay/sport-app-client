@@ -6,10 +6,10 @@
   <div id="carouselExample" class="carousel slide" data-bs-wrap="false">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <app-shed-table class="d-block w-100" (onRecordSelect)="change_selected_record($event)" [periods]="schedule.current_week"></app-shed-table>
+        <app-shed-table class="d-block w-100" [periods]="schedule.current_week"></app-shed-table>
       </div>
       <div class="carousel-item">
-        <app-shed-table class="d-block w-100" (onRecordSelect)="change_selected_record($event)" [periods]="schedule.next_week" [next_week]="true"></app-shed-table>
+        <app-shed-table class="d-block w-100" [periods]="schedule.next_week" [next_week]="true"></app-shed-table>
       </div>
     </div>
     <button class="sl-b d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
@@ -24,6 +24,3 @@
     </button>
   </div>
 </div>
-
-
-<app-modal-element *ngIf="selected_record" [record]="selected_record"></app-modal-element>

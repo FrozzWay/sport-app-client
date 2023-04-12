@@ -22,7 +22,7 @@
       <td *ngFor="let date of period.value.days | keyvalue">
         <ul>
           <ng-container *ngFor="let record of date.value">
-            <a href data-bs-toggle="modal" data-bs-target="#programModal" (click)="open_modal(record)">
+            <a href="javascript:void(0)"  (click)="open_modal(record)">
               <app-sched-elem class="qwe d-block" [record]="record"></app-sched-elem>
             </a>
           </ng-container>
