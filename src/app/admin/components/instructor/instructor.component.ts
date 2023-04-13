@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import * as models from "../../../../ApiModule/model/models";
 import { InstructorsService } from "../../../../ApiModule";
+import {from, mergeMap, of, delay, concatMap, switchMap, map} from 'rxjs'
 
 @Component({
   selector: 'app-instructor',
@@ -10,7 +11,12 @@ import { InstructorsService } from "../../../../ApiModule";
 export class InstructorComponent {
   instructors!: Array<models.Instructor>;
 
+  foo = from([1,2,3,4])
+
   constructor(private instructor_service: InstructorsService) {
+    from([0,1,2,3,4]).pipe(
+      concatMap((x) => of(x))
+    ).subscribe(console.log)
   }
 
   ngOnInit() {

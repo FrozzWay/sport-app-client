@@ -1,0 +1,35 @@
+th:first-child, th:last-child, td:first-child, td:last-child {
+  width: 55px;
+}
+td {
+  vertical-align: top;
+}
+th {
+  height: 42px;
+  border-left: 1px solid #dedede;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 0;
+  font-weight: normal;
+}
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+th:first-child {
+  border-left: none;
+}
+tr:nth-child(even) {
+  background: #f8f8f8;
+}
+ul {
+  padding: 0;
+  margin: 3px 0;
+}
+.qwe:nth-child(even) {
+  margin-top: 3px;
+}
+.sched-t {
+  margin-top: 10px;
+  border-top: 1px solid #dedede;
+}

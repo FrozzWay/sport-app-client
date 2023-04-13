@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ScheduleRecord } from "../../../../../ApiModule";
+import { ScheduleRecord, SchemaRecord } from "src/ApiModule";
 import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
@@ -9,7 +9,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 })
 export class ElementScheduleComponent {
   @Input()
-  record!: ScheduleRecord;
+  record!: ScheduleRecord | SchemaRecord;
   begins!: Date
   ends!: Date
 
@@ -18,7 +18,14 @@ export class ElementScheduleComponent {
   }
 
   ngOnInit() {
-    this.begins = new Date(this.record.date)
+      if ("date" in this.record) {
+        this.begins = new Date(this.record.date)
+      }
+      else {
+        this.begins = new Date(0)
+        this.begins.setHours(+this.record.day_time.split(':')[0])
+        this.begins.setMinutes(+this.record.day_time.split(':')[1])
+      }
     this.ends = new Date(this.begins)
     this.ends.setMinutes(this.ends.getMinutes() + this.record.duration)
   }

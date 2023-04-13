@@ -6,19 +6,19 @@
   <div id="carouselExample" class="carousel slide" data-bs-wrap="false">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <app-shed-table class="d-block w-100" [periods]="schedule.current_week"></app-shed-table>
+        <app-shed-editor-table class="d-block w-100" [periods]="schedule_records.current_week" [schema]="schedule_schemas.active"></app-shed-editor-table>
       </div>
       <div class="carousel-item">
-        <app-shed-table class="d-block w-100" [periods]="schedule.next_week" [next_week]="true"></app-shed-table>
+        <app-shed-editor-table class="d-block w-100" [periods]="schedule_records.next_week" [next_week]="true" [schema]="schedule_schemas.next_week"></app-shed-editor-table>
       </div>
     </div>
     <button class="sl-b d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
-            [ngStyle]="{'background-color': (!nw) ? '#f5f3f3' : '#e82e8a'}" [disabled]="!nw" (click)="onClick()">
+            [ngStyle]="{'background-color': (!nw) ? '#f5f3f3' : '#e82e8a'}" [disabled]="!nw" (click)="nw=!nw">
       <mat-icon class="align-self-center" style="color: #dedede">arrow_back_alt</mat-icon>
       <span class="visually-hidden">Previous</span>
     </button>
     <button class="sl-b sl-b-next d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
-            [ngStyle]="{'background-color': (nw) ? '#f5f3f3' : '#e82e8a'}" [disabled]="nw" (click)="onClick()">
+            [ngStyle]="{'background-color': (nw) ? '#f5f3f3' : '#e82e8a'}" [disabled]="nw" (click)="nw=!nw">
       <mat-icon class="align-self-center" style="color: #dedede">arrow_forward_alt</mat-icon>
       <span class="visually-hidden">Next</span>
     </button>

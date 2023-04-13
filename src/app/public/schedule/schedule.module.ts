@@ -19,37 +19,41 @@ import { BookingModalComponent } from './components/booking.modal/booking.modal.
 import { Configuration } from "../../../ApiModule";
 
 @NgModule({
-  declarations: [
-    WidgetComponent,
-    FilterPanelComponent,
-    TableScheduleComponent,
-    ElementScheduleComponent,
-    RecordModalComponent,
-    BookingModalComponent
-  ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    DirectivesModule,
-    MatAutocompleteModule,
-    MatSnackBarModule,
-    ReusableModule,
-    NgbModalModule,
-  ],
-  providers: [
-    {
-      provide: Configuration,
-      useFactory: () => new Configuration(
+    declarations: [
+        WidgetComponent,
+        FilterPanelComponent,
+        TableScheduleComponent,
+        ElementScheduleComponent,
+        RecordModalComponent,
+        BookingModalComponent
+    ],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatCheckboxModule,
+        MatButtonModule,
+        DirectivesModule,
+        MatAutocompleteModule,
+        MatSnackBarModule,
+        ReusableModule,
+        NgbModalModule,
+    ],
+    exports: [
+        ElementScheduleComponent,
+        FilterPanelComponent
+    ],
+    providers: [
         {
-          credentials: { OAuth2PasswordBearer : <string>localStorage.getItem("accessToken")},
-        }
-      ),
-    },
-  ]
+            provide: Configuration,
+            useFactory: () => new Configuration(
+                {
+                    credentials: { OAuth2PasswordBearer: <string>localStorage.getItem("accessToken") },
+                }
+            ),
+        },
+    ]
 })
 export class ScheduleModule {
 }

@@ -3,6 +3,7 @@ import * as models from "src/ApiModule/model/models";
 import { Filters, Schedule } from "src/app/public/models"
 import * as utils from "src/time-utils"
 import { ScheduleService } from "src/ApiModule";
+import { FilterScheduleService } from "../../services/filter-schedule.service";
 
 
 @Component({
@@ -17,16 +18,12 @@ export class WidgetComponent {
     current_week: {},
     next_week: {}
   }
-  filters: Filters = {
-    programs: new Map<number, string>(),
-    instructors: new Map<number, string>(),
-    categories: new Set<string>(),
-    placements: new Set<string>()
-  }
   nw: boolean = false;
 
-  constructor(private schedule_service: ScheduleService,) {
-  }
+  constructor(
+    private schedule_service: ScheduleService,
+    public filter_service: FilterScheduleService
+  ) {}
 
   ngOnInit() {
     this.prepare_schedule()
@@ -47,24 +44,16 @@ export class WidgetComponent {
     }
   }
 
-  classify_for_filters() {
-    this.api_schedule.forEach((record) => {
-      let program = record.program
-      this.filters.categories.add(program.category.name)
-      this.filters.instructors.set(program.instructor.id, record.program.instructor.credentials)
-      this.filters.placements.add(program.placement.name)
-      this.filters.programs.set(program.id,program.name)
-    })
-  }
-
   get_schedule() {
     this.schedule_service.getSchedule().subscribe({
       next: (schedule) => {
         this.api_schedule = schedule;
         this.fill_schedule(schedule);
-        this.classify_for_filters();
+        this.filter_service.classify_for_filters(schedule);
       },
-      error: (err) => {alert('network error')}
+      error: (err) => {
+        alert('network error')
+      }
     })
   }
 
@@ -81,25 +70,9 @@ export class WidgetComponent {
   }
 
   filter_schedule(filters: any) {
-    let schedule: models.ScheduleRecord[] = Array.from(this.api_schedule)
-    if (filters.programs.size > 0)
-      schedule = this.api_schedule.filter(record => filters.programs.has(record.program.id))
-    if (filters.instructors.size > 0)
-      schedule = schedule.filter(record => filters.instructors.has(record.program.instructor.id))
-    if (filters.categories.size > 0)
-      schedule = schedule.filter(record => filters.categories.has(record.program.category.name))
-    if (filters.placements.size > 0)
-      schedule = schedule.filter(record => filters.placements.has(record.program.placement.name))
-    if (!filters.paid)
-      schedule = schedule.filter(record => !record.program.paid)
-    if (!filters.available_registration)
-      schedule = schedule.filter(record => !record.program.available_registration)
+    const filtered = this.filter_service.filter_schedule(this.api_schedule, filters)
     this.prepare_schedule()
-    this.fill_schedule(schedule)
-  }
-
-  jsonify(obj: any) {
-    return JSON.stringify(obj)
+    this.fill_schedule(filtered)
   }
 
   onClick() {

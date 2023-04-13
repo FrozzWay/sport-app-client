@@ -1,6 +1,6 @@
 import * as models from "../../ApiModule/model/models";
 
-export interface periods {
+export interface periods_ScheduleRecord {
   [hour: number] : {
     days: {
       [day: string]:  models.ScheduleRecord[]
@@ -10,8 +10,8 @@ export interface periods {
 }
 
 export interface Schedule {
-  current_week: periods,
-  next_week: periods
+  current_week: periods_ScheduleRecord,
+  next_week: periods_ScheduleRecord
 }
 
 export interface Filters {

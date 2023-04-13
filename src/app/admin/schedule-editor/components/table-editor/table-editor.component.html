@@ -1,0 +1,40 @@
+<table>
+  <tbody>
+  <tr>
+    <th></th>
+    <th *ngFor="let date of dates">
+      <ng-container *ngIf="date.getTime() !== today(); else elseBlock">
+        {{date| date:'d MMMM':'':'ru'}}<br>
+        {{date | date:'E':'':'ru'}}
+      </ng-container>
+      <ng-template #elseBlock><b>Сегодня</b></ng-template>
+    </th>
+    <th></th>
+  </tr>
+  </tbody>
+</table>
+
+<table class="sched-t" *ngIf="schema; else MissingNextWeekSchema">
+  <tbody>
+  <ng-container *ngFor="let period of periods | keyvalue">
+    <tr *ngIf="period.value.filled">
+      <td>{{period.key | number:'2.0-0'}}:00</td>
+      <td *ngFor="let date of period.value.days | keyvalue">
+        <ul>
+          <ng-container *ngFor="let record of date.value">
+            <a href="javascript:void(0)"  (click)="open_modal(record)">
+              <app-sched-elem class="qwe d-block" [record]="record"></app-sched-elem>
+            </a>
+          </ng-container>
+        </ul>
+      </td>
+      <td></td>
+    </tr>
+  </ng-container>
+  </tbody>
+</table>
+
+
+<ng-template #MissingNextWeekSchema>
+  <h1>Message</h1>
+</ng-template>

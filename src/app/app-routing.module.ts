@@ -6,6 +6,7 @@ import { WidgetComponent } from "./public/schedule/components/widget/widget.comp
 import { LoginComponent } from "./auth/components/login/login.component";
 
 import { authGuard } from "./auth/auth.guard";
+import { ScheduleEditorComponent } from "./admin/schedule-editor/components/main/main.component";
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
     path: 'admin',
     canActivateChild: [authGuard],
     children: [
-      { path: 'instructors', component: InstructorComponent }
+      { path: 'instructors', component: InstructorComponent },
+      { path: 'schedule/edit', component: ScheduleEditorComponent}
     ]
   },
   { path: 'schedule', component: WidgetComponent },
