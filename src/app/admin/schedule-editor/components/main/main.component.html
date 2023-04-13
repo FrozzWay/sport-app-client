@@ -1,6 +1,16 @@
 <br>
 <div style="max-width: 1300px; min-width: 1100px; margin: auto">
-  <app-filter-panel (onFilterSchedule)="filter_schedule($event)" [filters]="filter_service.filters">
+  <app-filter-panel (onFilterSchedule)="filter_schedule($event)" [filters]="filter_service.filters" [hideCheckBoxes]="true">
+  <div class="d-inline-flex justify-content-end align-items-center mb-3" style="width: 29%">
+<!--    <button mat-flat-button color="warn" class="me-3 fs-5" style="">Удалить</button>-->
+    <div class="me-2 w-50 text-center fs-5">
+      <button class="py-2 bg-white schema_name">{{schedule_schemas.active!.name}}</button>
+    </div>
+    <button mat-flat-button color="accent" class="me-5 fs-5" style="">Добавить</button>
+<!--    <button mat-fab color="accent" class="me-5" style="transform: scale(0.8)">-->
+<!--      <mat-icon>add</mat-icon>-->
+<!--    </button>-->
+  </div>
   </app-filter-panel>
 
   <div id="carouselExample" class="carousel slide" data-bs-wrap="false">
@@ -13,12 +23,12 @@
       </div>
     </div>
     <button class="sl-b d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
-            [ngStyle]="{'background-color': (!nw) ? '#f5f3f3' : '#e82e8a'}" [disabled]="!nw" (click)="nw=!nw">
+            [ngStyle]="{'background-color': (!nw) ? '#f5f3f3' : '#3f51b5'}" [disabled]="!nw" (click)="nw=!nw">
       <mat-icon class="align-self-center" style="color: #dedede">arrow_back_alt</mat-icon>
       <span class="visually-hidden">Previous</span>
     </button>
     <button class="sl-b sl-b-next d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
-            [ngStyle]="{'background-color': (nw) ? '#f5f3f3' : '#e82e8a'}" [disabled]="nw" (click)="nw=!nw">
+            [ngStyle]="{'background-color': (nw) ? '#f5f3f3' : '#3f51b5'}" [disabled]="nw" (click)="nw=!nw">
       <mat-icon class="align-self-center" style="color: #dedede">arrow_forward_alt</mat-icon>
       <span class="visually-hidden">Next</span>
     </button>

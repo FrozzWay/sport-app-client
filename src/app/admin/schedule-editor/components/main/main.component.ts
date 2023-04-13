@@ -27,6 +27,7 @@ export class ScheduleEditorComponent {
   ) {}
 
   ngOnInit() {
+    document.body.classList.toggle('admin-theme');
     this.prepare_schedule()
     this.schema_service.getSchemas().subscribe((schemas) => this.process_schemas(schemas))
   }
@@ -42,11 +43,13 @@ export class ScheduleEditorComponent {
 
     this.schema_service.getRecordsWithinSchema(active_schema.id).subscribe((r) => {
       this.api_records.active = r
+      this.filter_service.classify_for_filters(r)
       this.fill_with_records(r, this.schedule_records.current_week)
     })
     if (next_week_schema)
       this.schema_service.getRecordsWithinSchema(next_week_schema.id).subscribe((r) => {
         this.api_records.next_week = r
+        this.filter_service.classify_for_filters(r)
         this.fill_with_records(r, this.schedule_records.next_week);
       })
 
@@ -70,7 +73,6 @@ export class ScheduleEditorComponent {
       container[+hours].days[day].push(r)
       console.log(container)
     })
-    this.filter_service.classify_for_filters(records)
   }
 
   filter_schedule(filters: any) {

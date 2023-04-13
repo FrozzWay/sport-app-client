@@ -7,6 +7,7 @@ import { ScheduleEditorComponent } from './schedule-editor/components/main/main.
 import { MatIconModule } from "@angular/material/icon";
 import { TableScheduleEditorComponent } from './schedule-editor/components/table-editor/table-editor.component';
 import { ScheduleModule } from "../public/schedule/schedule.module";
+import { MatButtonModule } from "@angular/material/button";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ScheduleModule } from "../public/schedule/schedule.module";
     AuthModule,
     ApiModule,
     MatIconModule,
-    ScheduleModule
+    ScheduleModule,
+    MatButtonModule
   ],
   providers: [
     {

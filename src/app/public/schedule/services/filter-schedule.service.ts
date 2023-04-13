@@ -31,7 +31,7 @@ export class FilterScheduleService {
     // @ts-ignore
     let schedule = Array.from(collection)
     if (filters.programs.size > 0)
-      schedule = schedule.filter(record => filters.programs.has(record.program.id))
+      schedule = schedule.filter(record => filters.programs.has(record.program.name))
     if (filters.instructors.size > 0)
       schedule = schedule.filter(record => filters.instructors.has(record.program.instructor.id))
     if (filters.categories.size > 0)
@@ -42,6 +42,6 @@ export class FilterScheduleService {
       schedule = schedule.filter(record => !record.program.paid)
     if (!filters.available_registration)
       schedule = schedule.filter(record => !record.program.available_registration)
-    return schedule
+    return schedule as any
   }
 }

@@ -3,11 +3,8 @@
   <tr>
     <th></th>
     <th *ngFor="let date of dates">
-      <ng-container *ngIf="date.getTime() !== today(); else elseBlock">
-        {{date| date:'d MMMM':'':'ru'}}<br>
-        {{date | date:'E':'':'ru'}}
-      </ng-container>
-      <ng-template #elseBlock><b>Сегодня</b></ng-template>
+      <span class="fs-5">{{date | date:'E':'':'ru'}}</span><br>
+      <span style="color: grey; text-transform: none">{{date| date:'d MMMM':'':'ru'}}</span>
     </th>
     <th></th>
   </tr>

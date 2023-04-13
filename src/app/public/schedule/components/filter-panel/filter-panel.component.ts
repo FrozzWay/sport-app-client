@@ -12,6 +12,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 export class FilterPanelComponent {
   @Output() onFilterSchedule: EventEmitter<any> = new EventEmitter();
   @Input() filters!: Filters
+  @Input() hideCheckBoxes = false
   applied_filters = {
     programs: new Set<string>(),
     instructors: new Set<number>(),
