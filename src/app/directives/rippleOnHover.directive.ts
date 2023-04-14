@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener } from "@angular/core";
+import { Directive, ElementRef, HostListener, Input } from "@angular/core";
 import { MatRipple } from "@angular/material/core";
 
 @Directive({
@@ -7,6 +7,7 @@ providers: [MatRipple]
 })
 export class RippleOnHoverDirective {
   rippleRef: any;
+  @Input() persistent: boolean = false
   constructor(
       private _elementRef: ElementRef,
       private ripple: MatRipple
@@ -21,6 +22,7 @@ export class RippleOnHoverDirective {
             {
               color: '#00000008',
               centered: true,
+              persistent: this.persistent,
               animation: {
                 exitDuration: 1000
               }

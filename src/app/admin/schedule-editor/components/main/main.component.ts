@@ -4,6 +4,8 @@ import { concatMap, of, from, zip } from "rxjs";
 import * as utils from "src/time-utils";
 import { SchemaRecords, ScheduleSchemas, periods_SchemaRecord, ApiRecords } from "../../../models";
 import { FilterScheduleService } from "src/app/public/schedule/services/filter-schedule.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import {AddRecordModalComponent} from "../add-record.modal/add-record.modal.component";
 
 
 @Component({
@@ -18,12 +20,14 @@ export class ScheduleEditorComponent {
     current_week: {},
     next_week: {}
   }
+  visible_schema!: Schema
   api_records: ApiRecords = {active: undefined, next_week: undefined}
 
   constructor(
     public schema_service: ScheduleSchemasService,
     public record_service: RecordsService,
     public filter_service: FilterScheduleService,
+    private modalService: NgbModal,
   ) {}
 
   ngOnInit() {
@@ -40,6 +44,7 @@ export class ScheduleEditorComponent {
         next_week_schema = undefined
     this.schedule_schemas.active = active_schema
     this.schedule_schemas.next_week = next_week_schema
+    this.visible_schema = active_schema
 
     this.schema_service.getRecordsWithinSchema(active_schema.id).subscribe((r) => {
       this.api_records.active = r
@@ -85,5 +90,21 @@ export class ScheduleEditorComponent {
       const filtered = this.filter_service.filter_schedule(this.api_records.next_week, filters);
       this.fill_with_records(filtered, this.schedule_records.next_week);
     }
+  }
+
+  slide_schema() {
+    if (!this.nw && this.schedule_schemas.next_week)
+      this.visible_schema = this.schedule_schemas.next_week
+    if (this.nw)
+      this.visible_schema = this.schedule_schemas.active!
+    this.nw = !this.nw
+  }
+
+  open_add_record_modal() {
+    const modalRef = this.modalService.open(AddRecordModalComponent, {
+      centered: true,
+      backdrop: true,
+    });
+    modalRef.componentInstance.schema = this.visible_schema
   }
 }

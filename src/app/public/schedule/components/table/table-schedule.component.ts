@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { periods_ScheduleRecord } from 'src/app/public/models'
 import * as utils from "src/time-utils";
-import { ScheduleRecord, SchemaRecord } from "src/ApiModule";
+import { ScheduleRecord } from "src/ApiModule";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { RecordModalComponent } from "../record.modal/record.modal.component";
 

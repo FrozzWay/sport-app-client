@@ -1,0 +1,29 @@
+@use 'src/styles';
+
+.btn-close {
+  transform: scale(1.5);
+  &:focus {
+    --bs-btn-close-focus-shadow: none;
+  }
+}
+
+.day-pill {
+  width: 40px;
+  height: 40px;
+  &:hover {
+    cursor: pointer;
+  }
+  @include styles.nonselect;
+}
+
+.selected_day {
+  background-color: #3f51b585;
+}
+
+.record_params {
+  border-spacing: 0 10px;
+  border-collapse: separate;
+  input {
+    width: 100px;
+  }
+}
