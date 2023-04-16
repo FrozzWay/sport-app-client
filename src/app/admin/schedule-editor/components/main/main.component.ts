@@ -104,6 +104,8 @@ export class ScheduleEditorComponent {
       centered: true,
       backdrop: 'static',
       keyboard: false,
+      scrollable: true,
+      windowClass: 'windowClass',
     });
     modalRef.componentInstance.schema = this.visible_schema
   }

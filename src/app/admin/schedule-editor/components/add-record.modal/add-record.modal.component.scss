@@ -69,3 +69,20 @@ table {
     color: #d79001;
   }
 }
+
+mat-select {
+  @include styles.nonselect
+}
+
+.mat-expansion-panel-body {
+  @extend .pb-0
+}
+
+#program_creation_additional_options {
+  input {
+    width: 60px;
+    padding: 0.2rem 0.75rem;
+    display: inline-block;
+    @extend .fs-5, .ms-2;
+  }
+}

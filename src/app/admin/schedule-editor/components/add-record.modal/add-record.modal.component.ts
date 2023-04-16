@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
   CategoriesService, Category, Instructor,
@@ -18,7 +18,8 @@ import { MatExpansionPanel } from "@angular/material/expansion";
 @Component({
   selector: 'app-add-record',
   templateUrl: './add-record.modal.component.html',
-  styleUrls: ['./add-record.modal.component.scss']
+  styleUrls: ['./add-record.modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AddRecordModalComponent {
   @Input() schema!: Schema
@@ -30,8 +31,12 @@ export class AddRecordModalComponent {
   programCreationForm = this.fb.group({
     category: [''],
     placement: [''],
-    instructor: ['']
+    instructor: [''],
+    place_limit: [''],
+    registration_opens: ['']
   })
+  enable_registration: boolean = true
+  paid: boolean = false
 
 
   weekdays = new Set<number>()
@@ -130,10 +135,20 @@ export class AddRecordModalComponent {
 
   toggleProgramCreation_after() {
     this.onCreateProgram = !this.onCreateProgram
-      this.programControl.disabled ? this.programControl.enable() : this.programControl.disable()
-      this.program_creation_panel.toggle()
-      if (this.isSelectedProgram)
-        setTimeout(() => document.getElementById('program-desc')?.classList.remove('opacity-50'), 1)
+    this.programControl.disabled ? this.programControl.enable() : this.programControl.disable()
+    this.program_creation_panel.toggle()
+    setTimeout(() => this.enable_registration = !this.enable_registration)
+    if (this.isSelectedProgram)
+      setTimeout(() => document.getElementById('program-desc')?.classList.remove('opacity-50'))
+  }
+
+  openNewModal() {
+    let parent = document.getElementsByClassName('windowClass').item(0)!
+    parent.classList.remove('show')
+    const childModalRef = this.modalService.open(AddRecordModalComponent, {
+      backdrop: false
+    })
+    childModalRef.closed.subscribe(() => parent.classList.add('show'))
   }
 
 

@@ -57,8 +57,11 @@
     </div>
     <mat-expansion-panel #program_creation_panel style="box-shadow: none">
       <ng-template matExpansionPanelContent>
-        <p>Создаём новую программу</p>
-        <mat-form-field appearance="fill">
+        <p>Создать новую программу</p>
+        <mat-form-field appearance="fill" class="d-block">
+          <input matInput placeholder="Название" type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="" style="width: 200px">
           <mat-label>Категория</mat-label>
           <mat-select [formControl]="programCreationForm.controls.category" required>
             <mat-option *ngFor="let category of categories" [value]="category.name">
@@ -66,7 +69,7 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="fill" class="d-inline-block float-end" style="width: 200px">
           <mat-label>Помещение</mat-label>
           <mat-select [formControl]="programCreationForm.controls.placement" required>
             <mat-option *ngFor="let placement of placements" [value]="placement.name">
@@ -74,13 +77,24 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <app-autocomplete [formControl]="programCreationForm.controls.instructor" [options]="instructors!"
-                          display_property="credentials" placeholder="Инструктор"
-        ></app-autocomplete>
+        <app-autocomplete width="100%" [formControl]="programCreationForm.controls.instructor" [options]="instructors!"
+                          display_property="credentials" placeholder="Инструктор"></app-autocomplete>
+        <div class="d-inline-flex">
+          <div><mat-checkbox [(ngModel)]="paid"></mat-checkbox><span>Платное</span></div>
+          <div><mat-checkbox [(ngModel)]="enable_registration" class="ms-2"></mat-checkbox><span>По записи</span></div>
+        </div>
+        <div class="d-flex pb-1 mt-2" id="program_creation_additional_options">
+          <div>
+            <span class="ms-2">Мест:</span>
+            <input [attr.disabled]="!enable_registration ? '' : null" [formControl]="programCreationForm.controls.place_limit" class="form-control"></div>
+          <div>
+            <span class="ms-2">Открыть запись за (дней):</span>
+            <input [attr.disabled]="!enable_registration ? '' : null" [formControl]="programCreationForm.controls.registration_opens" class="form-control"></div>
+        </div>
       </ng-template>
     </mat-expansion-panel>
-
-
-
+  </div>
+  <div class="modal-footer fs-5">
+    <button mat-raised-button color="primary">Добавить</button>
   </div>
 </div>
