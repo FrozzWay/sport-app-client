@@ -12,8 +12,11 @@ import { AddRecordModalComponent } from './schedule-editor/components/add-record
 import { MatSelectModule } from "@angular/material/select";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DirectivesModule } from "../directives/directives.module";
-import { TextMaskModule } from 'angular2-text-mask';
 import { MatInputModule } from "@angular/material/input";
+import { ReusableModule } from "../reusable components/reusable.module";
+import { IMaskDirective } from "angular-imask";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 
 @NgModule({
@@ -25,7 +28,6 @@ import { MatInputModule } from "@angular/material/input";
   ],
   imports: [
     CommonModule,
-    TextMaskModule,
     AuthModule,
     ApiModule,
     MatIconModule,
@@ -34,17 +36,11 @@ import { MatInputModule } from "@angular/material/input";
     MatSelectModule,
     ReactiveFormsModule,
     DirectivesModule,
-    MatInputModule
+    MatInputModule,
+    ReusableModule,
+    IMaskDirective,
+    MatExpansionModule,
+    MatProgressBarModule
   ],
-  providers: [
-    {
-      provide: Configuration,
-      useFactory: () => new Configuration(
-        {
-          credentials: { OAuth2PasswordBearer : <string>localStorage.getItem("accessToken")},
-        }
-      ),
-    },
-  ]
 })
 export class AdminModule { }

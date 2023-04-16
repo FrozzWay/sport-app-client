@@ -5,7 +5,7 @@ import * as utils from "src/time-utils";
 import { SchemaRecords, ScheduleSchemas, periods_SchemaRecord, ApiRecords } from "../../../models";
 import { FilterScheduleService } from "src/app/public/schedule/services/filter-schedule.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import {AddRecordModalComponent} from "../add-record.modal/add-record.modal.component";
+import { AddRecordModalComponent } from "../add-record.modal/add-record.modal.component";
 
 
 @Component({
@@ -76,7 +76,6 @@ export class ScheduleEditorComponent {
       const [hours, day] = [r.day_time.split(':')[0], r.week_day]
       container[+hours].filled = true
       container[+hours].days[day].push(r)
-      console.log(container)
     })
   }
 
@@ -103,7 +102,8 @@ export class ScheduleEditorComponent {
   open_add_record_modal() {
     const modalRef = this.modalService.open(AddRecordModalComponent, {
       centered: true,
-      backdrop: true,
+      backdrop: 'static',
+      keyboard: false,
     });
     modalRef.componentInstance.schema = this.visible_schema
   }

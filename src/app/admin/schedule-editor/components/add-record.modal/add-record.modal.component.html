@@ -3,57 +3,84 @@
     <h1 class="modal-title fs-4">Новая запись расписания</h1>
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
   </div>
-  <div class="modal-body fs-5 row row-cols-1 gy-3">
-<!--    <mat-form-field appearance="fill">
-      <mat-label>День недели</mat-label>
-      <mat-select [formControl]="weekdayControl" required>
-        <mat-option *ngFor="let day of week_days" [value]="day.getUTCDay()">
-          {{day | date:'EEEE':'':'ru'}}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="weekdayControl.hasError('required')">Please choose an animal</mat-error>
-    </mat-form-field>-->
-    <div class="d-flex justify-content-between w-100 px-5">
-      <div (click)="onDayClick(day)" *ngFor="let day of week_days" class="day-pill position-relative rounded-circle d-flex align-items-center"
-            id="day_{{day.getUTCDay()}}" rippleOnHover [persistent]="true">
-        <span class="text-uppercase text-center d-block m-auto">
-          {{day | date:'EE':'':'ru'}}
-        </span>
+  <div class="modal-body fs-5">
+    <div id="record-params" class="px-0">
+      <div class="d-flex justify-content-between w-100 px-5">
+        <div (click)="onDayClick(day)" *ngFor="let day of week_days" class="day-pill position-relative rounded-circle d-flex align-items-center"
+              id="day_{{day.getUTCDay()}}" rippleOnHover [persistent]="true">
+          <span class="text-uppercase text-center d-block m-auto">
+            {{day | date:'EE':'':'ru'}}
+          </span>
+        </div>
       </div>
+      <table class="py-3" id="record-params-table">
+        <tr>
+          <td><label for="begin-time-input">Начало занятия:</label></td>
+          <td><input placeholder="10:00" id="begin-time-input" [formControl]="daytimeControl" [imask]="daytime_mask" type="text" class="text-center me-5 form-control fs-5"></td>
+        </tr>
+        <tr class="mt-2">
+          <td><label for="duration-input">Длительность:</label></td>
+          <td><input placeholder="60" id="duration-input" [formControl]="durationControl" [imask]="duration_mask" type="text" class="text-center form-control fs-5"></td>
+        </tr>
+      </table>
     </div>
-<!--    <mat-form-field appearance="fill">-->
-<!--      <mat-label>Время занятия</mat-label>-->
-<!--      <input matInput [textMask]="{mask: daytime_mask}">-->
-<!--    </mat-form-field>-->
+    <div id="program-params" class="ms-4 mt-3">
+      <app-autocomplete class="d-inline-block" placeholder="Программа" [formControl]="programControl"
+                        [options]="programs" display_property="name" [disabled]="onCreateProgram"></app-autocomplete>
+      <button (click)="toggleProgramCreation()" mat-mini-fab color="primary" class="ms-4"><mat-icon>{{(!onCreateProgram) ? 'add': 'remove'}}</mat-icon></button>
+      <div id="program-desc" class="ms-3 opacity-50" *ngIf="program && !onCreateProgram">
+        <table id="program-desc-table" style="border-spacing: 0 15px">
+          <tr><td>Категория:</td><td>{{program.category.name}}</td></tr>
+          <tr><td>Инструктор:</td><td>{{program.instructor.credentials}}</td></tr>
+          <tr><td>Помещение:</td><td>{{program.placement.name}}</td></tr>
+        </table>
+        <div class="icon-row d-flex align-items-center">
+          <div *ngIf="program.paid">
+            <mat-icon class="paid-icon" fontSet="mat-icon-filled" *ngIf="true">finance_chip</mat-icon>
+            <span>платное</span>
+          </div>
+          <div *ngIf="program.available_registration">
+            <mat-icon class="booking-icon" fontSet="mat-icon-filled" *ngIf="true">edit</mat-icon>
+            <span>по записи</span>
+          </div>
+          <div *ngIf="program.place_limit">
+            <mat-icon fontSet="mat-icon-filled" style="color: #3f9ab5">person</mat-icon>
+            <span>{{program.place_limit}} мест</span>
+          </div>
+          <div *ngIf="program.registration_opens">
+            <mat-icon style="color: #9f6b01;">more_time</mat-icon>
+            <span>За {{program.registration_opens}} дня</span>
+          </div>
+        </div>
+      </div>
+      <mat-progress-bar *ngIf="programCreation_pbar_shown" mode="query" class="w-75"></mat-progress-bar>
+    </div>
+    <mat-expansion-panel #program_creation_panel style="box-shadow: none">
+      <ng-template matExpansionPanelContent>
+        <p>Создаём новую программу</p>
+        <mat-form-field appearance="fill">
+          <mat-label>Категория</mat-label>
+          <mat-select [formControl]="programCreationForm.controls.category" required>
+            <mat-option *ngFor="let category of categories" [value]="category.name">
+              {{category.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Помещение</mat-label>
+          <mat-select [formControl]="programCreationForm.controls.placement" required>
+            <mat-option *ngFor="let placement of placements" [value]="placement.name">
+              {{placement.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <app-autocomplete [formControl]="programCreationForm.controls.instructor" [options]="instructors!"
+                          display_property="credentials" placeholder="Инструктор"
+        ></app-autocomplete>
+      </ng-template>
+    </mat-expansion-panel>
 
 
-<!--    <div class="flex-row d-flex align-items-center justify-content-center ms-4">-->
-<!--      <div class="">-->
-<!--        <label for="">Начало занятия</label>-->
-<!--      </div>-->
-<!--      <div class="ms-4">-->
-<!--        <input [textMask]="{mask: daytime_mask}" type="text" class="text-center w-50 form-control fs-5">-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="flex-row d-flex align-items-center justify-content-center ms-4">-->
-<!--      <div class="">-->
-<!--        <label for="">Длительность</label>-->
-<!--      </div>-->
-<!--      <div class="ms-4">-->
-<!--        <input type="text" class="text-center w-50 form-control fs-5">-->
-<!--      </div>-->
-<!--    </div>-->
-
-    <table class="ms-5 my-1 m-auto record_params" style="width: 340px">
-      <tr>
-        <td><label for="begin-time-input">Начало занятия:</label></td>
-        <td><input placeholder="10:00" id="begin-time-input" [textMask]="{mask: daytime_mask}" type="text" class="text-center me-5 form-control fs-5"></td>
-      </tr>
-      <tr class="mt-2">
-        <td><label for="duration-input">Длительность:</label></td>
-        <td><input placeholder="60" id="duration-input" type="text" class="text-center form-control fs-5"></td>
-      </tr>
-    </table>
 
   </div>
 </div>

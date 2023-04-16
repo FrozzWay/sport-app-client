@@ -21,6 +21,6 @@ import { MatInputModule } from "@angular/material/input";
   ],
   exports: [
     AutocompleteComponent
-  ]
+  ],
 })
 export class ReusableModule { }

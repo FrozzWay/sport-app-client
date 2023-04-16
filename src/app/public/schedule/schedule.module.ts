@@ -16,44 +16,33 @@ import { RecordModalComponent } from './components/record.modal/record.modal.com
 import { ReusableModule } from "../../reusable components/reusable.module";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { BookingModalComponent } from './components/booking.modal/booking.modal.component';
-import { Configuration } from "../../../ApiModule";
 
 @NgModule({
-    declarations: [
-        WidgetComponent,
-        FilterPanelComponent,
-        TableScheduleComponent,
-        ElementScheduleComponent,
-        RecordModalComponent,
-        BookingModalComponent
-    ],
-    imports: [
-        CommonModule,
-        MatIconModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        DirectivesModule,
-        MatAutocompleteModule,
-        MatSnackBarModule,
-        ReusableModule,
-        NgbModalModule,
-    ],
-    exports: [
-        ElementScheduleComponent,
-        FilterPanelComponent
-    ],
-    providers: [
-        {
-            provide: Configuration,
-            useFactory: () => new Configuration(
-                {
-                    credentials: { OAuth2PasswordBearer: <string>localStorage.getItem("accessToken") },
-                }
-            ),
-        },
-    ]
+  declarations: [
+    WidgetComponent,
+    FilterPanelComponent,
+    TableScheduleComponent,
+    ElementScheduleComponent,
+    RecordModalComponent,
+    BookingModalComponent
+  ],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    DirectivesModule,
+    MatAutocompleteModule,
+    MatSnackBarModule,
+    ReusableModule,
+    NgbModalModule,
+  ],
+  exports: [
+    ElementScheduleComponent,
+    FilterPanelComponent
+  ]
 })
 export class ScheduleModule {
 }

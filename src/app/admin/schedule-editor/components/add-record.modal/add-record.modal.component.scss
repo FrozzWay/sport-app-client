@@ -20,10 +20,52 @@
   background-color: #3f51b585;
 }
 
-.record_params {
+table {
   border-spacing: 0 10px;
   border-collapse: separate;
+}
+
+#record-params-table {
+  margin-left: 4.5rem;
+  td:nth-child(2) {
+    @extend .ps-3
+  }
   input {
     width: 100px;
+  }
+}
+
+#program-desc-table {
+  td:nth-child(2) {
+    @extend .ps-3
+  }
+  td:nth-child(2) {
+    font-weight: 500;
+  }
+}
+
+.icon-row {
+  div {
+    @extend .d-flex, .align-items-center;
+
+    &:not(:first-child) {
+      @extend .ms-3
+    }
+  }
+
+  span {
+    @extend .ps-1, .fs-6
+  }
+
+  .paid-icon {
+    font-size: 30px;
+    width: 30px; height: 30px;
+    color: #689F38;
+  }
+
+  .booking-icon {
+    font-size: 20px;
+    width: 20px; height: 20px;
+    color: #d79001;
   }
 }
