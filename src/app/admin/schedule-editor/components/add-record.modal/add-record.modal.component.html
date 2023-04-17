@@ -1,4 +1,4 @@
-<div class="modal-content">
+<div class="modal-content" id="add-record-modal-component">
   <div class="modal-header">
     <h1 class="modal-title fs-4">Новая запись расписания</h1>
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
@@ -6,8 +6,8 @@
   <div class="modal-body fs-5">
     <div id="record-params" class="px-0">
       <div class="d-flex justify-content-between w-100 px-5">
-        <div (click)="onDayClick(day)" *ngFor="let day of week_days" class="day-pill position-relative rounded-circle d-flex align-items-center"
-              id="day_{{day.getUTCDay()}}" rippleOnHover [persistent]="true">
+        <div (click)="onDayClick(day)" *ngFor="let day of weekdays" class="day-pill position-relative rounded-circle d-flex align-items-center"
+             id="day_{{day.getUTCDay()}}" rippleOnHover [persistent]="true">
           <span class="text-uppercase text-center d-block m-auto">
             {{day | date:'EE':'':'ru'}}
           </span>
@@ -59,7 +59,7 @@
       <ng-template matExpansionPanelContent>
         <p>Создать новую программу</p>
         <mat-form-field appearance="fill" class="d-block">
-          <input matInput placeholder="Название" type="text">
+          <input matInput [formControl]="programCreationForm.controls.name" placeholder="Название" type="text" required>
         </mat-form-field>
         <mat-form-field appearance="fill" class="" style="width: 200px">
           <mat-label>Категория</mat-label>
@@ -86,15 +86,15 @@
         <div class="d-flex pb-1 mt-2" id="program_creation_additional_options">
           <div>
             <span class="ms-2">Мест:</span>
-            <input [attr.disabled]="!enable_registration ? '' : null" [formControl]="programCreationForm.controls.place_limit" class="form-control"></div>
+            <input type="number" [attr.disabled]="!enable_registration ? '' : null" [formControl]="programCreationForm.controls.place_limit" class="form-control"></div>
           <div>
             <span class="ms-2">Открыть запись за (дней):</span>
-            <input [attr.disabled]="!enable_registration ? '' : null" [formControl]="programCreationForm.controls.registration_opens" class="form-control"></div>
+            <input type="number" [attr.disabled]="!enable_registration ? '' : null" [formControl]="programCreationForm.controls.registration_opens" class="form-control"></div>
         </div>
       </ng-template>
     </mat-expansion-panel>
   </div>
   <div class="modal-footer fs-5">
-    <button mat-raised-button color="primary">Добавить</button>
+    <button mat-raised-button color="primary" (click)="onAddRecord()" [disabled]="!isReadyToAdd()">Добавить</button>
   </div>
 </div>

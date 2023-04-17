@@ -14,7 +14,6 @@ export * from './locationInner';
 export * from './periods';
 export * from './placement';
 export * from './program';
-export * from './program1';
 export * from './programsReport';
 export * from './programsReportResponse';
 export * from './programsReportRow';

@@ -13,6 +13,7 @@ export class AutocompleteComponent {
   @Input() placeholder!: string;
   @Input() formControl = new FormControl<string | any>('');
   @Input() width?: string;
+  @Input() required: boolean = true;
   filteredOptions!: Observable<any>;
   displayFn: any;
 

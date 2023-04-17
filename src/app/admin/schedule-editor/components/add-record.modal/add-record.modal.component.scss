@@ -1,88 +1,98 @@
 @use 'src/styles';
 
-.btn-close {
-  transform: scale(1.5);
-  &:focus {
-    --bs-btn-close-focus-shadow: none;
-  }
-}
+#add-record-modal-component {
+  .btn-close {
+    transform: scale(1.5);
 
-.day-pill {
-  width: 40px;
-  height: 40px;
-  &:hover {
-    cursor: pointer;
-  }
-  @include styles.nonselect;
-}
-
-.selected_day {
-  background-color: #3f51b585;
-}
-
-table {
-  border-spacing: 0 10px;
-  border-collapse: separate;
-}
-
-#record-params-table {
-  margin-left: 4.5rem;
-  td:nth-child(2) {
-    @extend .ps-3
-  }
-  input {
-    width: 100px;
-  }
-}
-
-#program-desc-table {
-  td:nth-child(2) {
-    @extend .ps-3
-  }
-  td:nth-child(2) {
-    font-weight: 500;
-  }
-}
-
-.icon-row {
-  div {
-    @extend .d-flex, .align-items-center;
-
-    &:not(:first-child) {
-      @extend .ms-3
+    &:focus {
+      --bs-btn-close-focus-shadow: none;
     }
   }
 
-  span {
-    @extend .ps-1, .fs-6
+  .day-pill {
+    width: 40px;
+    height: 40px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    @include styles.nonselect;
   }
 
-  .paid-icon {
-    font-size: 30px;
-    width: 30px; height: 30px;
-    color: #689F38;
+  .selected_day {
+    background-color: #3f51b585;
   }
 
-  .booking-icon {
-    font-size: 20px;
-    width: 20px; height: 20px;
-    color: #d79001;
+  table {
+    border-spacing: 0 10px;
+    border-collapse: separate;
   }
-}
 
-mat-select {
-  @include styles.nonselect
-}
+  #record-params-table {
+    margin-left: 4.5rem;
 
-.mat-expansion-panel-body {
-  @extend .pb-0
-}
+    td:nth-child(2) {
+      @extend .ps-3
+    }
 
-#program_creation_additional_options {
-  input {
-    width: 60px;
-    padding: 0.2rem 0.75rem;
-    display: inline-block;
-    @extend .fs-5, .ms-2;
+    input {
+      width: 100px;
+    }
+  }
+
+  #program-desc-table {
+    td:nth-child(2) {
+      @extend .ps-3
+    }
+
+    td:nth-child(2) {
+      font-weight: 500;
+    }
+  }
+
+  .icon-row {
+    div {
+      @extend .d-flex, .align-items-center;
+
+      &:not(:first-child) {
+        @extend .ms-3
+      }
+    }
+
+    span {
+      @extend .ps-1, .fs-6
+    }
+
+    .paid-icon {
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+      color: #689F38;
+    }
+
+    .booking-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      color: #d79001;
+    }
+  }
+
+  mat-select {
+    @include styles.nonselect
+  }
+
+  .mat-expansion-panel-body {
+    @extend .pb-0
+  }
+
+  #program_creation_additional_options {
+    input {
+      width: 60px;
+      padding: 0.2rem 0.75rem;
+      display: inline-block;
+      @extend .fs-5, .ms-2;
+    }
   }
 }

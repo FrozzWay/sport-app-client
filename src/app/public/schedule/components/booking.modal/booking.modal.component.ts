@@ -29,8 +29,8 @@ export class BookingModalComponent {
   ngOnInit() {
     this.getClientList()
     this.clientControl.valueChanges.subscribe((client) => {
-      if (typeof client != 'string')
-        this.selected_client = client as ClientMinimum
+      if (typeof client != 'string' && client)
+        this.selected_client = client
       else this.selected_client = undefined
     })
   }
