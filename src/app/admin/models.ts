@@ -1,4 +1,4 @@
-import * as models from "src/ApiModule/model/models";
+import * as models from 'src/ApiModule/model/models';
 
 
 export interface ScheduleSchemas {

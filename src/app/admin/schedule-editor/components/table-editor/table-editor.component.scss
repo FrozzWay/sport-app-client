@@ -33,3 +33,18 @@ ul {
   margin-top: 10px;
   border-top: 1px solid #dedede;
 }
+
+@keyframes append-animate {
+	from {
+		transform: scale(0);
+		opacity: 0;
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
+
+.added {
+  animation: append-animate .3s linear;
+}

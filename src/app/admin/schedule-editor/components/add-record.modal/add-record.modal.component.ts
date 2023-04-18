@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import {
   CategoriesService, Category,
@@ -13,6 +13,7 @@ import IMask from 'imask';
 import { forkJoin, concatMap, Observable } from "rxjs";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatExpansionPanel } from "@angular/material/expansion";
+import { MatSnackBar } from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-record',
@@ -23,9 +24,12 @@ import { MatExpansionPanel } from "@angular/material/expansion";
 export class AddRecordModalComponent {
   @Input() schema!: Schema
   @ViewChild('program_creation_panel') program_creation_panel!: MatExpansionPanel;
+  @Output() onAddRecords: EventEmitter<SchemaRecord[]> = new EventEmitter();
   programCreation_pbar_shown: boolean = false
-  daytimeControl = new FormControl('');
-  durationControl = new FormControl('');
+  recordCreationForm = this.fb.group({
+    daytimeControl: [''],
+    durationControl: [''],
+  })
   programControl = new FormControl('');
   programCreationForm = this.fb.group({
     name: [''],
@@ -86,6 +90,7 @@ export class AddRecordModalComponent {
     private instructor_service: InstructorsService,
     private record_service: RecordsService,
     private schema_service: ScheduleSchemasService,
+    private snackBar: MatSnackBar,
     iconRegistry: MatIconRegistry,
   ) {
     iconRegistry.registerFontClassAlias('mat-icon-filled', 'material-font-filled mat-ligature-font');
@@ -95,8 +100,8 @@ export class AddRecordModalComponent {
     // querying
     utils.add_days(this.weekdays, false)
     this.program_service.getAllPrograms().subscribe((programs) => {
-        this.programs = programs;
-        this.program = (programs.length > 0) ? programs[0] : undefined
+      this.programs = programs;
+      this.program = (programs.length > 0) ? programs[0] : undefined
     })
     // autocomplete controls
     this.programControl.valueChanges.subscribe((program) => {
@@ -132,6 +137,7 @@ export class AddRecordModalComponent {
       this.toggleProgramCreation_after();
       return
     }
+    // else query data
     this.programCreation_pbar_shown = true
     this.category_service.getCategories().pipe(concatMap(value => {
       this.categories = value;
@@ -166,8 +172,8 @@ export class AddRecordModalComponent {
 
 
   isReadyToAdd() {
-    const daytime = this.daytimeControl.value
-    const duration = this.durationControl.value
+    const daytime = this.recordCreationForm.controls.daytimeControl.value
+    const duration = this.recordCreationForm.controls.durationControl.value
     const record_params = Boolean(daytime && duration && this.selected_weekdays.size > 0 && daytime.length == 5)
     if (!record_params) return false
     if (this.isSelectedProgram && !this.onCreateProgram) return true
@@ -184,6 +190,7 @@ export class AddRecordModalComponent {
     if (!this.onCreateProgram) {
       let records = this.add_records(this.program!)
       this.include_records_in_schema(records)
+      this.update_program_select(this.program!)
       return
     }
     let program: CreateProgram = {
@@ -200,10 +207,11 @@ export class AddRecordModalComponent {
       program['place_limit'] = place_limit ? +place_limit : undefined
       program['registration_opens'] = registration_opens ? +registration_opens : undefined
     }
-
     this.program_service.createProgram(program).subscribe(program => {
       let records = this.add_records(program)
       this.include_records_in_schema(records)
+      this.update_program_select(program)
+      this.toggleProgramCreation();
     })
   }
 
@@ -215,8 +223,8 @@ export class AddRecordModalComponent {
   add_record(day: number, program: Program): Observable<SchemaRecord> {
     const record: SchemaRecordCreate = {
       program: program,
-      day_time: this.daytimeControl.value!,
-      duration: +this.durationControl.value!,
+      day_time: this.recordCreationForm.controls.daytimeControl.value!,
+      duration: +this.recordCreationForm.controls.durationControl.value!,
       week_day: day,
     }
     return this.record_service.createRecord(record)
@@ -227,10 +235,27 @@ export class AddRecordModalComponent {
       this.added_records = records
       let records_id = records.map(record => record.id)
       return this.schema_service.includeRecordsInSchema(this.schema.id, records_id)
-    })).subscribe(
-      // snackbar message
-      // output event
-    )
+    })).subscribe(_ => {
+      this.snackBar.open('Записи расписания добавлены', 'Закрыть', {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 3000
+      });
+      this.onAddRecords.emit(this.added_records)
+    })
   }
 
+  update_program_select(program: Program) {
+    this.program = program;
+    if (!this.programs.includes(program))
+      this.programs.unshift(program)
+    this.isSelectedProgram = true;
+    this.programCreationForm.reset();
+    this.recordCreationForm.reset();
+    this.programControl.setValue(program as any);
+    [...this.selected_weekdays].forEach(day => {
+      this.selected_weekdays.delete(day)
+      document.getElementById(`day_${day}`)!.classList.remove('selected_day')
+    })
+  }
 }

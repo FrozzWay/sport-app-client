@@ -1,0 +1,25 @@
+<div id="program-desc" class="ms-3 opacity-50">
+  <table id="program-desc-table" style="border-spacing: 0 15px">
+    <tr><td>Категория:</td><td>{{program.category.name}}</td></tr>
+    <tr><td>Инструктор:</td><td>{{program.instructor.credentials}}</td></tr>
+    <tr><td>Помещение:</td><td>{{program.placement.name}}</td></tr>
+  </table>
+  <div class="icon-row d-flex align-items-center">
+    <div *ngIf="program.paid">
+      <mat-icon class="paid-icon" fontSet="mat-icon-filled" *ngIf="true">finance_chip</mat-icon>
+      <span>платное</span>
+    </div>
+    <div *ngIf="program.available_registration">
+      <mat-icon class="booking-icon" fontSet="mat-icon-filled" *ngIf="true">edit</mat-icon>
+      <span>по записи</span>
+    </div>
+    <div *ngIf="program.place_limit">
+      <mat-icon fontSet="mat-icon-filled" style="color: #3f9ab5">person</mat-icon>
+      <span>{{program.place_limit}} мест</span>
+    </div>
+    <div *ngIf="program.registration_opens">
+      <mat-icon style="color: #9f6b01;">more_time</mat-icon>
+      <span>За {{program.registration_opens}} дня</span>
+    </div>
+  </div>
+</div>

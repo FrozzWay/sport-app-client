@@ -18,6 +18,10 @@ import { IMaskDirective } from "angular-imask";
 import { MatExpansionModule } from "@angular/material/expansion";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { ProgramOverviewComponent } from './schedule-editor/components/program-overview/program-overview.component';
+import {
+  ViewRecordModalComponent
+} from './schedule-editor/components/view-record.modal/view-record.modal.component';
 
 
 @NgModule({
@@ -26,24 +30,27 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
     ScheduleEditorComponent,
     TableScheduleEditorComponent,
     AddRecordModalComponent,
+    ProgramOverviewComponent,
+    ViewRecordModalComponent,
   ],
-    imports: [
-        CommonModule,
-        AuthModule,
-        ApiModule,
-        MatIconModule,
-        ScheduleModule,
-        MatButtonModule,
-        MatSelectModule,
-        ReactiveFormsModule,
-        DirectivesModule,
-        MatInputModule,
-        ReusableModule,
-        IMaskDirective,
-        MatExpansionModule,
-        MatProgressBarModule,
-        MatCheckboxModule,
-        FormsModule
-    ],
+  imports: [
+    CommonModule,
+    AuthModule,
+    ApiModule,
+    MatIconModule,
+    ScheduleModule,
+    MatButtonModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    DirectivesModule,
+    MatInputModule,
+    ReusableModule,
+    IMaskDirective,
+    MatExpansionModule,
+    MatProgressBarModule,
+    MatCheckboxModule,
+    FormsModule
+  ],
 })
-export class AdminModule { }
+export class AdminModule {
+}

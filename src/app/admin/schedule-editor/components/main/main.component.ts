@@ -20,8 +20,10 @@ export class ScheduleEditorComponent {
     current_week: {},
     next_week: {}
   }
+  selected_schema?: Schema
   visible_schema!: Schema
   api_records: ApiRecords = {active: undefined, next_week: undefined}
+  applied_filters?: any
 
   constructor(
     public schema_service: ScheduleSchemasService,
@@ -33,7 +35,10 @@ export class ScheduleEditorComponent {
   ngOnInit() {
     document.body.classList.toggle('admin-theme');
     this.prepare_schedule()
-    this.schema_service.getSchemas().subscribe((schemas) => this.process_schemas(schemas))
+    if (!this.selected_schema)
+      this.schema_service.getSchemas().subscribe((schemas) => this.process_schemas(schemas))
+    else
+      this.query_records_schema(this.selected_schema)
   }
 
   process_schemas(schemas: Schema[]) {
@@ -45,19 +50,29 @@ export class ScheduleEditorComponent {
     this.schedule_schemas.active = active_schema
     this.schedule_schemas.next_week = next_week_schema
     this.visible_schema = active_schema
+    this.query_records_for_active_schedule()
+  }
 
-    this.schema_service.getRecordsWithinSchema(active_schema.id).subscribe((r) => {
+  query_records_for_active_schedule() {
+    this.schema_service.getRecordsWithinSchema(this.schedule_schemas.active!.id).subscribe((r) => {
       this.api_records.active = r
       this.filter_service.classify_for_filters(r)
       this.fill_with_records(r, this.schedule_records.current_week)
     })
-    if (next_week_schema)
-      this.schema_service.getRecordsWithinSchema(next_week_schema.id).subscribe((r) => {
+    if (this.schedule_schemas.next_week)
+      this.schema_service.getRecordsWithinSchema(this.schedule_schemas.next_week.id).subscribe((r) => {
         this.api_records.next_week = r
         this.filter_service.classify_for_filters(r)
         this.fill_with_records(r, this.schedule_records.next_week);
       })
+  }
 
+  query_records_schema(schema: Schema) {
+    this.schema_service.getRecordsWithinSchema(schema.id).subscribe((r) => {
+      this.api_records.active = r
+      this.filter_service.classify_for_filters(r)
+      this.fill_with_records(r, this.schedule_records.current_week)
+    })
   }
 
   prepare_schedule() {
@@ -80,6 +95,7 @@ export class ScheduleEditorComponent {
   }
 
   filter_schedule(filters: any) {
+    this.applied_filters = filters
     this.prepare_schedule()
     if (this.api_records.active) {
       const filtered = this.filter_service.filter_schedule(this.api_records.active, filters);
@@ -108,5 +124,48 @@ export class ScheduleEditorComponent {
       windowClass: 'windowClass',
     });
     modalRef.componentInstance.schema = this.visible_schema
+    modalRef.componentInstance.onAddRecords.subscribe((added_records: SchemaRecord[]) => this.onAddRecords(added_records))
   }
+
+  onAddRecords(added_records: SchemaRecord[]) {
+    if (this.visible_schema == this.schedule_schemas.next_week) {
+        this.api_records.next_week!.push(...added_records)
+        this.reRenderRecords(true)
+      }
+    else {
+      this.api_records.active!.push(...added_records)
+      this.reRenderRecords(false)
+    }
+  }
+
+  onRemoveRecord(record: SchemaRecord) {
+    if (this.visible_schema == this.schedule_schemas.next_week) {
+        this.api_records.next_week = this.api_records.next_week!.filter(r => r !== record)
+        this.reRenderRecords(true)
+      }
+    else {
+      this.api_records.active = this.api_records.active!.filter(r => r !== record)
+      this.reRenderRecords(false)
+    }
+  }
+
+  reRenderRecords(nw: boolean) {
+    if (nw) {
+      this.filter_service.classify_for_filters(this.api_records.next_week!)
+      if (this.applied_filters)
+        this.filter_schedule(this.applied_filters)
+      else
+        this.prepare_schedule()
+      this.fill_with_records(this.api_records.next_week!, this.schedule_records.next_week)
+    } else {
+      this.filter_service.classify_for_filters(this.api_records.active!)
+      if (this.applied_filters)
+        this.filter_schedule(this.applied_filters)
+      else {
+        this.prepare_schedule()
+        this.fill_with_records(this.api_records.active!, this.schedule_records.current_week)
+      }
+    }
+  }
+
 }

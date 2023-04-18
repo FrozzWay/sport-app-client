@@ -1,0 +1,16 @@
+<div class="modal-content">
+  <div class="modal-header fs-4">
+    <h1 class="modal-title fs-4">Запись расписания</h1>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
+  </div>
+  <div class="modal-body fs-5">
+    <div class="ms-3">
+      <p class="mb-1">{{begins | date:'EEEE':'':'ru' | titlecase}}</p>
+      <p class="mb-0">{{begins | date:'HH:mm'}} - {{ends | date:'HH:mm'}}</p>
+    </div>
+    <app-program-overview [program]="record.program"></app-program-overview>
+  </div>
+  <div class="modal-footer fs-5">
+    <button mat-raised-button color="warn" (click)="removeRecord()">Удалить запись</button>
+  </div>
+</div>

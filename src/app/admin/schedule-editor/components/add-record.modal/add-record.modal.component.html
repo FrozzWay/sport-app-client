@@ -16,11 +16,11 @@
       <table class="py-3" id="record-params-table">
         <tr>
           <td><label for="begin-time-input">Начало занятия:</label></td>
-          <td><input placeholder="10:00" id="begin-time-input" [formControl]="daytimeControl" [imask]="daytime_mask" type="text" class="text-center me-5 form-control fs-5"></td>
+          <td><input placeholder="10:00" id="begin-time-input" [formControl]="recordCreationForm.controls.daytimeControl" [imask]="daytime_mask" type="text" class="text-center me-5 form-control fs-5"></td>
         </tr>
         <tr class="mt-2">
           <td><label for="duration-input">Длительность:</label></td>
-          <td><input placeholder="60" id="duration-input" [formControl]="durationControl" [imask]="duration_mask" type="text" class="text-center form-control fs-5"></td>
+          <td><input placeholder="60" id="duration-input" [formControl]="recordCreationForm.controls.durationControl" [imask]="duration_mask" type="text" class="text-center form-control fs-5"></td>
         </tr>
       </table>
     </div>
@@ -28,31 +28,7 @@
       <app-autocomplete class="d-inline-block" placeholder="Программа" [formControl]="programControl"
                         [options]="programs" display_property="name" [disabled]="onCreateProgram"></app-autocomplete>
       <button (click)="toggleProgramCreation()" mat-mini-fab color="primary" class="ms-4"><mat-icon>{{(!onCreateProgram) ? 'add': 'remove'}}</mat-icon></button>
-      <div id="program-desc" class="ms-3 opacity-50" *ngIf="program && !onCreateProgram">
-        <table id="program-desc-table" style="border-spacing: 0 15px">
-          <tr><td>Категория:</td><td>{{program.category.name}}</td></tr>
-          <tr><td>Инструктор:</td><td>{{program.instructor.credentials}}</td></tr>
-          <tr><td>Помещение:</td><td>{{program.placement.name}}</td></tr>
-        </table>
-        <div class="icon-row d-flex align-items-center">
-          <div *ngIf="program.paid">
-            <mat-icon class="paid-icon" fontSet="mat-icon-filled" *ngIf="true">finance_chip</mat-icon>
-            <span>платное</span>
-          </div>
-          <div *ngIf="program.available_registration">
-            <mat-icon class="booking-icon" fontSet="mat-icon-filled" *ngIf="true">edit</mat-icon>
-            <span>по записи</span>
-          </div>
-          <div *ngIf="program.place_limit">
-            <mat-icon fontSet="mat-icon-filled" style="color: #3f9ab5">person</mat-icon>
-            <span>{{program.place_limit}} мест</span>
-          </div>
-          <div *ngIf="program.registration_opens">
-            <mat-icon style="color: #9f6b01;">more_time</mat-icon>
-            <span>За {{program.registration_opens}} дня</span>
-          </div>
-        </div>
-      </div>
+      <app-program-overview [program]="program" *ngIf="program && !onCreateProgram"></app-program-overview>
       <mat-progress-bar *ngIf="programCreation_pbar_shown" mode="query" class="w-75"></mat-progress-bar>
     </div>
     <mat-expansion-panel #program_creation_panel style="box-shadow: none">

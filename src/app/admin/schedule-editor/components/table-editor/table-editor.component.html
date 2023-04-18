@@ -16,10 +16,10 @@
   <ng-container *ngFor="let period of periods | keyvalue">
     <tr *ngIf="period.value.filled">
       <td>{{period.key | number:'2.0-0'}}:00</td>
-      <td *ngFor="let date of period.value.days | keyvalue">
+      <td *ngFor="let day of period.value.days | keyvalue">
         <ul>
-          <ng-container *ngFor="let record of date.value">
-            <a href="javascript:void(0)"  (click)="open_modal(record)">
+          <ng-container *ngFor="let record of day.value">
+            <a href="javascript:void(0)"  (click)="view_record(record)">
               <app-sched-elem class="qwe d-block" [record]="record"></app-sched-elem>
             </a>
           </ng-container>
