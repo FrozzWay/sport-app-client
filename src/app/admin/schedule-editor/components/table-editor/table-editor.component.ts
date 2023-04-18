@@ -16,6 +16,7 @@ export class TableScheduleEditorComponent {
   @Input() next_week: boolean = false
   @Input() schema?: Schema
   @Output() onRemoveRecord: EventEmitter<any> = new EventEmitter();
+  @Output() onCreateNextWeekSchema: EventEmitter<any> = new EventEmitter();
   dates: Date[] = []
 
   constructor(private modalService: NgbModal) {
@@ -37,7 +38,7 @@ export class TableScheduleEditorComponent {
     })
   }
 
-  today() {
-    return utils.today()
+  create_next_week() {
+    this.onCreateNextWeekSchema.emit()
   }
 }

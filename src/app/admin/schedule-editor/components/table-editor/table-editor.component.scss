@@ -29,9 +29,8 @@ ul {
 .qwe:nth-child(even) {
   margin-top: 3px;
 }
-.sched-t {
-  margin-top: 10px;
-  border-top: 1px solid #dedede;
+#dates-table-header {
+  border-bottom: 1px solid #dedede;
 }
 
 @keyframes append-animate {
@@ -47,4 +46,16 @@ ul {
 
 .added {
   animation: append-animate .3s linear;
+}
+
+#schedule_table {
+  display: block;
+  overflow-y: scroll;
+  height: calc(100vh - 60px);
+}
+#schedule_table::-webkit-scrollbar {
+  width: 10px;
+}
+#schedule_table::-webkit-scrollbar-thumb {
+  background-color: #c9c8c8;
 }

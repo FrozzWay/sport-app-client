@@ -1,17 +1,17 @@
-<table>
+<table id="dates-table-header">
   <tbody>
   <tr>
     <th></th>
     <th *ngFor="let date of dates">
       <span class="fs-5">{{date | date:'E':'':'ru'}}</span><br>
-      <span style="color: grey; text-transform: none">{{date| date:'d MMMM':'':'ru'}}</span>
+      <span style="color: grey; text-transform: none; padding-bottom: 10px; display: block">{{date| date:'d MMMM':'':'ru'}}</span>
     </th>
     <th></th>
   </tr>
   </tbody>
 </table>
 
-<table class="sched-t" *ngIf="schema; else MissingNextWeekSchema">
+<table id="schedule_table" *ngIf="schema; else MissingNextWeekSchema">
   <tbody>
   <ng-container *ngFor="let period of periods | keyvalue">
     <tr *ngIf="period.value.filled">
@@ -33,5 +33,10 @@
 
 
 <ng-template #MissingNextWeekSchema>
-  <h1>Message</h1>
+  <div class="d-flex align-items-center" id="missingNwSchema-message">
+    <div class="m-auto">
+      <h1 class="display-6 fs-1 d-block m-auto text-center" style="width: 600px">Расписание следующей недели формируется на основе текущей недели</h1>
+      <button (click)="create_next_week()" class="m-auto fs-5 d-block mt-3" mat-raised-button color="primary">Создать схему</button>
+    </div>
+  </div>
 </ng-template>

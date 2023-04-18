@@ -37,7 +37,7 @@
         <mat-form-field appearance="fill" class="d-block">
           <input matInput [formControl]="programCreationForm.controls.name" placeholder="Название" type="text" required>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="" style="width: 200px">
+        <mat-form-field appearance="fill" class="" style="width: 195px">
           <mat-label>Категория</mat-label>
           <mat-select [formControl]="programCreationForm.controls.category" required>
             <mat-option *ngFor="let category of categories" [value]="category.name">

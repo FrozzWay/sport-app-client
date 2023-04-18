@@ -41,6 +41,11 @@ export class ScheduleEditorComponent {
       this.query_records_schema(this.selected_schema)
   }
 
+  ngAfterViewInit() {
+    let pos = document.getElementById('dates-table-header')!.getBoundingClientRect().bottom * 2
+    document.getElementById('missingNwSchema-message')!.setAttribute('style', `height:calc(100vh - ${pos}px)`)
+  }
+
   process_schemas(schemas: Schema[]) {
     const active_schema = schemas.find((element) => element.active)!
     let next_week_schema = schemas.find((element) => element.to_be_active_from)
@@ -168,4 +173,7 @@ export class ScheduleEditorComponent {
     }
   }
 
+  create_next_week() {
+
+  }
 }

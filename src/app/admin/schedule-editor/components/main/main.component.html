@@ -1,5 +1,5 @@
 <br>
-<div style="max-width: 1300px; min-width: 1100px; margin: auto">
+<div style="max-width: 1300px; min-width: 1100px; margin: auto" class="px-xl-3 px-xxl-0">
   <app-filter-panel (onFilterSchedule)="filter_schedule($event)" [filters]="filter_service.filters" [hideCheckBoxes]="true">
   <div class="d-inline-flex justify-content-end align-items-center mb-3" style="width: 29%">
     <div class="me-2 w-50 text-center fs-5">
@@ -15,7 +15,7 @@
         <app-shed-editor-table class="d-block w-100" (onRemoveRecord)="onRemoveRecord($event)" [periods]="schedule_records.current_week" [schema]="schedule_schemas.active"></app-shed-editor-table>
       </div>
       <div class="carousel-item">
-        <app-shed-editor-table class="d-block w-100" (onRemoveRecord)="onRemoveRecord($event)" [periods]="schedule_records.next_week" [next_week]="true" [schema]="schedule_schemas.next_week"></app-shed-editor-table>
+        <app-shed-editor-table class="d-block w-100" (onCreateNextWeekSchema)="create_next_week()" (onRemoveRecord)="onRemoveRecord($event)" [periods]="schedule_records.next_week" [next_week]="true" [schema]="schedule_schemas.next_week"></app-shed-editor-table>
       </div>
     </div>
     <button class="sl-b d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"

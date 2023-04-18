@@ -5,8 +5,9 @@
   </div>
   <div class="modal-body fs-5">
     <div class="ms-3">
-      <p class="mb-1">{{begins | date:'EEEE':'':'ru' | titlecase}}</p>
-      <p class="mb-0">{{begins | date:'HH:mm'}} - {{ends | date:'HH:mm'}}</p>
+      <p class="mb-1 fst-italic">{{begins | date:'EEEE':'':'ru' | titlecase}},
+      {{begins | date:'HH:mm'}} - {{ends | date:'HH:mm'}}
+      </p>
     </div>
     <app-program-overview [program]="record.program"></app-program-overview>
   </div>
