@@ -1,0 +1,14 @@
+<div class="modal-content">
+  <div class="modal-header fs-4">
+    <h1 class="modal-title">Категории</h1>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
+  </div>
+  <div class="modal-body fs-5">
+    <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span>{{active_schema.name}}</span>
+        <mat-icon style="color: green">check_circle</mat-icon>
+      </li>
+    </ul>
+  </div>
+</div>

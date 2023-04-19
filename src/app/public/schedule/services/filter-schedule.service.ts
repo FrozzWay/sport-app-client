@@ -6,13 +6,17 @@ import { ScheduleRecord, SchemaRecord } from "src/ApiModule";
   providedIn: 'root'
 })
 export class FilterScheduleService {
-  filters: Filters = {
+  filters!: Filters
+  constructor() { this.cleanup_filters() }
+
+  cleanup_filters() {
+    this.filters = {
       programs: new Map<number, string>(),
       instructors: new Map<number, string>(),
       categories: new Set<string>(),
       placements: new Set<string>()
     }
-  constructor() { }
+  }
 
   classify_for_filters(collection: ScheduleRecord[] | SchemaRecord[]) {
     collection.forEach((record) => {

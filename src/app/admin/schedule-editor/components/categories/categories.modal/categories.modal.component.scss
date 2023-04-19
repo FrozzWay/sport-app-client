@@ -1,0 +1,16 @@
+li {
+  border: none;
+  border-bottom: 1px solid;
+  border-color: whitesmoke;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.delete-category {
+  cursor: pointer;
+  &:hover {
+    background-color: #ad3c3c0d;
+    transition: all .1s;
+  }
+}

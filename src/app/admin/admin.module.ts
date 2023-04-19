@@ -22,6 +22,11 @@ import { ProgramOverviewComponent } from './schedule-editor/components/program-o
 import {
   ViewRecordModalComponent
 } from './schedule-editor/components/view-record.modal/view-record.modal.component';
+import { CategoriesModalComponent } from './schedule-editor/components/categories/categories.modal/categories.modal.component';
+import { SchemasModalComponent } from './schedule-editor/components/schemas.modal/schemas.modal.component';
+import { CategoryViewModalComponent } from './schedule-editor/components/categories/category-view.modal/category-view.modal.component.';
+import { PlacementsModalComponent } from './schedule-editor/components/placements/placements.modal/placements.modal.component';
+import { PlacementViewModalComponent } from './schedule-editor/components/placements/placement-view.modal/placement-view.modal.component';
 
 
 @NgModule({
@@ -32,6 +37,11 @@ import {
     AddRecordModalComponent,
     ProgramOverviewComponent,
     ViewRecordModalComponent,
+    CategoriesModalComponent,
+    SchemasModalComponent,
+    CategoryViewModalComponent,
+    PlacementsModalComponent,
+    PlacementViewModalComponent,
   ],
   imports: [
     CommonModule,

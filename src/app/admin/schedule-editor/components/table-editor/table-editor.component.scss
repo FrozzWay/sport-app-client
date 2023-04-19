@@ -1,3 +1,5 @@
+@use 'src/styles';
+
 th:first-child, th:last-child, td:first-child, td:last-child {
   width: 55px;
 }
@@ -15,6 +17,7 @@ th {
 table {
   width: 100%;
   table-layout: fixed;
+  @include styles.nonselect
 }
 th:first-child {
   border-left: none;
@@ -49,9 +52,9 @@ ul {
 }
 
 #schedule_table {
-  display: block;
-  overflow-y: scroll;
-  height: calc(100vh - 60px);
+  //display: block;
+  //overflow-y: scroll;
+  //height: calc(100vh - 60px);
 }
 #schedule_table::-webkit-scrollbar {
   width: 10px;

@@ -1,5 +1,19 @@
 <br>
 <div style="max-width: 1300px; min-width: 1100px; margin: auto" class="px-xl-3 px-xxl-0">
+  <ul class="list-inline fs-5" id="nav-list">
+    <li class="list-inline-item">
+      <button mat-button (click)="category_modal()">Категории</button>
+    </li>
+    <li class="list-inline-item">
+      <button mat-button (click)="placement_modal()">Помещения</button>
+    </li>
+    <li class="list-inline-item">
+      <button mat-button (click)="category_modal()">Инструктора</button>
+    </li>
+    <li class="list-inline-item">
+      <button mat-button (click)="category_modal()">Клиенты</button>
+    </li>
+  </ul>
   <app-filter-panel (onFilterSchedule)="filter_schedule($event)" [filters]="filter_service.filters" [hideCheckBoxes]="true">
   <div class="d-inline-flex justify-content-end align-items-center mb-3" style="width: 29%">
     <div class="me-2 w-50 text-center fs-5">

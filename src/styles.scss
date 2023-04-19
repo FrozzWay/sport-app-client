@@ -64,6 +64,17 @@ a {
   z-index: 10000!important;
 }
 
+body {
+  overflow: scroll;
+}
+
+.btn-close {
+  &:focus {
+    --bs-btn-close-focus-shadow: none;
+    //opacity: .5;
+  }
+}
+
 @mixin nonselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
-import { RecordsService, ScheduleSchemasService, Schema, SchemaRecord } from "src/ApiModule";
+import { Component, EventEmitter } from '@angular/core';
+import { Category, Placement, RecordsService, ScheduleSchemasService, Schema, SchemaRecord } from "src/ApiModule";
 import { concatMap, of, from, zip } from "rxjs";
 import * as utils from "src/time-utils";
 import { SchemaRecords, ScheduleSchemas, periods_SchemaRecord, ApiRecords } from "../../../models";
 import { FilterScheduleService } from "src/app/public/schedule/services/filter-schedule.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AddRecordModalComponent } from "../add-record.modal/add-record.modal.component";
+import { CategoriesModalComponent } from "../categories/categories.modal/categories.modal.component";
+import { PlacementsModalComponent } from "../placements/placements.modal/placements.modal.component";
 
 
 @Component({
@@ -24,6 +26,7 @@ export class ScheduleEditorComponent {
   visible_schema!: Schema
   api_records: ApiRecords = {active: undefined, next_week: undefined}
   applied_filters?: any
+  onQueriedRecords = new EventEmitter();
 
   constructor(
     public schema_service: ScheduleSchemasService,
@@ -59,17 +62,20 @@ export class ScheduleEditorComponent {
   }
 
   query_records_for_active_schedule() {
-    this.schema_service.getRecordsWithinSchema(this.schedule_schemas.active!.id).subscribe((r) => {
+    this.schema_service.getRecordsWithinSchema(this.schedule_schemas.active!.id).pipe(concatMap(r => {
       this.api_records.active = r
       this.filter_service.classify_for_filters(r)
       this.fill_with_records(r, this.schedule_records.current_week)
-    })
-    if (this.schedule_schemas.next_week)
-      this.schema_service.getRecordsWithinSchema(this.schedule_schemas.next_week.id).subscribe((r) => {
-        this.api_records.next_week = r
-        this.filter_service.classify_for_filters(r)
-        this.fill_with_records(r, this.schedule_records.next_week);
-      })
+      return of(1)
+    })).pipe(concatMap(_ => {
+      if (this.schedule_schemas.next_week)
+        this.schema_service.getRecordsWithinSchema(this.schedule_schemas.next_week.id).subscribe(r => {
+          this.api_records.next_week = r
+          this.filter_service.classify_for_filters(r)
+          this.fill_with_records(r, this.schedule_records.next_week);
+        });
+      return of(1);
+    })).subscribe(_ => this.onQueriedRecords.emit())
   }
 
   query_records_schema(schema: Schema) {
@@ -173,7 +179,37 @@ export class ScheduleEditorComponent {
     }
   }
 
+  reInit() {
+    this.prepare_schedule()
+    if (this.selected_schema)
+      this.query_records_schema(this.selected_schema)
+    else
+      this.query_records_for_active_schedule()
+
+    this.onQueriedRecords.subscribe(_ => {
+      this.reRenderRecords(false)
+      if (this.schedule_schemas.next_week)
+        this.reRenderRecords(true)
+    })
+  }
+
   create_next_week() {
 
+  }
+
+  category_modal() {
+    const modalRef = this.modalService.open(CategoriesModalComponent)
+    modalRef.componentInstance.onUpdate.subscribe((category: Category)=> {
+      this.filter_service.cleanup_filters()
+      this.reInit();
+    })
+  }
+
+  placement_modal() {
+    const modalRef = this.modalService.open(PlacementsModalComponent)
+    modalRef.componentInstance.onUpdate.subscribe((placement: Placement)=> {
+      this.filter_service.cleanup_filters()
+      this.reInit()
+    })
   }
 }
