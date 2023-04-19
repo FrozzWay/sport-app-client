@@ -17,7 +17,7 @@
       cursor: pointer;
     }
 
-    @include styles.nonselect;
+    @include styles.no-select;
   }
 
   .selected_day {
@@ -80,7 +80,7 @@
   }
 
   mat-select {
-    @include styles.nonselect
+    @include styles.no-select
   }
 
   .mat-expansion-panel-body {

@@ -17,7 +17,7 @@ th {
 table {
   width: 100%;
   table-layout: fixed;
-  @include styles.nonselect
+  @include styles.no-select
 }
 th:first-child {
   border-left: none;

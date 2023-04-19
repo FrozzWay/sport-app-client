@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiModule, Configuration } from "../../ApiModule";
 import { AuthModule } from "../auth/auth.module";
-import { InstructorComponent } from './components/instructor/instructor.component';
 import { ScheduleEditorComponent } from './schedule-editor/components/main/main.component';
 import { MatIconModule } from "@angular/material/icon";
 import { TableScheduleEditorComponent } from './schedule-editor/components/table-editor/table-editor.component';
@@ -27,11 +26,12 @@ import { SchemasModalComponent } from './schedule-editor/components/schemas.moda
 import { CategoryViewModalComponent } from './schedule-editor/components/categories/category-view.modal/category-view.modal.component.';
 import { PlacementsModalComponent } from './schedule-editor/components/placements/placements.modal/placements.modal.component';
 import { PlacementViewModalComponent } from './schedule-editor/components/placements/placement-view.modal/placement-view.modal.component';
+import { InstructorModalComponent } from './schedule-editor/components/instructors/instructor.modal/instructor.modal.component';
+import { InstructorViewModalComponent } from './schedule-editor/components/instructors/instructor-view.modal/instructor-view.modal.component';
 
 
 @NgModule({
   declarations: [
-    InstructorComponent,
     ScheduleEditorComponent,
     TableScheduleEditorComponent,
     AddRecordModalComponent,
@@ -42,6 +42,8 @@ import { PlacementViewModalComponent } from './schedule-editor/components/placem
     CategoryViewModalComponent,
     PlacementsModalComponent,
     PlacementViewModalComponent,
+    InstructorModalComponent,
+    InstructorViewModalComponent,
   ],
   imports: [
     CommonModule,

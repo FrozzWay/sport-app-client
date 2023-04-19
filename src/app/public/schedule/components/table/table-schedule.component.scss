@@ -1,3 +1,5 @@
+@use 'src/styles';
+
 th:first-child, th:last-child, td:first-child, td:last-child {
   width: 55px;
 }
@@ -15,6 +17,7 @@ th {
 table {
   width: 100%;
   table-layout: fixed;
+  @include styles.no-select
 }
 th:first-child {
   border-left: none;

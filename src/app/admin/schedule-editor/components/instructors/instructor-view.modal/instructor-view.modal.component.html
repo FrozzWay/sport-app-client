@@ -1,0 +1,17 @@
+<div class="modal-content">
+  <div class="modal-body fs-5 pb-0">
+    <span class="fs-4 fw-medium d-block mb-3">{{msg}}</span>
+    <ng-container *ngIf="instructor">
+      <img [src]="photo_url" *ngIf="photo_url" alt="{{instructor.credentials}}">
+      <img class="photo_replacer" [src]="'assets/coach.png'" *ngIf="!photo_url" alt="{{instructor.credentials}}">
+    </ng-container>
+    <p class="mt-1 mb-1">Имя:</p>
+    <input type="text" [formControl]="credentials" (keyup.enter)="save()" class="form-control fs-5 d-block">
+    <p class="mt-1 mb-1">Номер телефона:</p>
+    <input type="text" [imask]="phone_mask" [formControl]="phone" (keyup.enter)="save()" class="form-control fs-5 d-block">
+  </div>
+  <div class="modal-footer border-0 pt-0 mt-1">
+    <button class="btn fs-5" (click)="activeDialog.dismiss()">Назад</button>
+    <button mat-raised-button color="primary" class="fs-5" (click)="save()">Сохранить</button>
+  </div>
+</div>

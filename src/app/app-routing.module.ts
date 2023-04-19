@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router'; // CLI imports router
 
-import { InstructorComponent } from "./admin/components/instructor/instructor.component"
 import { WidgetComponent } from "./public/schedule/components/widget/widget.component";
 import { LoginComponent } from "./auth/components/login/login.component";
 
@@ -14,7 +13,6 @@ const routes: Routes = [
     path: 'admin',
     canActivateChild: [authGuard],
     children: [
-      { path: 'instructors', component: InstructorComponent },
       { path: 'schedule/edit', component: ScheduleEditorComponent}
     ]
   },

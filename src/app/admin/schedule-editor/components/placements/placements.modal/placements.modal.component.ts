@@ -3,7 +3,6 @@ import { Placement, PlacementsService } from "src/ApiModule";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { PlacementViewModalComponent } from "../placement-view.modal/placement-view.modal.component";
-import { placements } from "@popperjs/core";
 import { HttpErrorResponse } from "@angular/common/http";
 
 @Component({
@@ -12,7 +11,7 @@ import { HttpErrorResponse } from "@angular/common/http";
   styleUrls: ['../../categories/categories.modal/categories.modal.component.scss']
 })
 export class PlacementsModalComponent {
-  @Input() placements!: Placement[]
+  placements!: Placement[]
   @Output() onUpdate: EventEmitter<any> = new EventEmitter();
 
   constructor(
@@ -40,7 +39,7 @@ export class PlacementsModalComponent {
           this.snackBar.open('Сохранено', 'Закрыть', { duration: 3000, verticalPosition: 'top' })
           const i = this.placements.indexOf(placement)
           this.placements[i] = result;
-          this.onUpdate.emit(placement)
+          this.onUpdate.emit()
         })
     })
   }
@@ -64,10 +63,10 @@ export class PlacementsModalComponent {
       next: () => {
         this.snackBar.open('Помещение удалено', 'Закрыть', { duration: 3000, verticalPosition: 'top' });
         this.placements = this.placements.filter(p => p != placement)
-        this.onUpdate.emit(placement)
+        this.onUpdate.emit()
       },
       error: (error: HttpErrorResponse) => {
-        this.snackBar.open(error.error.detail, 'Закрыть', {
+        this.snackBar.open(`Ошибка: ${error.error.detail}`, 'Закрыть', {
           duration: 3000,
           verticalPosition: 'top'
         })

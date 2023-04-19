@@ -1,13 +1,13 @@
 import { Component, EventEmitter } from '@angular/core';
 import { Category, Placement, RecordsService, ScheduleSchemasService, Schema, SchemaRecord } from "src/ApiModule";
-import { concatMap, of, from, zip } from "rxjs";
-import * as utils from "src/time-utils";
+import { concatMap, of } from "rxjs";
 import { SchemaRecords, ScheduleSchemas, periods_SchemaRecord, ApiRecords } from "../../../models";
 import { FilterScheduleService } from "src/app/public/schedule/services/filter-schedule.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AddRecordModalComponent } from "../add-record.modal/add-record.modal.component";
 import { CategoriesModalComponent } from "../categories/categories.modal/categories.modal.component";
 import { PlacementsModalComponent } from "../placements/placements.modal/placements.modal.component";
+import { InstructorModalComponent } from "../instructors/instructor.modal/instructor.modal.component";
 
 
 @Component({
@@ -198,7 +198,9 @@ export class ScheduleEditorComponent {
   }
 
   category_modal() {
-    const modalRef = this.modalService.open(CategoriesModalComponent)
+    const modalRef = this.modalService.open(CategoriesModalComponent, {
+      scrollable: true
+    })
     modalRef.componentInstance.onUpdate.subscribe((category: Category)=> {
       this.filter_service.cleanup_filters()
       this.reInit();
@@ -206,8 +208,20 @@ export class ScheduleEditorComponent {
   }
 
   placement_modal() {
-    const modalRef = this.modalService.open(PlacementsModalComponent)
+    const modalRef = this.modalService.open(PlacementsModalComponent, {
+      scrollable: true
+    })
     modalRef.componentInstance.onUpdate.subscribe((placement: Placement)=> {
+      this.filter_service.cleanup_filters()
+      this.reInit()
+    })
+  }
+
+  instructor_modal() {
+    const modalRef = this.modalService.open(InstructorModalComponent, {
+      scrollable: true
+    })
+    modalRef.componentInstance.onUpdate.subscribe(() => {
       this.filter_service.cleanup_filters()
       this.reInit()
     })

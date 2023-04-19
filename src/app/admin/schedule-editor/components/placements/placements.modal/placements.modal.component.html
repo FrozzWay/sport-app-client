@@ -8,7 +8,7 @@
       <ng-container *ngFor="let placement of placements">
         <div class="d-flex justify-content-between align-items-center">
           <li rippleOnHover [persistent]="true" (click)="edit_placement(placement)"
-              class="list-group-item d-flex w-100 me-2 justify-content-between align-items-center">
+              class="list-group-item d-flex w-100 me-2 justify-content-between align-items-center no-select">
             <span>{{placement.name}}</span>
           </li>
           <div class="position-relative delete-category rounded-circle" (click)="delete_placement(placement)">

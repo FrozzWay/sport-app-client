@@ -65,7 +65,7 @@ export class CategoriesModalComponent {
         this.onUpdate.emit(category)
       },
       error: (error: HttpErrorResponse) => {
-        this.snackBar.open(error.error.detail, 'Закрыть', {
+        this.snackBar.open(`Ошибка: ${error.error.detail}`, 'Закрыть', {
           duration: 3000,
           verticalPosition: 'top'
         })
