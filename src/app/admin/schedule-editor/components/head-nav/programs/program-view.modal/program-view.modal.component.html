@@ -1,10 +1,10 @@
 <div class="modal-content">
   <div class="modal-body fs-5 pb-0">
-    <span class="fs-4 fw-medium d-block mb-3">Категория</span>
+    <span class="fs-4 fw-medium d-block mb-3">Программа</span>
     <app-program-overview [program]="program"></app-program-overview>
   </div>
   <div class="modal-footer border-0 pt-2 mt-3">
     <button class="btn fs-5" (click)="activeDialog.dismiss()">Назад</button>
-    <button mat-raised-button color="warn" class="fs-5" (click)="delete()">Удалить</button>
+    <button mat-raised-button color="warn" class="fs-5" (click)="delete()" *ngIf="!hideAction">Удалить</button>
   </div>
 </div>

@@ -4,6 +4,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ProgramViewModalComponent } from "../program-view.modal/program-view.modal.component";
 import { HttpErrorResponse } from "@angular/common/http";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-program.modal-delete',
@@ -12,6 +13,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 })
 export class ProgramModalComponent {
   programs!: Program[]
+  filtered_programs!: Program[]
+  filterControl = new FormControl();
   @Output() onDelete = new EventEmitter();
 
   constructor(
@@ -22,7 +25,20 @@ export class ProgramModalComponent {
   ) {}
 
   ngOnInit() {
-    this.programs_service.getAllPrograms().subscribe((p) => this.programs = p)
+    this.programs_service.getAllPrograms().subscribe((p) =>{
+      this.programs = p
+      this.filtered_programs = p
+    })
+    this.filterControl.valueChanges.subscribe(v => this._filter(v))
+  }
+
+  _filter(value: any) {
+    if (typeof value != 'string') return
+    const filterValue = value.toLowerCase();
+    this.filtered_programs = this.programs.filter(program =>
+      program.name.toLowerCase().includes(filterValue) ||
+      program.instructor.credentials.toLowerCase().includes(filterValue)
+    )
   }
 
   view_program(program: Program) {

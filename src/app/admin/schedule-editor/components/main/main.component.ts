@@ -11,6 +11,9 @@ import { InstructorModalComponent } from "../head-nav/instructors/instructor.mod
 import { ClientModalComponent } from "../head-nav/clients/client.modal/client.modal.component";
 import { ProgramModalComponent } from "../head-nav/programs/program.modal/program.modal.component";
 import { StaffModalComponent } from "../head-nav/staff/staff.modal/staff.modal.component";
+import {
+  ProgramReportMakerModalComponent
+} from "../head-nav/reports/program-report-maker.modal/program-report-maker.modal.component";
 
 
 @Component({
@@ -248,6 +251,12 @@ export class ScheduleEditorComponent {
 
   staff_modal() {
     this.modalService.open(StaffModalComponent, {
+      scrollable: true
+    })
+  }
+
+  report_program_modal() {
+    this.modalService.open(ProgramReportMakerModalComponent, {
       scrollable: true
     })
   }

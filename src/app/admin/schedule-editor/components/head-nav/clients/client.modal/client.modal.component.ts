@@ -4,6 +4,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ClientViewModalComponent } from "../client-view.modal/client-view.modal.component";
 import { HttpErrorResponse } from "@angular/common/http";
+import { FormControl } from "@angular/forms";
 
 
 @Component({
@@ -13,6 +14,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 })
 export class ClientModalComponent {
   clients!: Client[]
+  filtered_clients!: Client[]
+  filterControl = new FormControl('')
 
   constructor(
     private client_service: ClientsService,
@@ -22,7 +25,20 @@ export class ClientModalComponent {
   ) {}
 
   ngOnInit() {
-    this.client_service.getClients().subscribe((c: any) => this.clients = c)
+    this.client_service.getClients().subscribe((c: any) => {
+      this.clients = c
+      this.filtered_clients = c
+    })
+    this.filterControl.valueChanges.subscribe(v => this._filter(v))
+  }
+
+  _filter(value: any) {
+    if (typeof value != 'string') return
+    const filterValue = value.toLowerCase();
+    this.filtered_clients = this.clients.filter(client =>
+      client.credentials.toLowerCase().includes(filterValue) ||
+      client.phone.toLowerCase().includes(filterValue)
+    )
   }
 
   edit_client(client: Client) {

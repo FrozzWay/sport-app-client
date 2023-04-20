@@ -12,6 +12,7 @@ import {
 })
 export class ProgramViewModalComponent {
   @Input() program!: Program
+  @Input() hideAction?: boolean
 
   constructor(public activeDialog: NgbActiveModal, private modalService: NgbModal) {}
 

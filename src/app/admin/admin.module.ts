@@ -34,6 +34,9 @@ import { ProgramModalComponent } from './schedule-editor/components/head-nav/pro
 import { ProgramViewModalComponent } from './schedule-editor/components/head-nav/programs/program-view.modal/program-view.modal.component';
 import { StaffModalComponent } from './schedule-editor/components/head-nav/staff/staff.modal/staff.modal.component';
 import { StaffViewModalComponent } from './schedule-editor/components/head-nav/staff/staff-view.modal/staff-view.modal.component';
+import { MatMenuModule } from "@angular/material/menu";
+import { ProgramReportMakerModalComponent } from './schedule-editor/components/head-nav/reports/program-report-maker.modal/program-report-maker.modal.component';
+import { MatRadioModule } from "@angular/material/radio";
 
 
 @NgModule({
@@ -56,6 +59,7 @@ import { StaffViewModalComponent } from './schedule-editor/components/head-nav/s
     ProgramViewModalComponent,
     StaffModalComponent,
     StaffViewModalComponent,
+    ProgramReportMakerModalComponent,
   ],
   imports: [
     CommonModule,
@@ -73,7 +77,9 @@ import { StaffViewModalComponent } from './schedule-editor/components/head-nav/s
     MatExpansionModule,
     MatProgressBarModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MatMenuModule,
+    MatRadioModule
   ],
 })
 export class AdminModule {

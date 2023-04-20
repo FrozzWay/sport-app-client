@@ -4,6 +4,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { InstructorViewModalComponent } from "../instructor-view.modal/instructor-view.modal.component";
 import { HttpErrorResponse } from "@angular/common/http";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-instructor.modal-element',
@@ -12,6 +13,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 })
 export class InstructorModalComponent {
   instructors!: Instructor[]
+  filtered_instructors!: Instructor[]
+  filterControl = new FormControl('');
   @Output() onUpdate = new EventEmitter();
   instructor_to_upload?: Instructor
 
@@ -23,7 +26,20 @@ export class InstructorModalComponent {
   ) {}
 
   ngOnInit() {
-    this.instructor_service.getInstructors().subscribe(i => this.instructors = i)
+    this.instructor_service.getInstructors().subscribe(i => {
+      this.instructors = i
+      this.filtered_instructors = i
+    })
+    this.filterControl.valueChanges.subscribe(v => this._filter(v))
+  }
+
+  _filter(value: any) {
+    if (typeof value != 'string') return
+    const filterValue = value.toLowerCase();
+    this.filtered_instructors = this.instructors.filter(instructor =>
+      instructor.credentials.toLowerCase().includes(filterValue) ||
+      instructor.phone.toLowerCase().includes(filterValue)
+    )
   }
 
   edit_instructor(instructor: Instructor) {

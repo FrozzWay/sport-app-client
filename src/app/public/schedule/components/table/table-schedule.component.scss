@@ -32,6 +32,20 @@ ul {
 .qwe:nth-child(even) {
   margin-top: 3px;
 }
+
+@keyframes append-animate {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+.added {
+  animation: append-animate .3s linear;
+}
+
 .sched-t {
   margin-top: 10px;
   border-top: 1px solid #dedede;
