@@ -1,0 +1,22 @@
+<div class="modal-content">
+  <div class="modal-body fs-5 pb-0">
+    <span class="fs-4 fw-medium d-block mb-3">{{msg}}</span>
+    <ng-container *ngIf="!staff; else view">
+      <p class="my-1">Имя:</p>
+      <input type="text" [formControl]="username" class="form-control fs-5 d-block">
+      <p class="my-1">Email:</p>
+      <input type="email" [formControl]="email" class="form-control fs-5 d-block">
+      <p class="my-1">Пароль:</p>
+      <input type="password" [formControl]="password" class="form-control fs-5 d-block">
+    </ng-container>
+    <ng-template #view>
+      <p class="my-1">Имя: {{staff!.username}}</p>
+      <p class="my-1">Email: {{staff!.email}}</p>
+    </ng-template>
+  </div>
+  <div class="modal-footer border-0 pt-0 mt-1">
+    <button class="btn fs-5" (click)="activeDialog.dismiss()">Назад</button>
+    <button mat-raised-button color="primary" class="fs-5" (click)="save()" *ngIf="!staff">Сохранить</button>
+    <button mat-raised-button color="warn" class="fs-5" (click)="delete()" *ngIf="staff">Удалить</button>
+  </div>
+</div>

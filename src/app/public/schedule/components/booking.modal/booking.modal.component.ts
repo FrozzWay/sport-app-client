@@ -36,7 +36,7 @@ export class BookingModalComponent {
   }
 
   getClientList() {
-    this.clients = this.client_service.getClients()
+    this.clients = this.client_service.getClients() as unknown as Observable<ClientMinimum[]>
   }
 
   openSnackBar(message: string) {

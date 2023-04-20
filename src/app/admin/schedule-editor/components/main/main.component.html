@@ -11,7 +11,13 @@
       <button mat-button (click)="instructor_modal()">Инструктора</button>
     </li>
     <li class="list-inline-item">
-      <button mat-button (click)="category_modal()">Клиенты</button>
+      <button mat-button (click)="client_modal()">Клиенты</button>
+    </li>
+    <li class="list-inline-item">
+      <button mat-button (click)="program_modal()">Программы</button>
+    </li>
+    <li class="list-inline-item">
+      <button mat-button (click)="staff_modal()">Рецепция</button>
     </li>
   </ul>
   <app-filter-panel (onFilterSchedule)="filter_schedule($event)" [filters]="filter_service.filters" [hideCheckBoxes]="true">

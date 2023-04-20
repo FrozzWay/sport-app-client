@@ -5,9 +5,12 @@ import { SchemaRecords, ScheduleSchemas, periods_SchemaRecord, ApiRecords } from
 import { FilterScheduleService } from "src/app/public/schedule/services/filter-schedule.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AddRecordModalComponent } from "../add-record.modal/add-record.modal.component";
-import { CategoriesModalComponent } from "../categories/categories.modal/categories.modal.component";
-import { PlacementsModalComponent } from "../placements/placements.modal/placements.modal.component";
-import { InstructorModalComponent } from "../instructors/instructor.modal/instructor.modal.component";
+import { CategoriesModalComponent } from "../head-nav/categories/categories.modal/categories.modal.component";
+import { PlacementsModalComponent } from "../head-nav/placements/placements.modal/placements.modal.component";
+import { InstructorModalComponent } from "../head-nav/instructors/instructor.modal/instructor.modal.component";
+import { ClientModalComponent } from "../head-nav/clients/client.modal/client.modal.component";
+import { ProgramModalComponent } from "../head-nav/programs/program.modal/program.modal.component";
+import { StaffModalComponent } from "../head-nav/staff/staff.modal/staff.modal.component";
 
 
 @Component({
@@ -224,6 +227,28 @@ export class ScheduleEditorComponent {
     modalRef.componentInstance.onUpdate.subscribe(() => {
       this.filter_service.cleanup_filters()
       this.reInit()
+    })
+  }
+
+  client_modal() {
+    this.modalService.open(ClientModalComponent, {
+      scrollable: true
+    })
+  }
+
+  program_modal() {
+    const modalRef = this.modalService.open(ProgramModalComponent, {
+      scrollable: true
+    })
+    modalRef.componentInstance.onDelete.subscribe(() => {
+      this.filter_service.cleanup_filters()
+      this.reInit()
+    })
+  }
+
+  staff_modal() {
+    this.modalService.open(StaffModalComponent, {
+      scrollable: true
     })
   }
 }

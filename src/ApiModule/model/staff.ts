@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ClientMinimum } from "./clientMinimum";
+import { Role } from './role';
 
 
-export interface Client extends ClientMinimum{
-    credentials: string;
-    phone: string;
-    additional_data?: any | null;
+export interface Staff {
+    email: string;
+    username: string;
     id: number;
+    role: number;
 }
 

@@ -21,13 +21,19 @@ import { ProgramOverviewComponent } from './schedule-editor/components/program-o
 import {
   ViewRecordModalComponent
 } from './schedule-editor/components/view-record.modal/view-record.modal.component';
-import { CategoriesModalComponent } from './schedule-editor/components/categories/categories.modal/categories.modal.component';
+import { CategoriesModalComponent } from './schedule-editor/components/head-nav/categories/categories.modal/categories.modal.component';
 import { SchemasModalComponent } from './schedule-editor/components/schemas.modal/schemas.modal.component';
-import { CategoryViewModalComponent } from './schedule-editor/components/categories/category-view.modal/category-view.modal.component.';
-import { PlacementsModalComponent } from './schedule-editor/components/placements/placements.modal/placements.modal.component';
-import { PlacementViewModalComponent } from './schedule-editor/components/placements/placement-view.modal/placement-view.modal.component';
-import { InstructorModalComponent } from './schedule-editor/components/instructors/instructor.modal/instructor.modal.component';
-import { InstructorViewModalComponent } from './schedule-editor/components/instructors/instructor-view.modal/instructor-view.modal.component';
+import { CategoryViewModalComponent } from './schedule-editor/components/head-nav/categories/category-view.modal/category-view.modal.component.';
+import { PlacementsModalComponent } from './schedule-editor/components/head-nav/placements/placements.modal/placements.modal.component';
+import { PlacementViewModalComponent } from './schedule-editor/components/head-nav/placements/placement-view.modal/placement-view.modal.component';
+import { InstructorModalComponent } from './schedule-editor/components/head-nav/instructors/instructor.modal/instructor.modal.component';
+import { InstructorViewModalComponent } from './schedule-editor/components/head-nav/instructors/instructor-view.modal/instructor-view.modal.component';
+import { ClientModalComponent } from './schedule-editor/components/head-nav/clients/client.modal/client.modal.component';
+import { ClientViewModalComponent } from './schedule-editor/components/head-nav/clients/client-view.modal/client-view.modal.component';
+import { ProgramModalComponent } from './schedule-editor/components/head-nav/programs/program.modal/program.modal.component';
+import { ProgramViewModalComponent } from './schedule-editor/components/head-nav/programs/program-view.modal/program-view.modal.component';
+import { StaffModalComponent } from './schedule-editor/components/head-nav/staff/staff.modal/staff.modal.component';
+import { StaffViewModalComponent } from './schedule-editor/components/head-nav/staff/staff-view.modal/staff-view.modal.component';
 
 
 @NgModule({
@@ -44,6 +50,12 @@ import { InstructorViewModalComponent } from './schedule-editor/components/instr
     PlacementViewModalComponent,
     InstructorModalComponent,
     InstructorViewModalComponent,
+    ClientModalComponent,
+    ClientViewModalComponent,
+    ProgramModalComponent,
+    ProgramViewModalComponent,
+    StaffModalComponent,
+    StaffViewModalComponent,
   ],
   imports: [
     CommonModule,

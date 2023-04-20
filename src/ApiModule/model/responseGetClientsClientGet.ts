@@ -9,13 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ClientMinimum } from "./clientMinimum";
+import { Client } from './client';
+import { ClientMinimum } from './clientMinimum';
 
 
-export interface Client extends ClientMinimum{
-    credentials: string;
-    phone: string;
-    additional_data?: any | null;
-    id: number;
+export interface ResponseGetClientsClientGet extends Client {
 }
 

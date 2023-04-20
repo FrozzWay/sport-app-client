@@ -3,6 +3,9 @@ import { ScheduleSchemasService, Schema, SchemaRecord } from "src/ApiModule";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { this_mo } from "src/time-utils";
+import {
+  ConfirmationDialogComponent
+} from "../../../../reusable components/confirmation-dialog/confirmation-dialog.component";
 
 @Component({
   selector: 'app-view-record.modal-element',
@@ -34,10 +37,12 @@ export class ViewRecordModalComponent {
   }
 
   removeRecord() {
-    const confirmRef = this.modalService.open(ConfirmationDialog, {
+    const confirmRef = this.modalService.open(ConfirmationDialogComponent, {
       centered: true,
       size: 'sm'
     })
+    confirmRef.componentInstance.header = 'Удаление записи'
+    confirmRef.componentInstance.message = 'Запись клиентов на это занятие будет удалена. Это действие невозможно отменить.'
     confirmRef.result.then(() => {
       this.schema_service.excludeRecordsFromSchema(this.schema.id, [this.record.id])
         .subscribe(() => {
@@ -51,13 +56,4 @@ export class ViewRecordModalComponent {
       })
     })
   }
-}
-
-
-@Component({
-  selector: 'dialog-animations-dialog',
-  templateUrl: 'confirmation-dialog.html',
-})
-export class ConfirmationDialog {
-  constructor(public activeDialog: NgbActiveModal,) {}
 }

@@ -1,4 +1,4 @@
-<li [ngStyle]="{'border-left': '2px solid '+record.program.category.color}" rippleOnHover>
+<li [ngStyle]="{'border-left': '2px solid '+record.program.category.color}" rippleOnHover class="shhh">
   <div>{{begins | date:'HH:mm'}}-{{ends| date:'HH:mm'}}</div>
   <div class="duration"><mat-icon class="icon me-1" fontIcon="schedule"></mat-icon>{{record.duration}} мин.</div>
   <div class="program-name fs-5">{{record.program.name}}</div>
