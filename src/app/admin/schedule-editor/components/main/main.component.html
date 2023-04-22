@@ -30,7 +30,7 @@
   <app-filter-panel (onFilterSchedule)="filter_schedule($event)" [filters]="filter_service.filters" [hideCheckBoxes]="true">
   <div class="d-inline-flex justify-content-end align-items-center mb-3" style="width: 29%">
     <div class="me-2 w-50 text-center fs-5">
-      <button class="py-2 bg-white schema_name">{{visible_schema.name}}</button>
+      <button (click)="schemas_modal()" class="py-2 bg-white schema_name">{{visible_schema.name}}</button>
     </div>
     <button (click)="open_add_record_modal()" mat-flat-button color="accent" class="me-5 fs-5" style="">Добавить</button>
   </div>

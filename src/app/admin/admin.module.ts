@@ -22,7 +22,7 @@ import {
   ViewRecordModalComponent
 } from './schedule-editor/components/view-record.modal/view-record.modal.component';
 import { CategoriesModalComponent } from './schedule-editor/components/head-nav/categories/categories.modal/categories.modal.component';
-import { SchemasModalComponent } from './schedule-editor/components/schemas.modal/schemas.modal.component';
+import { SchemasModalComponent } from './schedule-editor/components/schemas/schemas.modal/schemas.modal.component';
 import { CategoryViewModalComponent } from './schedule-editor/components/head-nav/categories/category-view.modal/category-view.modal.component.';
 import { PlacementsModalComponent } from './schedule-editor/components/head-nav/placements/placements.modal/placements.modal.component';
 import { PlacementViewModalComponent } from './schedule-editor/components/head-nav/placements/placement-view.modal/placement-view.modal.component';
@@ -40,6 +40,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import { ProgramReportViewModalComponent } from './schedule-editor/components/head-nav/reports/program-report-view.modal/program-report-view.modal.component';
 import { ClientReportMakerModalComponent } from './schedule-editor/components/head-nav/reports/client-report-maker.modal/client-report-maker.modal.component';
 import { ClientReportViewModalComponent } from './schedule-editor/components/head-nav/reports/client-report-view.modal/client-report-view.modal.component';
+import { SchemaViewModalComponent } from './schedule-editor/components/schemas/schema-view.modal/schema-view.modal.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { ClientReportViewModalComponent } from './schedule-editor/components/hea
     ProgramReportViewModalComponent,
     ClientReportMakerModalComponent,
     ClientReportViewModalComponent,
+    SchemaViewModalComponent,
   ],
   imports: [
     CommonModule,

@@ -17,6 +17,7 @@ import {
 import {
   ClientReportMakerModalComponent
 } from "../head-nav/reports/client-report-maker.modal/client-report-maker.modal.component";
+import { SchemasModalComponent } from "../schemas/schemas.modal/schemas.modal.component";
 
 
 @Component({
@@ -269,6 +270,12 @@ export class ScheduleEditorComponent {
     this.modalService.open(ClientReportMakerModalComponent, {
       scrollable: true,
       windowClass: 'client-report-maker'
+    })
+  }
+
+  schemas_modal() {
+    this.modalService.open(SchemasModalComponent, {
+      scrollable: true,
     })
   }
 }
