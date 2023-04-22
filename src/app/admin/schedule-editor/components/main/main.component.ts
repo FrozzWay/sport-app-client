@@ -257,7 +257,8 @@ export class ScheduleEditorComponent {
 
   report_program_modal() {
     this.modalService.open(ProgramReportMakerModalComponent, {
-      scrollable: true
+      scrollable: true,
+      windowClass: 'program-report-maker'
     })
   }
 }

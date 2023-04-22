@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { Periods, Program, ProgramsService, ReportsService } from "src/ApiModule";
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Periods, Program, ProgramsReportResponse, ProgramsService, ReportsService } from "src/ApiModule";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormControl } from "@angular/forms";
 import { ProgramViewModalComponent } from "../../programs/program-view.modal/program-view.modal.component";
+import { ProgramReportViewModalComponent } from "../program-report-view.modal/program-report-view.modal.component";
 
 @Component({
   selector: 'app-program-report-maker.modal-element',
@@ -10,11 +11,13 @@ import { ProgramViewModalComponent } from "../../programs/program-view.modal/pro
   styleUrls: ['../../categories/categories.modal/categories.modal.component.scss', './program-report-maker.modal.component.scss']
 })
 export class ProgramReportMakerModalComponent {
+  @ViewChild('checker') checker!: ElementRef
   programs!: Program[]
   selected_programs: Set<Program> = new Set();
   filtered_programs?: Program[]
   filterControl = new FormControl();
-  period?: Periods
+  period?: Periods = 'week'
+  all_checked: boolean = false
 
 
   constructor(
@@ -27,6 +30,7 @@ export class ProgramReportMakerModalComponent {
 
   ngOnInit() {
     this.programs_service.getAllPrograms().subscribe(p => {
+      p = p.filter(p => p.available_registration)
       this.programs = p
       this.filtered_programs = p
     })
@@ -45,6 +49,7 @@ export class ProgramReportMakerModalComponent {
   check_program(program: Program) {
     this.selected_programs?.has(program) ?
       this.selected_programs.delete(program) : this.selected_programs.add(program)
+    this.all_checked = (this.selected_programs.size == this.programs.length)
   }
 
   open_program(program: Program) {
@@ -57,15 +62,31 @@ export class ProgramReportMakerModalComponent {
   }
 
   check_all() {
-    this.selected_programs.size > 0 ?
-      this.selected_programs.clear() : this.selected_programs = new Set(this.programs)
+    if (this.selected_programs.size > 0) {
+      this.selected_programs.clear();
+      setTimeout(() => this.all_checked = false, 1)
+    }
+    else {
+      this.selected_programs = new Set(this.programs)
+      this.all_checked = true
+    }
   }
 
   make_report() {
-    console.log(this.period)
     this.reports_service.getProgramsReport({
       programs: Array.from(this.selected_programs!).map(p => p.id),
       period: this.period!
-    }).subscribe()
+    }).subscribe(r => this.open_report(r))
+  }
+
+  open_report(r: ProgramsReportResponse) {
+    const parent = document.getElementsByClassName('program-report-maker').item(0)!
+    parent.classList.remove('show')
+    const modalRef = this.modalService.open(ProgramReportViewModalComponent, {
+      centered: true,
+      scrollable: true
+    })
+    modalRef.componentInstance.report = r;
+    modalRef.dismissed.subscribe(() => parent.classList.add('show'))
   }
 }

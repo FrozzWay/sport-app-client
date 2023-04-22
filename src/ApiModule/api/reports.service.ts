@@ -23,6 +23,8 @@ import { ClientReport } from '../model/clientReport';
 // @ts-ignore
 import { HTTPValidationError } from '../model/hTTPValidationError';
 // @ts-ignore
+import { Periods } from '../model/periods';
+// @ts-ignore
 import { ProgramsReport } from '../model/programsReport';
 // @ts-ignore
 import { ProgramsReportResponse } from '../model/programsReportResponse';
@@ -100,15 +102,25 @@ export class ReportsService {
     /**
      * Get Client Report
      * @param clientId 
+     * @param period 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getClientReport(clientId: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Array<ClientReport>>;
-    public getClientReport(clientId: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Array<ClientReport>>>;
-    public getClientReport(clientId: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Array<ClientReport>>>;
-    public getClientReport(clientId: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
+    public getClientReport(clientId: number, period: Periods, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<Array<ClientReport>>;
+    public getClientReport(clientId: number, period: Periods, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpResponse<Array<ClientReport>>>;
+    public getClientReport(clientId: number, period: Periods, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<HttpEvent<Array<ClientReport>>>;
+    public getClientReport(clientId: number, period: Periods, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext}): Observable<any> {
         if (clientId === null || clientId === undefined) {
             throw new Error('Required parameter clientId was null or undefined when calling getClientReport.');
+        }
+        if (period === null || period === undefined) {
+            throw new Error('Required parameter period was null or undefined when calling getClientReport.');
+        }
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (period !== undefined && period !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>period, 'period');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -153,6 +165,7 @@ export class ReportsService {
         return this.httpClient.request<Array<ClientReport>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

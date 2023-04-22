@@ -37,6 +37,7 @@ import { StaffViewModalComponent } from './schedule-editor/components/head-nav/s
 import { MatMenuModule } from "@angular/material/menu";
 import { ProgramReportMakerModalComponent } from './schedule-editor/components/head-nav/reports/program-report-maker.modal/program-report-maker.modal.component';
 import { MatRadioModule } from "@angular/material/radio";
+import { ProgramReportViewModalComponent } from './schedule-editor/components/head-nav/reports/program-report-view.modal/program-report-view.modal.component';
 
 
 @NgModule({
@@ -60,6 +61,7 @@ import { MatRadioModule } from "@angular/material/radio";
     StaffModalComponent,
     StaffViewModalComponent,
     ProgramReportMakerModalComponent,
+    ProgramReportViewModalComponent,
   ],
   imports: [
     CommonModule,

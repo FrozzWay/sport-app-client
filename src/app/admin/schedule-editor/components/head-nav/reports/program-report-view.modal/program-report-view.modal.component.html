@@ -1,0 +1,27 @@
+<div class="modal-content">
+  <div class="modal-body fs-5 pb-0">
+    <span class="fs-4 fw-medium d-block mb-3">Отчет</span>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Начало</th>
+          <th>Конец</th>
+          <th>Посещаемость</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of report.data">
+          <th scope="row">{{r.period_num}}</th>
+          <td>{{date(r.period_begin) | date:'mediumDate':'':'ru'}}</td>
+          <td>{{date(r.period_end) | date:'mediumDate':'':'ru'}}</td>
+          <td>{{r.amount}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="report.data.length == 0" class="ms-5">Отсутствуют данные о посещаемости</p>
+  </div>
+  <div class="modal-footer border-0 pt-0 mt-1">
+    <button class="btn fs-5" (click)="activeModal.dismiss()">Назад</button>
+  </div>
+</div>

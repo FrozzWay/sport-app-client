@@ -10,10 +10,11 @@
  * Do not edit the class manually.
  */
 import { Program } from './program';
+import { ProgramsReportRow } from './programsReportRow';
 
 
 export interface ClientReport { 
     program: Program;
-    booked_amount: number;
+    data: Array<ProgramsReportRow>;
 }
 

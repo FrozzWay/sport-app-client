@@ -13,7 +13,7 @@
     </mat-form-field>
     <div class="d-flex justify-content-between align-items-center">
       <p>Выбрано: {{selected_programs.size}}</p>
-      <mat-checkbox [checked]="selected_programs.size == programs.length" (change)="check_all()"></mat-checkbox>
+      <mat-checkbox [(ngModel)]="all_checked" (change)="check_all()"></mat-checkbox>
     </div>
     <ul class="list-group list-group-flush">
       <ng-container *ngFor="let program of filtered_programs">
