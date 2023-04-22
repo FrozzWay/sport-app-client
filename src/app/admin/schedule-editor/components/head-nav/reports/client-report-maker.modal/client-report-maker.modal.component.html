@@ -1,0 +1,36 @@
+<div class="modal-content">
+  <div class="modal-header fs-4">
+    <h1 class="modal-title fs-4">Отчет по клиенту</h1>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.close()"></button>
+  </div>
+  <div class="modal-body fs-5">
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="period">
+      <mat-radio-button checked value="week">По неделям</mat-radio-button>
+      <mat-radio-button value="month" class="ms-2">По месяцам</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field appearance="fill" class="d-block mt-2">
+      <input matInput [formControl]="filterControl" type="text" placeholder="Отфильтровать">
+    </mat-form-field>
+    <ul class="list-group list-group-flush">
+      <mat-radio-group [(ngModel)]="selected_client">
+        <ng-container *ngFor="let client of filtered_clients">
+          <div class="d-flex justify-content-between align-items-center">
+            <li rippleOnHover [persistent]="true" (click)="selected_client=client; check_radio(client.id)"
+                class="list-group-item w-100 me-2 no-select">
+              <div>{{client.credentials}}</div>
+              <div class="d-flex align-items-center">
+                <mat-icon fontSet="mat-icon-filled" inline class="pe-1">phone</mat-icon>
+                {{client.phone}}</div>
+            </li>
+            <div id="action_buttons" class="d-flex align-items-center">
+              <mat-radio-button name="mat-client-radio-{{client.id}}" id="mat-client-radio-{{client.id}}" [value]="client"></mat-radio-button>
+            </div>
+          </div>
+        </ng-container>
+      </mat-radio-group>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button mat-raised-button color="primary" class="fs-5" [disabled]="!period || !selected_client" (click)="make_report()">Сформировать</button>
+  </div>
+</div>

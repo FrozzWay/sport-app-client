@@ -79,6 +79,10 @@ body {
   width: 450px !important;
 }
 
+.tiny-backdrop {
+  opacity: .2 !important;
+}
+
 @mixin no-select {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

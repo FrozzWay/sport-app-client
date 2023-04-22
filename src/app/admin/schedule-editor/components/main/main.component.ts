@@ -14,6 +14,9 @@ import { StaffModalComponent } from "../head-nav/staff/staff.modal/staff.modal.c
 import {
   ProgramReportMakerModalComponent
 } from "../head-nav/reports/program-report-maker.modal/program-report-maker.modal.component";
+import {
+  ClientReportMakerModalComponent
+} from "../head-nav/reports/client-report-maker.modal/client-report-maker.modal.component";
 
 
 @Component({
@@ -259,6 +262,13 @@ export class ScheduleEditorComponent {
     this.modalService.open(ProgramReportMakerModalComponent, {
       scrollable: true,
       windowClass: 'program-report-maker'
+    })
+  }
+
+  report_client_modal() {
+    this.modalService.open(ClientReportMakerModalComponent, {
+      scrollable: true,
+      windowClass: 'client-report-maker'
     })
   }
 }

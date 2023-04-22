@@ -38,6 +38,8 @@ import { MatMenuModule } from "@angular/material/menu";
 import { ProgramReportMakerModalComponent } from './schedule-editor/components/head-nav/reports/program-report-maker.modal/program-report-maker.modal.component';
 import { MatRadioModule } from "@angular/material/radio";
 import { ProgramReportViewModalComponent } from './schedule-editor/components/head-nav/reports/program-report-view.modal/program-report-view.modal.component';
+import { ClientReportMakerModalComponent } from './schedule-editor/components/head-nav/reports/client-report-maker.modal/client-report-maker.modal.component';
+import { ClientReportViewModalComponent } from './schedule-editor/components/head-nav/reports/client-report-view.modal/client-report-view.modal.component';
 
 
 @NgModule({
@@ -62,6 +64,8 @@ import { ProgramReportViewModalComponent } from './schedule-editor/components/he
     StaffViewModalComponent,
     ProgramReportMakerModalComponent,
     ProgramReportViewModalComponent,
+    ClientReportMakerModalComponent,
+    ClientReportViewModalComponent,
   ],
   imports: [
     CommonModule,

@@ -22,7 +22,7 @@
     <li class="list-inline-item">
       <button mat-button [matMenuTriggerFor]="menu">Отчеты</button>
       <mat-menu #menu="matMenu" class="fs-5">
-        <button mat-menu-item>Отчет по клиенту</button>
+        <button mat-menu-item (click)="report_client_modal()">Отчет по клиенту</button>
         <button mat-menu-item (click)="report_program_modal()">Отчет по программам</button>
       </mat-menu>
     </li>

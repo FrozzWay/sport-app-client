@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Periods, Program, ProgramsReportResponse, ProgramsService, ReportsService } from "src/ApiModule";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { FormControl } from "@angular/forms";
@@ -11,7 +11,6 @@ import { ProgramReportViewModalComponent } from "../program-report-view.modal/pr
   styleUrls: ['../../categories/categories.modal/categories.modal.component.scss', './program-report-maker.modal.component.scss']
 })
 export class ProgramReportMakerModalComponent {
-  @ViewChild('checker') checker!: ElementRef
   programs!: Program[]
   selected_programs: Set<Program> = new Set();
   filtered_programs?: Program[]
