@@ -3,12 +3,11 @@ import {
   Category,
   Instructor,
   Placement,
-  RecordsService,
   ScheduleSchemasService,
   Schema,
   SchemaRecord
 } from "src/ApiModule";
-import { concatMap, of } from "rxjs";
+import { concatMap, of, take } from "rxjs";
 import { SchemaRecords, ScheduleSchemas, periods_SchemaRecord, ApiRecords } from "../../../models";
 import { FilterScheduleService } from "src/app/public/schedule/services/filter-schedule.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -37,20 +36,20 @@ import { FilterPanelComponent } from "../../../../public/schedule/components/fil
 export class ScheduleEditorComponent {
   @ViewChild(FilterPanelComponent) filter_panel!: FilterPanelComponent
   nw: boolean = false;
-  schedule_schemas: ScheduleSchemas = { active: undefined, next_week: undefined }
+  schedule_schemas: ScheduleSchemas = { active: undefined, next_week: undefined}
   schedule_records: SchemaRecords = {
     current_week: {},
-    next_week: {}
+    next_week: {},
+    custom: {}
   }
-  selected_schema?: Schema
+  selected_custom_schema?: Schema
   visible_schema!: Schema
-  api_records: ApiRecords = {active: undefined, next_week: undefined}
+  api_records: ApiRecords = {active: undefined, next_week: undefined, custom: undefined}
   applied_filters?: any
   onQueriedRecords = new EventEmitter();
 
   constructor(
     public schema_service: ScheduleSchemasService,
-    public record_service: RecordsService,
     public filter_service: FilterScheduleService,
     private modalService: NgbModal,
   ) {}
@@ -58,10 +57,10 @@ export class ScheduleEditorComponent {
   ngOnInit() {
     document.body.classList.add('admin-theme');
     this.prepare_schedule()
-    if (!this.selected_schema)
+    if (!this.selected_custom_schema)
       this.schema_service.getSchemas().subscribe((schemas) => this.process_schemas(schemas))
     else
-      this.query_records_schema(this.selected_schema)
+      this.query_records_schema(this.selected_custom_schema)
   }
 
   ngAfterViewInit() {
@@ -110,9 +109,9 @@ export class ScheduleEditorComponent {
 
   query_records_schema(schema: Schema) {
     this.schema_service.getRecordsWithinSchema(schema.id).subscribe((r) => {
-      this.api_records.active = r
+      this.api_records.custom = r
       this.filter_service.classify_for_filters(r)
-      this.fill_with_records(r, this.schedule_records.current_week)
+      this.fill_with_records(r, this.schedule_records.custom)
       this.onQueriedRecords.emit()
     })
   }
@@ -121,9 +120,11 @@ export class ScheduleEditorComponent {
     for (let hours = 0; hours < 24; hours++) {
       this.schedule_records.current_week[hours] = { days: {} }
       this.schedule_records.next_week[hours] = { days: {} }
+      this.schedule_records.custom[hours] = { days: {} }
       for (let day = 0; day < 7; day++) {
         this.schedule_records.current_week[hours].days[day] = []
         this.schedule_records.next_week[hours].days[day] = []
+        this.schedule_records.custom[hours].days[day] = []
       }
     }
   }
@@ -158,6 +159,10 @@ export class ScheduleEditorComponent {
       const filtered = this.filter_service.filter_schedule(this.api_records.next_week, filters);
       this.fill_with_records(filtered, this.schedule_records.next_week);
     }
+    if (this.api_records.custom) {
+      const filtered = this.filter_service.filter_schedule(this.api_records.custom, filters);
+      this.fill_with_records(filtered, this.schedule_records.custom);
+    }
   }
 
   slide_schema() {
@@ -186,9 +191,13 @@ export class ScheduleEditorComponent {
       this.api_records.next_week!.push(...added_records)
       this.fill_with_records(added_records, this.schedule_records.next_week)
     }
-    else {
+    if (this.visible_schema == this.schedule_schemas.active) {
       this.api_records.active!.push(...added_records)
       this.fill_with_records(added_records, this.schedule_records.current_week)
+    }
+    else {
+      this.api_records.custom!.push(...added_records)
+      this.fill_with_records(added_records, this.schedule_records.custom)
     }
     this.filter_service.classify_for_filters(added_records)
   }
@@ -198,9 +207,13 @@ export class ScheduleEditorComponent {
         this.api_records.next_week = this.api_records.next_week!.filter(r => r !== record)
         this.remove_records([record], this.schedule_records.next_week)
       }
-    else {
+    if (this.visible_schema == this.schedule_schemas.active) {
       this.api_records.active = this.api_records.active!.filter(r => r !== record)
       this.remove_records([record], this.schedule_records.current_week)
+    }
+    else {
+      this.api_records.custom = this.api_records.custom!.filter(r => r !== record)
+      this.remove_records([record], this.schedule_records.custom)
     }
   }
 
@@ -217,7 +230,7 @@ export class ScheduleEditorComponent {
       this.ngOnInit()
       if (this.applied_filters) {
         (this.applied_filters.categories as Set<string>).delete(category.name)
-        this.onQueriedRecords.subscribe(_ => this.filter_schedule(this.applied_filters))
+        this.onQueriedRecords.pipe(take(1)).subscribe(_ => this.filter_schedule(this.applied_filters))
       }
     })
   }
@@ -231,7 +244,7 @@ export class ScheduleEditorComponent {
       this.ngOnInit()
       if (this.applied_filters) {
         (this.applied_filters.placements as Set<string>).delete(placement.name)
-        this.onQueriedRecords.subscribe(_ => this.filter_schedule(this.applied_filters))
+        this.onQueriedRecords.pipe(take(1)).subscribe(_ => this.filter_schedule(this.applied_filters))
       }
     })
   }
@@ -244,7 +257,7 @@ export class ScheduleEditorComponent {
       this.filter_service.cleanup_filters()
       this.ngOnInit()
       if (this.applied_filters) {
-        this.onQueriedRecords.subscribe(_ => this.filter_schedule(this.applied_filters))
+        this.onQueriedRecords.pipe(take(1)).subscribe(_ => this.filter_schedule(this.applied_filters))
       }
     })
   }
@@ -288,15 +301,27 @@ export class ScheduleEditorComponent {
     const modalRef = this.modalService.open(SchemasModalComponent, {
       scrollable: true,
     })
+    modalRef.componentInstance.fromSchema = this.visible_schema
+
     modalRef.componentInstance.onEditedSchema
       .subscribe((updated_schema: Schema) => {
-        if (this.schedule_schemas.active!.id == updated_schema.id)
-          this.schedule_schemas.active!.name = updated_schema.name
+        const custom_schema = this.selected_custom_schema
 
-        if (new Date(updated_schema.to_be_active_from!) > new Date()) {
+        if (this.visible_schema.id == updated_schema.id)
+          this.visible_schema.name = updated_schema.name
+
+        // if (this.schedule_schemas.active!.id == updated_schema.id)
+        //   this.schedule_schemas.active!.name = updated_schema.name
+
+        if (updated_schema.to_be_active_from) {
+          if (custom_schema) {
+            if (custom_schema.id == updated_schema.id)
+              this.open_active_schema()
+            return
+          }
           this.schedule_schemas.next_week = updated_schema
           this.reInit()
-          this.onQueriedRecords.subscribe(() => {
+          this.onQueriedRecords.pipe(take(1)).subscribe(() => {
             this.visible_schema = this.nw ? this.schedule_schemas.next_week! : this.schedule_schemas.active!
           })
         }
@@ -309,7 +334,23 @@ export class ScheduleEditorComponent {
             this.visible_schema = this.schedule_schemas.active!
           }
         }
-
       })
+
+    modalRef.componentInstance.onOpenSchema
+      .subscribe((schema: Schema) => {
+        if (!schema.active) {
+          this.selected_custom_schema = schema
+          this.visible_schema = schema
+          this.reInit()
+        }
+        else
+          this.open_active_schema()
+      })
+  }
+
+  open_active_schema() {
+    this.selected_custom_schema = undefined
+    this.nw = false
+    this.reInit()
   }
 }

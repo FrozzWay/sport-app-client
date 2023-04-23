@@ -5,15 +5,21 @@
   </div>
   <div class="modal-body fs-5">
     <ul class="list-group">
-      <li rippleOnHover (click)="edit_schema(active_schema)" class="list-group-item d-flex justify-content-between align-items-center">
-        <span class="ellipsis">{{active_schema.name}}</span>
+      <li rippleOnHover (click)="customSchema ? back_to_schedule() : edit_schema(active_schema)" class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <span class="ellipsis">{{active_schema.name}}</span>
+          <mat-icon *ngIf="fromSchema.active" class="ms-2" color="primary">visibility</mat-icon>
+        </div>
         <div class="d-flex align-items-center">
           <span class="me-2" style="color: green">активная</span>
           <mat-icon style="color: green">check_circle</mat-icon>
         </div>
       </li>
-      <li *ngIf="next_week_schema" rippleOnHover (click)="edit_schema(next_week_schema)" class="list-group-item d-flex justify-content-between align-items-center">
-        <span class="ellipsis">{{next_week_schema.name}}</span>
+      <li *ngIf="next_week_schema" rippleOnHover (click)="customSchema ? back_to_schedule() : edit_schema(next_week_schema)" class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="d-flex align-items-center">
+          <span class="ellipsis">{{next_week_schema.name}}</span>
+          <mat-icon *ngIf="fromSchema.to_be_active_from" class="ms-2" color="primary">visibility</mat-icon>
+        </div>
         <div class="d-flex align-items-center">
           <span class="me-2" style="color: darkorange">со следующей недели</span>
           <mat-icon style="color: darkorange">more_time</mat-icon>
@@ -26,9 +32,12 @@
     <ul class="list-group list-group-flush" id="secondary-schemas">
       <ng-container *ngFor="let schema of passive_schemas">
         <div class="d-flex justify-content-between align-items-center">
-          <li rippleOnHover [persistent]="true" (click)="true"
+          <li rippleOnHover [persistent]="true" (click)="view_schema(schema)"
               class="list-group-item w-100 me-2 no-select">
-            <span class="ellipsis">{{schema.name}}</span>
+            <div class="d-flex align-items-center">
+              <span class="ellipsis">{{schema.name}}</span>
+              <mat-icon style="overflow: unset !important;" class="ms-2" color="primary" *ngIf="customSchema && (fromSchema.id == schema.id)">visibility</mat-icon>
+            </div>
           </li>
         <div id="action_buttons" class="d-flex align-items-center">
           <div class="position-relative edit_schema rounded-circle" (click)="edit_schema(schema)">
@@ -36,9 +45,14 @@
                 <mat-icon color="primary">settings</mat-icon>
               </div>
           </div>
-          <div class="position-relative delete-category rounded-circle" (click)="true">
+          <div *ngIf="!customSchema || !(fromSchema.id == schema.id)" class="position-relative delete-category rounded-circle" (click)="delete_schema(schema)">
             <div class="p-2 d-flex">
               <mat-icon color="warn">delete</mat-icon>
+            </div>
+          </div>
+          <div *ngIf="customSchema && (fromSchema.id == schema.id)" class="position-relative rounded-circle">
+            <div class="p-2 d-flex opacity-50">
+              <mat-icon color="">delete</mat-icon>
             </div>
           </div>
           </div>

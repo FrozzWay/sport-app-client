@@ -14,6 +14,7 @@ import { ViewRecordModalComponent } from "../view-record.modal/view-record.modal
 export class TableScheduleEditorComponent {
   @Input() periods!: periods_SchemaRecord
   @Input() next_week: boolean = false
+  @Input() custom_schema: boolean = false
   @Input() schema?: Schema
   @Output() onRemoveRecord: EventEmitter<any> = new EventEmitter();
   @Output() onCreateNextWeekSchema: EventEmitter<any> = new EventEmitter();

@@ -9,6 +9,7 @@ export interface ScheduleSchemas {
 export interface ApiRecords {
   active?: models.SchemaRecord[],
   next_week?: models.SchemaRecord[],
+  custom?: models.SchemaRecord[],
 }
 
 export interface periods_SchemaRecord {
@@ -22,7 +23,8 @@ export interface periods_SchemaRecord {
 
 export interface SchemaRecords {
   current_week: periods_SchemaRecord,
-  next_week: periods_SchemaRecord
+  next_week: periods_SchemaRecord,
+  custom: periods_SchemaRecord,
 }
 
 export interface Filters {

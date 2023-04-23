@@ -32,9 +32,9 @@
     <div class="me-2 w-50 text-center fs-5">
       <button (click)="schemas_modal()" class="py-2 bg-white schema_name">
         <div class="d-flex align-items-center justify-content-center">
-          <span class="ellipsis d-block" style="max-width: 80px;">{{visible_schema.name}}</span>
-            <mat-icon style="color: green" *ngIf="visible_schema.active" class="ms-2">check_circle</mat-icon>
-            <mat-icon style="color: darkorange" *ngIf="visible_schema == schedule_schemas.next_week" class="ms-2">more_time</mat-icon>
+          <span class="ellipsis d-block">{{visible_schema.name}}</span>
+            <mat-icon style="color: green; overflow: unset" *ngIf="visible_schema.active" class="ms-2">check_circle</mat-icon>
+            <mat-icon style="color: darkorange; overflow: unset" *ngIf="visible_schema == schedule_schemas.next_week" class="ms-2">more_time</mat-icon>
         </div>
       </button>
     </div>
@@ -44,20 +44,33 @@
 
   <div id="carouselExample" class="carousel slide" data-bs-wrap="false">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <app-shed-editor-table class="d-block w-100" (onRemoveRecord)="onRemoveRecord($event)" [periods]="schedule_records.current_week" [schema]="schedule_schemas.active"></app-shed-editor-table>
-      </div>
-      <div class="carousel-item">
-        <app-shed-editor-table class="d-block w-100" (onCreateNextWeekSchema)="create_next_week()" (onRemoveRecord)="onRemoveRecord($event)" [periods]="schedule_records.next_week" [next_week]="true" [schema]="schedule_schemas.next_week"></app-shed-editor-table>
-      </div>
+      <ng-container *ngIf="!selected_custom_schema; else custom_schema">
+        <div class="carousel-item active">
+          <app-shed-editor-table class="d-block w-100" (onRemoveRecord)="onRemoveRecord($event)"
+                                 [periods]="schedule_records.current_week"
+                                 [schema]="schedule_schemas.active"></app-shed-editor-table>
+        </div>
+        <div class="carousel-item">
+          <app-shed-editor-table class="d-block w-100" (onCreateNextWeekSchema)="create_next_week()"
+                                 (onRemoveRecord)="onRemoveRecord($event)" [periods]="schedule_records.next_week"
+                                 [next_week]="true" [schema]="schedule_schemas.next_week"></app-shed-editor-table>
+        </div>
+      </ng-container>
+      <ng-template #custom_schema>
+        <div class="carousel-item active">
+          <app-shed-editor-table class="d-block w-100" (onRemoveRecord)="onRemoveRecord($event)"
+                                 [periods]="schedule_records.custom" [custom_schema]="true"
+                                 [schema]="selected_custom_schema"></app-shed-editor-table>
+        </div>
+      </ng-template>
     </div>
     <button class="sl-b d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
-            [ngStyle]="{'background-color': (!nw) ? '#f5f3f3' : '#3f51b5'}" [disabled]="!nw" (click)="slide_schema()">
+            [ngStyle]="{'background-color': (!nw || selected_custom_schema) ? '#f5f3f3' : '#3f51b5'}" [disabled]="!nw || selected_custom_schema" (click)="slide_schema()">
       <mat-icon class="align-self-center" style="color: #dedede">arrow_back_alt</mat-icon>
       <span class="visually-hidden">Previous</span>
     </button>
     <button class="sl-b sl-b-next d-flex p-2" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
-            [ngStyle]="{'background-color': (nw) ? '#f5f3f3' : '#3f51b5'}" [disabled]="nw" (click)="slide_schema()">
+            [ngStyle]="{'background-color': (nw || selected_custom_schema) ? '#f5f3f3' : '#3f51b5'}" [disabled]="nw || selected_custom_schema" (click)="slide_schema()">
       <mat-icon class="align-self-center" style="color: #dedede">arrow_forward_alt</mat-icon>
       <span class="visually-hidden">Next</span>
     </button>

@@ -2,9 +2,9 @@
   <tbody>
   <tr>
     <th></th>
-    <th *ngFor="let date of dates">
+    <th *ngFor="let date of dates" [style.padding]="custom_schema ? '14px': 'initial'" [style.padding-bottom]="!custom_schema ? '10px': '14px'">
       <span class="fs-5">{{date | date:'E':'':'ru'}}</span><br>
-      <span style="color: grey; text-transform: none; padding-bottom: 10px; display: block">{{date| date:'d MMMM':'':'ru'}}</span>
+      <span *ngIf="!custom_schema" style="color: grey; text-transform: none; display: block">{{date| date:'d MMMM':'':'ru'}}</span>
     </th>
     <th></th>
   </tr>
