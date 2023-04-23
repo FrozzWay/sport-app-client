@@ -17,7 +17,7 @@ export class FilterPanelComponent {
     programs: new Set<string>(),
     instructors: new Set<number>(),
     categories: new Set<string>(),
-    placements: new Set<number>(),
+    placements: new Set<string>(),
     paid: true,
     available_registration: true,
   }
@@ -29,6 +29,13 @@ export class FilterPanelComponent {
 
   constructor(iconRegistry: MatIconRegistry) {
     iconRegistry.registerFontClassAlias('mat-icon-filled', 'material-font-filled mat-ligature-font');
+  }
+
+  dropFormControls() {
+    this.placements.setValue(null)
+    this.categories.setValue(null)
+    this.instructors.setValue(null)
+    this.programs.setValue(null)
   }
 
   ngOnInit() {

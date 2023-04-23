@@ -54,7 +54,7 @@ export class InstructorModalComponent {
           this.snackBar.open('Сохранено', 'Закрыть', { duration: 3000, verticalPosition: 'top' })
           const i = this.instructors.indexOf(instructor)
           this.instructors[i] = result;
-          this.onUpdate.emit()
+          this.onUpdate.emit(instructor)
         },
         error: (error: HttpErrorResponse) => {
            this.snackBar.open(error.error.detail, 'Закрыть', {duration: 5000, verticalPosition: 'top'})
@@ -84,7 +84,7 @@ export class InstructorModalComponent {
       next: () => {
         this.snackBar.open('Инструктор удален', 'Закрыть', { duration: 3000, verticalPosition: 'top' });
         this.instructors = this.instructors.filter(i => i != instructor)
-        this.onUpdate.emit()
+        this.onUpdate.emit(instructor)
       },
       error: (error: HttpErrorResponse) => {
          this.snackBar.open(`Ошибка: ${error.error.detail}`, 'Закрыть', {duration: 5000, verticalPosition: 'top'})

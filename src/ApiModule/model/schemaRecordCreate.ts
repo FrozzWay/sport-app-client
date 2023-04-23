@@ -16,6 +16,6 @@ export interface SchemaRecordCreate {
     week_day: number;
     day_time: string;
     duration: number;
-    program: Program;
+    program: number;
 }
 

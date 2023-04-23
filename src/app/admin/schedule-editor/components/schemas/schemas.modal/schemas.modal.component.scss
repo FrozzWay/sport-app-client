@@ -19,3 +19,12 @@ li {
     transition: all .1s;
   }
 }
+
+.edit_schema {
+  cursor: pointer;
+  &:hover {
+    background-color: #3c74ad0d;
+    transition: all .1s;
+  }
+}
+

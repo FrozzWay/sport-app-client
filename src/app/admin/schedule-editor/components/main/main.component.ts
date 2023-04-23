@@ -1,5 +1,13 @@
-import { Component, EventEmitter } from '@angular/core';
-import { Category, Placement, RecordsService, ScheduleSchemasService, Schema, SchemaRecord } from "src/ApiModule";
+import { Component, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Category,
+  Instructor,
+  Placement,
+  RecordsService,
+  ScheduleSchemasService,
+  Schema,
+  SchemaRecord
+} from "src/ApiModule";
 import { concatMap, of } from "rxjs";
 import { SchemaRecords, ScheduleSchemas, periods_SchemaRecord, ApiRecords } from "../../../models";
 import { FilterScheduleService } from "src/app/public/schedule/services/filter-schedule.service";
@@ -18,6 +26,7 @@ import {
   ClientReportMakerModalComponent
 } from "../head-nav/reports/client-report-maker.modal/client-report-maker.modal.component";
 import { SchemasModalComponent } from "../schemas/schemas.modal/schemas.modal.component";
+import { FilterPanelComponent } from "../../../../public/schedule/components/filter-panel/filter-panel.component";
 
 
 @Component({
@@ -26,6 +35,7 @@ import { SchemasModalComponent } from "../schemas/schemas.modal/schemas.modal.co
   styleUrls: ['./main.component.scss']
 })
 export class ScheduleEditorComponent {
+  @ViewChild(FilterPanelComponent) filter_panel!: FilterPanelComponent
   nw: boolean = false;
   schedule_schemas: ScheduleSchemas = { active: undefined, next_week: undefined }
   schedule_records: SchemaRecords = {
@@ -46,7 +56,7 @@ export class ScheduleEditorComponent {
   ) {}
 
   ngOnInit() {
-    document.body.classList.toggle('admin-theme');
+    document.body.classList.add('admin-theme');
     this.prepare_schedule()
     if (!this.selected_schema)
       this.schema_service.getSchemas().subscribe((schemas) => this.process_schemas(schemas))
@@ -93,6 +103,7 @@ export class ScheduleEditorComponent {
       this.api_records.active = r
       this.filter_service.classify_for_filters(r)
       this.fill_with_records(r, this.schedule_records.current_week)
+      this.onQueriedRecords.emit()
     })
   }
 
@@ -189,20 +200,6 @@ export class ScheduleEditorComponent {
     }
   }
 
-  reInit() {
-    this.prepare_schedule()
-    if (this.selected_schema)
-      this.query_records_schema(this.selected_schema)
-    else
-      this.query_records_for_active_schedule()
-
-    this.onQueriedRecords.subscribe(_ => {
-      this.reRenderRecords(false)
-      if (this.schedule_schemas.next_week)
-        this.reRenderRecords(true)
-    })
-  }
-
   create_next_week() {
 
   }
@@ -213,7 +210,11 @@ export class ScheduleEditorComponent {
     })
     modalRef.componentInstance.onUpdate.subscribe((category: Category)=> {
       this.filter_service.cleanup_filters()
-      this.reInit();
+      this.ngOnInit()
+      if (this.applied_filters) {
+        (this.applied_filters.categories as Set<string>).delete(category.name)
+        this.onQueriedRecords.subscribe(_ => this.filter_schedule(this.applied_filters))
+      }
     })
   }
 
@@ -223,7 +224,11 @@ export class ScheduleEditorComponent {
     })
     modalRef.componentInstance.onUpdate.subscribe((placement: Placement)=> {
       this.filter_service.cleanup_filters()
-      this.reInit()
+      this.ngOnInit()
+      if (this.applied_filters) {
+        (this.applied_filters.placements as Set<string>).delete(placement.name)
+        this.onQueriedRecords.subscribe(_ => this.filter_schedule(this.applied_filters))
+      }
     })
   }
 
@@ -231,9 +236,12 @@ export class ScheduleEditorComponent {
     const modalRef = this.modalService.open(InstructorModalComponent, {
       scrollable: true
     })
-    modalRef.componentInstance.onUpdate.subscribe(() => {
+    modalRef.componentInstance.onUpdate.subscribe((instructor: Instructor) => {
       this.filter_service.cleanup_filters()
-      this.reInit()
+      this.ngOnInit()
+      if (this.applied_filters) {
+        this.onQueriedRecords.subscribe(_ => this.filter_schedule(this.applied_filters))
+      }
     })
   }
 
@@ -249,7 +257,9 @@ export class ScheduleEditorComponent {
     })
     modalRef.componentInstance.onDelete.subscribe(() => {
       this.filter_service.cleanup_filters()
-      this.reInit()
+      this.applied_filters = undefined
+      this.filter_panel.dropFormControls()
+      this.ngOnInit();
     })
   }
 

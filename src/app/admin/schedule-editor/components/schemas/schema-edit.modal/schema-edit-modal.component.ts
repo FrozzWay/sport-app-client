@@ -9,13 +9,15 @@ import {
 type SchemaAction = 'make_active' | 'activate_next_week';
 
 @Component({
-  selector: 'app-schema-view.modal',
-  templateUrl: './schema-view.modal.component.html',
-  styleUrls: ['./schema-view.modal.component.scss']
+  selector: 'app-schema-edit.modal-element',
+  templateUrl: './schema-edit-modal.component.html',
+  styleUrls: ['./schema-edit-modal.component.scss']
 })
-export class SchemaViewModalComponent {
+export class SchemaEditModalComponent {
   @Input() schema?: Schema
   @Input() schemas?: Schema[]
+  disable_activation: boolean = false
+  disable_next_week: boolean = false
   name = new FormControl('');
   baseSchema = new FormControl();
   update_action?: SchemaAction
@@ -27,6 +29,12 @@ export class SchemaViewModalComponent {
   ngOnInit() {
     if (this.schema) {
       this.msg = 'Редактирование схемы'
+      this.name.setValue(this.schema.name)
+      this.disable_activation = this.schema.active
+      this.disable_next_week = new Date(this.schema.to_be_active_from!) > new Date()
+    }
+    else {
+      this.msg = 'Создание схемы'
     }
   }
 

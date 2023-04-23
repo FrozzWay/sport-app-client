@@ -222,7 +222,7 @@ export class AddRecordModalComponent {
 
   add_record(day: number, program: Program): Observable<SchemaRecord> {
     const record: SchemaRecordCreate = {
-      program: program,
+      program: program.id,
       day_time: this.recordCreationForm.controls.daytimeControl.value!,
       duration: +this.recordCreationForm.controls.durationControl.value!,
       week_day: day,

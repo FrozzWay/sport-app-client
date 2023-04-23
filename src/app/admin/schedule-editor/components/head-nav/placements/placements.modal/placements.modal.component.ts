@@ -39,7 +39,7 @@ export class PlacementsModalComponent {
           this.snackBar.open('Сохранено', 'Закрыть', { duration: 3000, verticalPosition: 'top' })
           const i = this.placements.indexOf(placement)
           this.placements[i] = result;
-          this.onUpdate.emit()
+          this.onUpdate.emit(placement)
         })
     })
   }
@@ -63,7 +63,7 @@ export class PlacementsModalComponent {
       next: () => {
         this.snackBar.open('Помещение удалено', 'Закрыть', { duration: 3000, verticalPosition: 'top' });
         this.placements = this.placements.filter(p => p != placement)
-        this.onUpdate.emit()
+        this.onUpdate.emit(placement)
       },
       error: (error: HttpErrorResponse) => {
         this.snackBar.open(`Ошибка: ${error.error.detail}`, 'Закрыть', {

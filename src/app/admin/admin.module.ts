@@ -40,7 +40,7 @@ import { MatRadioModule } from "@angular/material/radio";
 import { ProgramReportViewModalComponent } from './schedule-editor/components/head-nav/reports/program-report-view.modal/program-report-view.modal.component';
 import { ClientReportMakerModalComponent } from './schedule-editor/components/head-nav/reports/client-report-maker.modal/client-report-maker.modal.component';
 import { ClientReportViewModalComponent } from './schedule-editor/components/head-nav/reports/client-report-view.modal/client-report-view.modal.component';
-import { SchemaViewModalComponent } from './schedule-editor/components/schemas/schema-view.modal/schema-view.modal.component';
+import { SchemaEditModalComponent } from './schedule-editor/components/schemas/schema-edit.modal/schema-edit-modal.component';
 
 
 @NgModule({
@@ -67,7 +67,7 @@ import { SchemaViewModalComponent } from './schedule-editor/components/schemas/s
     ProgramReportViewModalComponent,
     ClientReportMakerModalComponent,
     ClientReportViewModalComponent,
-    SchemaViewModalComponent,
+    SchemaEditModalComponent,
   ],
   imports: [
     CommonModule,

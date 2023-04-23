@@ -5,14 +5,14 @@
   </div>
   <div class="modal-body fs-5">
     <ul class="list-group">
-      <li rippleOnHover class="list-group-item d-flex justify-content-between align-items-center">
+      <li rippleOnHover (click)="edit_schema(active_schema)" class="list-group-item d-flex justify-content-between align-items-center">
         <span class="ellipsis">{{active_schema.name}}</span>
         <div class="d-flex align-items-center">
           <span class="me-2" style="color: green">активная</span>
           <mat-icon style="color: green">check_circle</mat-icon>
         </div>
       </li>
-      <li *ngIf="next_week_schema" class="list-group-item d-flex justify-content-between align-items-center">
+      <li *ngIf="next_week_schema" rippleOnHover (click)="edit_schema(next_week_schema)" class="list-group-item d-flex justify-content-between align-items-center">
         <span class="ellipsis">{{next_week_schema.name}}</span>
         <div class="d-flex align-items-center">
           <span class="me-2" style="color: darkorange">на следующую неделю</span>
@@ -26,22 +26,27 @@
     <ul class="list-group list-group-flush" id="secondary-schemas">
       <ng-container *ngFor="let schema of schemas">
         <div class="d-flex justify-content-between align-items-center">
-          <li rippleOnHover [persistent]="true" (click)="view_schema(schema)"
+          <li rippleOnHover [persistent]="true" (click)="true"
               class="list-group-item w-100 me-2 no-select">
             <span class="ellipsis">{{schema.name}}</span>
           </li>
         <div id="action_buttons" class="d-flex align-items-center">
-            <div class="position-relative delete-category rounded-circle" (click)="true">
+          <div class="position-relative edit_schema rounded-circle" (click)="edit_schema(schema)">
               <div class="p-2 d-flex">
-                <mat-icon color="warn">delete</mat-icon>
+                <mat-icon color="primary">settings</mat-icon>
               </div>
+          </div>
+          <div class="position-relative delete-category rounded-circle" (click)="true">
+            <div class="p-2 d-flex">
+              <mat-icon color="warn">delete</mat-icon>
             </div>
+          </div>
           </div>
         </div>
       </ng-container>
     </ul>
   </div>
   <div class="modal-footer">
-    <button mat-raised-button color="primary" class="fs-5">Добавить</button>
+    <button mat-raised-button color="primary" (click)="create_schema()" class="fs-5">Добавить</button>
   </div>
 </div>
