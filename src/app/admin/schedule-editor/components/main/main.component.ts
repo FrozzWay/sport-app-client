@@ -218,7 +218,7 @@ export class ScheduleEditorComponent {
   }
 
   create_next_week() {
-
+    this.schemas_modal()
   }
 
   category_modal() {
@@ -310,8 +310,10 @@ export class ScheduleEditorComponent {
         if (this.visible_schema.id == updated_schema.id)
           this.visible_schema.name = updated_schema.name
 
-        // if (this.schedule_schemas.active!.id == updated_schema.id)
-        //   this.schedule_schemas.active!.name = updated_schema.name
+        if (updated_schema.active)
+          if (updated_schema.id != this.schedule_schemas.active!.id) {
+            this.open_active_schema()
+          }
 
         if (updated_schema.to_be_active_from) {
           if (custom_schema) {
@@ -343,8 +345,9 @@ export class ScheduleEditorComponent {
           this.visible_schema = schema
           this.reInit()
         }
-        else
+        else {
           this.open_active_schema()
+        }
       })
   }
 
@@ -352,5 +355,10 @@ export class ScheduleEditorComponent {
     this.selected_custom_schema = undefined
     this.nw = false
     this.reInit()
+    setTimeout(() => {
+      document.getElementsByClassName('carousel-item').item(0)!.classList.add('active')
+      document.getElementsByClassName('carousel-item').item(1)!.classList.remove('active')
+      this.position_missingNwSchema_message()
+    })
   }
 }

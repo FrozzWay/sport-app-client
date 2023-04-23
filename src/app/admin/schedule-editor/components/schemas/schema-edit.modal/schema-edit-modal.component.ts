@@ -45,9 +45,10 @@ export class SchemaEditModalComponent {
       active: this.update_action == 'make_active',
       activate_next_week: this.update_action == 'activate_next_week' ? true : undefined
     }
-    if (this.disable_next_week_action)
+    if (this.disable_next_week_action) {
       update_fields.activate_next_week = false
       update_fields.active = undefined
+    }
     this.activeDialog.close(update_fields)
   }
 
