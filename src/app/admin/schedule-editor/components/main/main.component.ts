@@ -68,6 +68,12 @@ export class ScheduleEditorComponent {
   }
 
   reInit() {
+    const visible_schema = this.visible_schema
+    this.ngOnInit()
+    this.onQueriedRecords.pipe(take(1)).subscribe(() => this.visible_schema = visible_schema)
+  }
+
+  reInit_with_filters() {
     this.filter_service.cleanup_filters()
     this.applied_filters = undefined
     this.filter_panel.dropFormControls()
@@ -227,7 +233,7 @@ export class ScheduleEditorComponent {
     })
     modalRef.componentInstance.onUpdate.subscribe((category: Category)=> {
       this.filter_service.cleanup_filters()
-      this.ngOnInit()
+      this.reInit()
       if (this.applied_filters) {
         (this.applied_filters.categories as Set<string>).delete(category.name)
         this.onQueriedRecords.pipe(take(1)).subscribe(_ => this.filter_schedule(this.applied_filters))
@@ -241,7 +247,7 @@ export class ScheduleEditorComponent {
     })
     modalRef.componentInstance.onUpdate.subscribe((placement: Placement)=> {
       this.filter_service.cleanup_filters()
-      this.ngOnInit()
+      this.reInit()
       if (this.applied_filters) {
         (this.applied_filters.placements as Set<string>).delete(placement.name)
         this.onQueriedRecords.pipe(take(1)).subscribe(_ => this.filter_schedule(this.applied_filters))
@@ -255,7 +261,7 @@ export class ScheduleEditorComponent {
     })
     modalRef.componentInstance.onUpdate.subscribe((instructor: Instructor) => {
       this.filter_service.cleanup_filters()
-      this.ngOnInit()
+      this.reInit()
       if (this.applied_filters) {
         this.onQueriedRecords.pipe(take(1)).subscribe(_ => this.filter_schedule(this.applied_filters))
       }
@@ -273,7 +279,7 @@ export class ScheduleEditorComponent {
       scrollable: true
     })
     modalRef.componentInstance.onDelete.subscribe(() => {
-      this.reInit()
+      this.reInit_with_filters()
     })
   }
 
@@ -310,25 +316,28 @@ export class ScheduleEditorComponent {
         if (this.visible_schema.id == updated_schema.id)
           this.visible_schema.name = updated_schema.name
 
+        // При активации схемы, открыть её.
         if (updated_schema.active)
           if (updated_schema.id != this.schedule_schemas.active!.id) {
             this.open_active_schema()
           }
 
         if (updated_schema.to_be_active_from) {
+          // При активации просматриваемой сторонней схемы на след. неделю, открыть её.
           if (custom_schema) {
             if (custom_schema.id == updated_schema.id)
               this.open_active_schema()
             return
           }
+          // При активации схемы на след. неделю, просматривая активную.
           this.schedule_schemas.next_week = updated_schema
-          this.reInit()
+          this.reInit_with_filters()
           this.onQueriedRecords.pipe(take(1)).subscribe(() => {
             this.visible_schema = this.nw ? this.schedule_schemas.next_week! : this.schedule_schemas.active!
           })
         }
 
-        // deactivation of next_week schema
+        // Отключение (деактивация) схемы следующей недели.
         if (this.schedule_schemas.next_week?.id == updated_schema.id) {
           if (!updated_schema.to_be_active_from) {
             this.schedule_schemas.next_week = undefined
@@ -343,7 +352,7 @@ export class ScheduleEditorComponent {
         if (!schema.active) {
           this.selected_custom_schema = schema
           this.visible_schema = schema
-          this.reInit()
+          this.reInit_with_filters()
         }
         else {
           this.open_active_schema()
@@ -354,7 +363,7 @@ export class ScheduleEditorComponent {
   open_active_schema() {
     this.selected_custom_schema = undefined
     this.nw = false
-    this.reInit()
+    this.reInit_with_filters()
     setTimeout(() => {
       document.getElementsByClassName('carousel-item').item(0)!.classList.add('active')
       document.getElementsByClassName('carousel-item').item(1)!.classList.remove('active')

@@ -34,7 +34,7 @@
         <div class="d-flex align-items-center justify-content-center">
           <span class="ellipsis d-block">{{visible_schema.name}}</span>
             <mat-icon style="color: green; overflow: unset" *ngIf="visible_schema.active" class="ms-2">check_circle</mat-icon>
-            <mat-icon style="color: darkorange; overflow: unset" *ngIf="visible_schema == schedule_schemas.next_week" class="ms-2">more_time</mat-icon>
+            <mat-icon style="color: darkorange; overflow: unset" *ngIf="visible_schema.id == schedule_schemas.next_week?.id" class="ms-2">more_time</mat-icon>
         </div>
       </button>
     </div>
