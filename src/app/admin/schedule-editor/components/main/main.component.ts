@@ -70,11 +70,8 @@ export class ScheduleEditorComponent {
   }
 
   process_schemas(schemas: Schema[]) {
-    const active_schema = schemas.find((element) => element.active)!
-    let next_week_schema = schemas.find((element) => element.to_be_active_from)
-    if (next_week_schema)
-      if (new Date(next_week_schema.to_be_active_from!) < new Date())
-        next_week_schema = undefined
+    const active_schema = schemas.find((schema) => schema.active)!
+    let next_week_schema = schemas.find((schema) => new Date(schema.to_be_active_from!) > new Date())
     this.schedule_schemas.active = active_schema
     this.schedule_schemas.next_week = next_week_schema
     this.visible_schema = active_schema
@@ -126,6 +123,17 @@ export class ScheduleEditorComponent {
     })
   }
 
+  remove_records(records: SchemaRecord[], container: periods_SchemaRecord) {
+    records.forEach((r) => {
+      const [hours, day] = [r.day_time.split(':')[0], r.week_day]
+      container[+hours].days[day] = container[+hours].days[day].filter(rec => r !== rec)
+      let filled = false
+      for (const [day, value] of Object.entries(container[+hours].days))
+        if (value.length > 0) filled = true
+      if (!filled) container[+hours].filled = false
+    })
+  }
+
   filter_schedule(filters: any) {
     this.applied_filters = filters
     this.prepare_schedule()
@@ -148,6 +156,7 @@ export class ScheduleEditorComponent {
   }
 
   open_add_record_modal() {
+    console.log(this.schedule_records)
     const modalRef = this.modalService.open(AddRecordModalComponent, {
       centered: true,
       backdrop: 'static',
@@ -161,42 +170,24 @@ export class ScheduleEditorComponent {
 
   onAddRecords(added_records: SchemaRecord[]) {
     if (this.visible_schema == this.schedule_schemas.next_week) {
-        this.api_records.next_week!.push(...added_records)
-        this.reRenderRecords(true)
-      }
+      this.api_records.next_week!.push(...added_records)
+      this.fill_with_records(added_records, this.schedule_records.next_week)
+    }
     else {
       this.api_records.active!.push(...added_records)
-      this.reRenderRecords(false)
+      this.fill_with_records(added_records, this.schedule_records.current_week)
     }
+    this.filter_service.classify_for_filters(added_records)
   }
 
   onRemoveRecord(record: SchemaRecord) {
     if (this.visible_schema == this.schedule_schemas.next_week) {
         this.api_records.next_week = this.api_records.next_week!.filter(r => r !== record)
-        this.reRenderRecords(true)
+        this.remove_records([record], this.schedule_records.next_week)
       }
     else {
       this.api_records.active = this.api_records.active!.filter(r => r !== record)
-      this.reRenderRecords(false)
-    }
-  }
-
-  reRenderRecords(nw: boolean) {
-    if (nw) {
-      this.filter_service.classify_for_filters(this.api_records.next_week!)
-      if (this.applied_filters)
-        this.filter_schedule(this.applied_filters)
-      else
-        this.prepare_schedule()
-      this.fill_with_records(this.api_records.next_week!, this.schedule_records.next_week)
-    } else {
-      this.filter_service.classify_for_filters(this.api_records.active!)
-      if (this.applied_filters)
-        this.filter_schedule(this.applied_filters)
-      else {
-        this.prepare_schedule()
-        this.fill_with_records(this.api_records.active!, this.schedule_records.current_week)
-      }
+      this.remove_records([record], this.schedule_records.current_week)
     }
   }
 
