@@ -79,6 +79,10 @@ body {
   width: 450px !important;
 }
 
+.modal-dialog-resized-s {
+  width: 375px !important;
+}
+
 .tiny-backdrop {
   opacity: .2 !important;
 }
@@ -99,6 +103,7 @@ body {
 @mixin ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ellipsis {

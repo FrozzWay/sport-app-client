@@ -65,7 +65,20 @@ export class ScheduleEditorComponent {
   }
 
   ngAfterViewInit() {
-    let pos = document.getElementById('dates-table-header')!.getBoundingClientRect().bottom * 2
+    this.position_missingNwSchema_message()
+  }
+
+  reInit() {
+    this.filter_service.cleanup_filters()
+    this.applied_filters = undefined
+    this.filter_panel.dropFormControls()
+    this.ngOnInit();
+  }
+
+  position_missingNwSchema_message() {
+    const tables = document.getElementsByClassName('dates-table-header')
+    let pos = tables.item(0)!.getBoundingClientRect().bottom * 2
+    if (pos == 0) pos = tables.item(1)!.getBoundingClientRect().bottom * 2
     document.getElementById('missingNwSchema-message')!.setAttribute('style', `height:calc(100vh - ${pos}px)`)
   }
 
@@ -247,10 +260,7 @@ export class ScheduleEditorComponent {
       scrollable: true
     })
     modalRef.componentInstance.onDelete.subscribe(() => {
-      this.filter_service.cleanup_filters()
-      this.applied_filters = undefined
-      this.filter_panel.dropFormControls()
-      this.ngOnInit();
+      this.reInit()
     })
   }
 
@@ -275,8 +285,31 @@ export class ScheduleEditorComponent {
   }
 
   schemas_modal() {
-    this.modalService.open(SchemasModalComponent, {
+    const modalRef = this.modalService.open(SchemasModalComponent, {
       scrollable: true,
     })
+    modalRef.componentInstance.onEditedSchema
+      .subscribe((updated_schema: Schema) => {
+        if (this.schedule_schemas.active!.id == updated_schema.id)
+          this.schedule_schemas.active!.name = updated_schema.name
+
+        if (new Date(updated_schema.to_be_active_from!) > new Date()) {
+          this.schedule_schemas.next_week = updated_schema
+          this.reInit()
+          this.onQueriedRecords.subscribe(() => {
+            this.visible_schema = this.nw ? this.schedule_schemas.next_week! : this.schedule_schemas.active!
+          })
+        }
+
+        // deactivation of next_week schema
+        if (this.schedule_schemas.next_week?.id == updated_schema.id) {
+          if (!updated_schema.to_be_active_from) {
+            this.schedule_schemas.next_week = undefined
+            setTimeout(() => this.position_missingNwSchema_message())
+            this.visible_schema = this.schedule_schemas.active!
+          }
+        }
+
+      })
   }
 }

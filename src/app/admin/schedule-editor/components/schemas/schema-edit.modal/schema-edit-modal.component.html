@@ -14,11 +14,12 @@
     </ng-container>
       <mat-radio-group [(ngModel)]="update_action" class="d-block" [ngClass]="schema ? 'my-2' : 'mb-2'">
         <mat-radio-button value="make_active" [disabled]="disable_activation">Активировать</mat-radio-button>
-        <mat-radio-button class="" value="activate_next_week" [disabled]="disable_next_week || disable_activation">Со следующей недели</mat-radio-button>
+        <mat-radio-button class="" value="activate_next_week" [disabled]="disable_next_week_elements || disable_activation">Со следующей недели</mat-radio-button>
       </mat-radio-group>
   </div>
   <div class="modal-footer border-0 pt-0">
     <button class="btn fs-5" (click)="activeDialog.dismiss()">Назад</button>
+    <button class="btn btn-outline-danger fs-5" *ngIf="disable_next_week_elements" (click)="disable_next_week_action=true; save()">Отключить</button>
     <button mat-raised-button color="primary" class="fs-5" (click)="save()">Сохранить</button>
   </div>
 </div>
