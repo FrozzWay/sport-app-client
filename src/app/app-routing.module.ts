@@ -13,7 +13,7 @@ const routes: Routes = [
     path: 'admin',
     canActivateChild: [authGuard],
     children: [
-      { path: 'schedule/edit', component: ScheduleEditorComponent}
+      { path: 'edit', component: ScheduleEditorComponent}
     ]
   },
   { path: 'schedule', component: WidgetComponent },

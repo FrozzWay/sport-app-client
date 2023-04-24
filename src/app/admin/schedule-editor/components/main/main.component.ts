@@ -26,6 +26,7 @@ import {
 } from "../head-nav/reports/client-report-maker.modal/client-report-maker.modal.component";
 import { SchemasModalComponent } from "../schemas/schemas.modal/schemas.modal.component";
 import { FilterPanelComponent } from "../../../../public/schedule/components/filter-panel/filter-panel.component";
+import { AuthService } from "../../../../auth/auth.service";
 
 
 @Component({
@@ -52,9 +53,11 @@ export class ScheduleEditorComponent {
     public schema_service: ScheduleSchemasService,
     public filter_service: FilterScheduleService,
     private modalService: NgbModal,
+    public auth_service: AuthService
   ) {}
 
   ngOnInit() {
+    this.api_records = {active: undefined, next_week: undefined, custom: undefined}
     document.body.classList.add('admin-theme');
     this.prepare_schedule()
     if (!this.selected_custom_schema)

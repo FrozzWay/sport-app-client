@@ -64,8 +64,8 @@ a {
   z-index: 10000!important;
 }
 
-body {
-  overflow: scroll;
+body, .modal-backdrop {
+  overflow-y: scroll;
 }
 
 .btn-close {

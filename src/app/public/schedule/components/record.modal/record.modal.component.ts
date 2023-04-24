@@ -31,7 +31,7 @@ export class RecordModalComponent {
   ) {}
 
   ngOnInit() {
-    this.authorized = this.auth_service.isLoggedIn
+    this.authorized = this.auth_service.isLoggedInOperator
     this.begins = new Date(this.record.date)
     this.ends = new Date(this.begins)
     this.ends.setMinutes(this.ends.getMinutes() + this.record.duration)

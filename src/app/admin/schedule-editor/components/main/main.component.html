@@ -1,32 +1,42 @@
 <br>
 <div style="max-width: 1300px; min-width: 1100px; margin: auto" class="px-xl-3 px-xxl-0">
-  <ul class="list-inline fs-5" id="nav-list">
-    <li class="list-inline-item">
-      <button mat-button (click)="category_modal()">Категории</button>
-    </li>
-    <li class="list-inline-item">
-      <button mat-button (click)="placement_modal()">Помещения</button>
-    </li>
-    <li class="list-inline-item">
-      <button mat-button (click)="instructor_modal()">Инструктора</button>
-    </li>
-    <li class="list-inline-item">
-      <button mat-button (click)="client_modal()">Клиенты</button>
-    </li>
-    <li class="list-inline-item">
-      <button mat-button (click)="program_modal()">Программы</button>
-    </li>
-    <li class="list-inline-item">
-      <button mat-button (click)="staff_modal()">Рецепция</button>
-    </li>
-    <li class="list-inline-item">
-      <button mat-button [matMenuTriggerFor]="menu">Отчеты</button>
-      <mat-menu #menu="matMenu" class="fs-5">
-        <button mat-menu-item (click)="report_client_modal()">Отчет по клиенту</button>
-        <button mat-menu-item (click)="report_program_modal()">Отчет по программам</button>
-      </mat-menu>
-    </li>
-  </ul>
+  <div class="d-flex justify-content-between">
+    <ul class="list-inline fs-5" id="nav-list">
+      <li class="list-inline-item">
+        <button mat-button (click)="category_modal()">Категории</button>
+      </li>
+      <li class="list-inline-item">
+        <button mat-button (click)="placement_modal()">Помещения</button>
+      </li>
+      <li class="list-inline-item">
+        <button mat-button (click)="instructor_modal()">Инструктора</button>
+      </li>
+      <li class="list-inline-item">
+        <button mat-button (click)="client_modal()">Клиенты</button>
+      </li>
+      <li class="list-inline-item">
+        <button mat-button (click)="program_modal()">Программы</button>
+      </li>
+      <li class="list-inline-item">
+        <button mat-button (click)="staff_modal()">Рецепция</button>
+      </li>
+      <li class="list-inline-item">
+        <button mat-button [matMenuTriggerFor]="menu">Отчеты</button>
+        <mat-menu #menu="matMenu" class="fs-5">
+          <button mat-menu-item (click)="report_client_modal()">Отчет по клиенту</button>
+          <button mat-menu-item (click)="report_program_modal()">Отчет по программам</button>
+        </mat-menu>
+      </li>
+    </ul>
+    <ul class="list-inline fs-5">
+      <li class="list-inline-item">
+        <a href="/schedule" target="_blank"><button mat-button>Расписание</button></a>
+      </li>
+      <li class="list-inline-item">
+        <button mat-button (click)="auth_service.logOut()">Выход</button>
+      </li>
+    </ul>
+  </div>
   <app-filter-panel (onFilterSchedule)="filter_schedule($event)" [filters]="filter_service.filters" [hideCheckBoxes]="true">
   <div class="d-inline-flex justify-content-end align-items-center mb-3" style="width: 29%">
     <div class="me-2 w-50 text-center fs-5">

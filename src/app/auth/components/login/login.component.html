@@ -1,4 +1,11 @@
-<p>login works!</p>
-<button type="button" (click)="login()">Login</button>
-<p>{{message}}</p>
-<p>{{access_token}}</p>
+<!--<p>{{access_token}}</p>-->
+
+<div class="d-flex align-items-center" style="height: 80vh">
+  <div class="m-auto fs-2" style="width: 300px">
+    <p class="text-center">Авторизация</p>
+    <input type="text" name="username" class="form-control fs-5" [formControl]="username" placeholder="Имя пользователя">
+    <input type="password" name="password" class="form-control mt-2 fs-5" [formControl]="password" placeholder="Пароль">
+    <button class="btn btn-primary w-100 mx-auto mt-2 d-block fs-5" (click)="login()">Вход</button>
+    <p class="text-danger fs-5 mt-2" *ngIf="wrong">Данные для входа неверны</p>
+  </div>
+</div>
