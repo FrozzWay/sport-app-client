@@ -106,14 +106,19 @@ export class ScheduleEditorComponent {
       this.fill_with_records(r, this.schedule_records.current_week)
       return of(1)
     })).pipe(concatMap(_ => {
-      if (this.schedule_schemas.next_week)
+      if (this.schedule_schemas.next_week) {
         this.schema_service.getRecordsWithinSchema(this.schedule_schemas.next_week.id).subscribe(r => {
           this.api_records.next_week = r
           this.filter_service.classify_for_filters(r)
           this.fill_with_records(r, this.schedule_records.next_week);
+          this.onQueriedRecords.emit()
         });
-      return of(1);
-    })).subscribe(_ => this.onQueriedRecords.emit())
+        return of(false)
+      }
+      else return of(true);
+    })).subscribe(shouldEmit => {
+      if (shouldEmit) this.onQueriedRecords.emit()
+    })
   }
 
   query_records_schema(schema: Schema) {
@@ -238,6 +243,7 @@ export class ScheduleEditorComponent {
       this.filter_service.cleanup_filters()
       this.reInit()
       if (this.applied_filters) {
+        console.log(this.applied_filters);
         (this.applied_filters.categories as Set<string>).delete(category.name)
         this.onQueriedRecords.pipe(take(1)).subscribe(_ => this.filter_schedule(this.applied_filters))
       }

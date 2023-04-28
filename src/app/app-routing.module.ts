@@ -17,7 +17,8 @@ const routes: Routes = [
     ]
   },
   { path: 'schedule', component: WidgetComponent },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '',   redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({
