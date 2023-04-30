@@ -1,8 +1,8 @@
-@use 'src/styles';
+//@use 'src/styles';
 #program-desc-table {
   border-collapse: separate;
   td:nth-child(2) {
-    @extend .ps-3
+    padding-left: 1rem;
   }
 
   td:nth-child(2) {
@@ -12,15 +12,13 @@
 
 .icon-row {
   div {
-    @extend .d-flex, .align-items-center;
-
     &:not(:first-child) {
-      @extend .ms-3
+      //@extend .ms-3
     }
   }
 
   span {
-    @extend .ps-1, .fs-6
+    //@extend .ps-1, .fs-6
   }
 
   .paid-icon {

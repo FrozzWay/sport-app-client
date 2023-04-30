@@ -5,21 +5,21 @@
     <tr><td>Помещение:</td><td>{{program.placement.name}}</td></tr>
   </table>
   <div class="icon-row d-flex align-items-center">
-    <div *ngIf="program.paid">
+    <div *ngIf="program.paid" class="d-flex align-items-center">
       <mat-icon class="paid-icon" fontSet="mat-icon-filled" *ngIf="true">finance_chip</mat-icon>
-      <span>платное</span>
+      <span class="ps-1 fs-6">платное</span>
     </div>
-    <div *ngIf="program.available_registration">
+    <div *ngIf="program.available_registration" class="d-flex align-items-center ms-3">
       <mat-icon class="booking-icon" fontSet="mat-icon-filled" *ngIf="true">edit</mat-icon>
-      <span>по записи</span>
+      <span class="ps-1 fs-6">по записи</span>
     </div>
-    <div *ngIf="program.place_limit">
+    <div *ngIf="program.place_limit" class="d-flex align-items-center ms-3">
       <mat-icon fontSet="mat-icon-filled" style="color: #3f9ab5">person</mat-icon>
-      <span>{{program.place_limit}} мест</span>
+      <span class="ps-1 fs-6">{{program.place_limit}} мест</span>
     </div>
-    <div *ngIf="program.registration_opens">
+    <div *ngIf="program.registration_opens" class="d-flex align-items-center ms-3">
       <mat-icon style="color: #9f6b01;">more_time</mat-icon>
-      <span>За {{program.registration_opens}} дня</span>
+      <span class="ps-1 fs-6">За {{program.registration_opens}} дня</span>
     </div>
   </div>
 </div>

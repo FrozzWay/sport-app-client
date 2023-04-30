@@ -1,4 +1,4 @@
-@use 'src/styles';
+@use 'src/scss/mixins';
 
 #add-record-modal-component {
   .btn-close {
@@ -17,7 +17,7 @@
       cursor: pointer;
     }
 
-    @include styles.no-select;
+    @include mixins.no-select;
   }
 
   .selected_day {
@@ -33,7 +33,8 @@
     margin-left: 4.5rem;
 
     td:nth-child(2) {
-      @extend .ps-3
+      padding-left: 1rem;
+      // @extend .ps-3
     }
 
     input {
@@ -43,7 +44,8 @@
 
   #program-desc-table {
     td:nth-child(2) {
-      @extend .ps-3
+      padding-left: 1rem;
+      // @extend .ps-3
     }
 
     td:nth-child(2) {
@@ -53,15 +55,16 @@
 
   .icon-row {
     div {
-      @extend .d-flex, .align-items-center;
-
+      display: flex;
+      align-items: center;
       &:not(:first-child) {
-        @extend .ms-3
+        margin-left: 1rem;
       }
     }
 
     span {
-      @extend .ps-1, .fs-6
+      padding-left: .25rem;
+      font-size: .75rem;
     }
 
     .paid-icon {
@@ -80,11 +83,11 @@
   }
 
   mat-select {
-    @include styles.no-select
+    @include mixins.no-select
   }
 
   .mat-expansion-panel-body {
-    @extend .pb-0
+    padding-bottom: 0;
   }
 
   #program_creation_additional_options {
@@ -92,7 +95,9 @@
       width: 60px;
       padding: 0.2rem 0.75rem;
       display: inline-block;
-      @extend .fs-5, .ms-2;
+      font-size: 0.9375rem;
+      margin-left: .5rem;
+      // @extend .fs-5, .ms-2;
     }
   }
 }
