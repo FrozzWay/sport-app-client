@@ -37,9 +37,9 @@ export class WidgetComponent {
       for (let day = 0; day < 7; day++) {
         let date = utils.this_mo()
         date.setDate(date.getDate() + day)
-        this.schedule.current_week[hours].days[date.toLocaleDateString()] = []
+        this.schedule.current_week[hours].days[date.toLocaleDateString('ru-RU')] = []
         date.setDate(date.getDate() + 7)
-        this.schedule.next_week[hours].days[date.toLocaleDateString()] = []
+        this.schedule.next_week[hours].days[date.toLocaleDateString('ru-RU')] = []
       }
     }
   }
@@ -60,7 +60,7 @@ export class WidgetComponent {
   fill_schedule(schedule: models.ScheduleRecord[]) {
     schedule.forEach((record: models.ScheduleRecord) => {
       let date = new Date(record.date)
-      let [hours, day] = [date.getHours(), date.toLocaleDateString()]
+      let [hours, day] = [date.getHours(), date.toLocaleDateString('ru-RU')]
       let week = (date < utils.next_mo()) ? 'current_week' : 'next_week'
       let path = this.schedule[week as keyof Schedule][hours]
       path.filled = true

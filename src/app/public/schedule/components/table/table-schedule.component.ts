@@ -21,6 +21,7 @@ export class TableScheduleComponent {
 
   ngOnInit() {
     utils.add_days(this.dates, this.next_week)
+    console.log(this.periods)
   }
 
   open_modal(record: ScheduleRecord) {
