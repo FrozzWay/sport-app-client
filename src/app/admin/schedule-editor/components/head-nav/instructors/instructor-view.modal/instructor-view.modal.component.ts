@@ -1,7 +1,8 @@
 import { Component, Inject, Input } from '@angular/core';
-import { BASE_PATH, Instructor } from "src/ApiModule";
+import { Instructor } from "src/ApiModule";
 import { FormControl } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { STATIC_PATH } from "../../../../../../app.module";
 
 @Component({
   selector: 'app-instructor-view.modal-element',
@@ -17,7 +18,9 @@ export class InstructorViewModalComponent {
   }
   photo_url?: string
   msg!: string
-  constructor(public activeDialog: NgbActiveModal, @Inject(BASE_PATH) private basePath: string,) {}
+  constructor(
+    public activeDialog: NgbActiveModal,
+    @Inject(STATIC_PATH) private staticPath: string,) {}
 
   ngOnInit() {
     if (this.instructor) {
@@ -25,7 +28,7 @@ export class InstructorViewModalComponent {
       this.phone.setValue(this.instructor.phone)
       this.msg = 'Редактирование инструктора'
       if (this.instructor.photo_src)
-          this.photo_url = `${this.basePath}/${this.instructor.photo_src}`
+          this.photo_url = `${this.staticPath}/${this.instructor.photo_src}`
     } else this.msg = 'Создание инструктора'
   }
 

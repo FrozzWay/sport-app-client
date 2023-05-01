@@ -10,6 +10,10 @@ import '@angular/common/locales/global/ru';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgbModalModule } from "@ng-bootstrap/ng-bootstrap";
 import { IMaskModule } from "angular-imask";
+import { environment } from "../environments/environment";
+import { InjectionToken } from '@angular/core';
+
+export const STATIC_PATH = new InjectionToken<string>('staticPath');
 
 @NgModule({
   declarations: [
@@ -26,7 +30,8 @@ import { IMaskModule } from "angular-imask";
     IMaskModule
   ],
   providers: [
-    { provide: BASE_PATH, useValue: 'http://192.168.0.150:8000' },
+    { provide: BASE_PATH, useValue: environment.apiUrl },
+    { provide: STATIC_PATH, useValue: environment.staticUrl },
     {
       provide: Configuration,
       useFactory: () => new Configuration(

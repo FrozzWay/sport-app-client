@@ -1,12 +1,12 @@
 import { Component, Inject, Input } from '@angular/core';
 import {
-  BASE_PATH,
   InstructorsService,
   ScheduleRecord
 } from "src/ApiModule";
 import { AuthService } from "../../../../auth/auth.service";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BookingModalComponent } from "../booking.modal/booking.modal.component";
+import { STATIC_PATH } from "../../../../app.module";
 
 @Component({
   selector: 'app-record.modal-element',
@@ -23,7 +23,7 @@ export class RecordModalComponent {
   booking_opened: Boolean = true
 
   constructor(
-    @Inject(BASE_PATH) private basePath: string,
+    @Inject(STATIC_PATH) private staticPath: string,
     private instructor_service: InstructorsService,
     private auth_service: AuthService,
     public activeModal: NgbActiveModal,
@@ -45,7 +45,7 @@ export class RecordModalComponent {
     this.instructor_service.getInstructorImage(this.record.program.instructor.id).subscribe({
       next: (instructor) => {
         if (instructor.photo_src)
-          this.photo_url = `${this.basePath}/${instructor.photo_src}`
+          this.photo_url = `${this.staticPath}/${instructor.photo_src}`
       }
     })
   }
