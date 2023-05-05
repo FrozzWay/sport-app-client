@@ -52,6 +52,7 @@ export class ProgramModalComponent {
         next: () => {
           this.snackBar.open('Программа удалена', 'Закрыть', { duration: 3000, verticalPosition: 'top' });
           this.programs = this.programs.filter(i => i != program)
+          this.filtered_programs = this.filtered_programs.filter(i => i != program)
           this.onDelete.emit()
         },
         error: (error: HttpErrorResponse) => {

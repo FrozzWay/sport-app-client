@@ -82,6 +82,7 @@ export class ClientModalComponent {
       next: () => {
         this.snackBar.open('Инструктор удален', 'Закрыть', { duration: 3000, verticalPosition: 'top' });
         this.clients = this.clients.filter(i => i != client)
+        this.filtered_clients = this.filtered_clients.filter(i => i != client)
       },
       error: (error: HttpErrorResponse) => {
          this.snackBar.open(`Ошибка: ${error.error.detail}`, 'Закрыть', {duration: 5000, verticalPosition: 'top'})

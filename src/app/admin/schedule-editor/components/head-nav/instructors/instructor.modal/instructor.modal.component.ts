@@ -84,6 +84,7 @@ export class InstructorModalComponent {
       next: () => {
         this.snackBar.open('Инструктор удален', 'Закрыть', { duration: 3000, verticalPosition: 'top' });
         this.instructors = this.instructors.filter(i => i != instructor)
+        this.filtered_instructors = this.filtered_instructors.filter(i => i != instructor)
         this.onUpdate.emit(instructor)
       },
       error: (error: HttpErrorResponse) => {
