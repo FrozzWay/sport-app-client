@@ -66,6 +66,7 @@ export class SchemasModalComponent {
       )).subscribe({
       next: (schema) => {
         this.snackBar.open('Схема успешно создана', 'Закрыть', { duration: 3000, verticalPosition: 'top' });
+        this.onEditedSchema.emit(schema)
         this.ngOnInit()
       },
       error: (error: HttpErrorResponse) => {
