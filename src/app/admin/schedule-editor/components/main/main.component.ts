@@ -201,11 +201,11 @@ export class ScheduleEditorComponent {
   }
 
   onAddRecords(added_records: SchemaRecord[]) {
-    if (this.visible_schema == this.schedule_schemas.next_week) {
+    if (this.visible_schema.id == this.schedule_schemas.next_week?.id) {
       this.api_records.next_week!.push(...added_records)
       this.fill_with_records(added_records, this.schedule_records.next_week)
     }
-    if (this.visible_schema == this.schedule_schemas.active) {
+    if (this.visible_schema.id == this.schedule_schemas.active?.id) {
       this.api_records.active!.push(...added_records)
       this.fill_with_records(added_records, this.schedule_records.current_week)
     }
@@ -217,11 +217,11 @@ export class ScheduleEditorComponent {
   }
 
   onRemoveRecord(record: SchemaRecord) {
-    if (this.visible_schema == this.schedule_schemas.next_week) {
+    if (this.visible_schema.id == this.schedule_schemas.next_week?.id) {
         this.api_records.next_week = this.api_records.next_week!.filter(r => r !== record)
         this.remove_records([record], this.schedule_records.next_week)
       }
-    if (this.visible_schema == this.schedule_schemas.active) {
+    if (this.visible_schema.id == this.schedule_schemas.active?.id) {
       this.api_records.active = this.api_records.active!.filter(r => r !== record)
       this.remove_records([record], this.schedule_records.current_week)
     }
