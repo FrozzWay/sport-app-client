@@ -100,7 +100,7 @@ export class AddRecordModalComponent {
     // querying
     utils.add_days(this.weekdays, false)
     this.program_service.getAllPrograms().subscribe((programs) => {
-      this.programs = programs;
+      this.programs = programs.reverse();
       this.program = (programs.length > 0) ? programs[0] : undefined
     })
     // autocomplete controls
