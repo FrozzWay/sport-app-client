@@ -15,6 +15,7 @@ export class TableScheduleComponent {
   @Input() periods!: periods_ScheduleRecord
   @Input() next_week: boolean = false
   dates: Date[] = []
+  unsorted(a: any, b: any): number { return 0; }
 
   constructor(private modalService: NgbModal) {
   }

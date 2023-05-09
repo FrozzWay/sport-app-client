@@ -19,6 +19,7 @@ export class TableScheduleEditorComponent {
   @Output() onRemoveRecord: EventEmitter<any> = new EventEmitter();
   @Output() onCreateNextWeekSchema: EventEmitter<any> = new EventEmitter();
   dates: Date[] = []
+  unsorted(a: any, b: any): number { return 0; }
 
   constructor(private modalService: NgbModal) {
   }

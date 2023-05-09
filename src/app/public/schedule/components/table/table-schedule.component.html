@@ -16,7 +16,7 @@
 
 <table class="sched-t">
   <tbody>
-  <ng-container *ngFor="let period of periods | keyvalue">
+  <ng-container *ngFor="let period of periods | keyvalue: unsorted">
     <tr *ngIf="period.value.filled">
       <td>{{period.key | number:'2.0-0'}}:00</td>
       <td *ngFor="let date of period.value.days | keyvalue">
