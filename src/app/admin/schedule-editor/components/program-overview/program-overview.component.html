@@ -9,15 +9,15 @@
       <mat-icon class="paid-icon" fontSet="mat-icon-filled" *ngIf="true">finance_chip</mat-icon>
       <span class="ps-1 fs-6">платное</span>
     </div>
-    <div *ngIf="program.available_registration" class="d-flex align-items-center ms-3">
+    <div *ngIf="program.available_registration" class="d-flex align-items-center">
       <mat-icon class="booking-icon" fontSet="mat-icon-filled" *ngIf="true">edit</mat-icon>
       <span class="ps-1 fs-6">по записи</span>
     </div>
-    <div *ngIf="program.place_limit" class="d-flex align-items-center ms-3">
+    <div *ngIf="program.place_limit" class="d-flex align-items-center">
       <mat-icon fontSet="mat-icon-filled" style="color: #3f9ab5">person</mat-icon>
       <span class="ps-1 fs-6">{{program.place_limit}} мест</span>
     </div>
-    <div *ngIf="program.registration_opens" class="d-flex align-items-center ms-3">
+    <div *ngIf="program.registration_opens" class="d-flex align-items-center">
       <mat-icon style="color: #9f6b01;">more_time</mat-icon>
       <span class="ps-1 fs-6">За {{program.registration_opens}} дня</span>
     </div>
