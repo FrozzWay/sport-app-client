@@ -19,7 +19,7 @@
   <ng-container *ngFor="let period of periods | keyvalue: unsorted">
     <tr *ngIf="period.value.filled">
       <td>{{period.key | number:'2.0-0'}}:00</td>
-      <td *ngFor="let date of period.value.days | keyvalue">
+      <td *ngFor="let date of period.value.days | keyvalue: unsorted">
         <ul>
           <ng-container *ngFor="let record of date.value">
             <a href="javascript:void(0)"  (click)="open_modal(record)">
